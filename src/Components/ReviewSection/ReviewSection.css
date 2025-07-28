@@ -1,0 +1,25 @@
+.heading-review{
+    font-size: 1.4rem;
+    color: #141718;
+}
+.revirw-card i{
+    color: #141718;
+}
+.text-review{
+    font-size: 1rem;
+    font-weight: 400;
+    color: #353945;
+    font-family: inherit;
+}
+ .btn-primary1{
+    background-color: #141718;
+    color: #fff;
+    border: 1px solid #141718;
+    padding: .375rem 2.5rem;
+    border-radius: 5rem;
+}
+.btn-primary1:hover{
+    background-color: #fff;
+    color: #141718;
+    border: 1px solid #141718;
+}
