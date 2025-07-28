@@ -6,29 +6,17 @@ import axios from 'axios';
 
 function ReviewsSection() {
 
-  const [reviews, setReviews] = useState([
-    // {
-    //   name: 'John Doe',
-    //   rating: 5,
-    //   comment: 'Great product!',
-    //   image: 'https://randomuser.me/api/portraits/men/10.jpg',
-    // },
-    // {
-    //   name: 'Jane Smith',
-    //   rating: 4,
-    //   comment: 'Very useful and high quality.',
-    //   image: 'https://randomuser.me/api/portraits/women/12.jpg',
-    // },
-  ]);
+  const [reviews, setReviews] = useState([]);
 
 const [refresh, setRefreshcopy] = useState(false);
 const setRefresh = () => setRefreshcopy(!refresh);
  let customerId = "cmdlrou2t001klxrm5jqiydih";
 
 let productId= "cmdlqlrdd0016lxrm1f072u75";
+const api = import.meta.env.VITE_API;
  const fetchReviews = async () => {
     try{
-        const response = await axios.get(`https://dokany-api-production.up.railway.app/reviews/${productId}`);
+        const response = await axios.get(`${api}/reviews/${productId}`);
         setReviews(response.data);
         console.log("reviews",response.data);
     }catch(error){
