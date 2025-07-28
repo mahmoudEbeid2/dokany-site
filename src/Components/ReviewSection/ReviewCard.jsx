@@ -5,9 +5,11 @@ function ReviewCard({ name="mohed", rating, comment, image="https://randomuser.m
 
  let token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZGxyb3UydDAwMWtseHJtNWpxaXlkaWgiLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3NTM2MjYxMDIsImV4cCI6MTc1NDIzMDkwMn0.1Z61T-MpuNkS_RGa9eUGuroYdWnATmNWTwPzOJRxfOc"
 
+ const api = import.meta.env.VITE_API;
+
     const deleteReview = async () => {
         try {
-            const response = await axios.delete(`https://dokany-api-production.up.railway.app/reviews/${id}`,{
+            const response = await axios.delete(`${api}/reviews/${id}`,{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
