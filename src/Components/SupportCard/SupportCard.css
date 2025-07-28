@@ -1,0 +1,19 @@
+.sapurt-card{
+ 
+}
+.sapurt-card i {
+    font-size: 3rem;
+    color: #141718;
+    width: 3rem;
+}
+
+.sapurt-card h2{
+    font-size: 1.25rem;
+    color: #141718;
+    font-weight: 500;
+}
+.sapurt-card p{
+    font-size: .875rem;
+    color: #6C7275;
+    font-weight: 400;
+}
