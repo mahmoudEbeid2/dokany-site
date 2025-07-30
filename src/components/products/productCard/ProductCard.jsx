@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Heart, Eye } from "lucide-react";
-// import toast from "react-hot-toast";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./ProductCard.module.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../features/user/userSlice";
 
-const getToken = () => {
-  let token = localStorage.getItem("token");
+const getToken = () => localStorage.getItem("token");
 
-  return token;
-};
 const addToCartAPI = async (productId) => {
   const response = await fetch(`${import.meta.env.VITE_API}/cart`, {
     method: "POST",
@@ -48,9 +46,7 @@ const removeFromFavoritesAPI = async (favoriteId) => {
     `${import.meta.env.VITE_API}/favorites/${favoriteId}`,
     {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
+      headers: { Authorization: `Bearer ${getToken()}` },
     }
   );
   if (!response.ok) {
@@ -60,10 +56,11 @@ const removeFromFavoritesAPI = async (favoriteId) => {
   return response.json();
 };
 
-const ProductCard = ({ product, favoriteItem, isJustIn = false }) => {
+const ProductCard = ({ product, favoriteItem, isNew = false }) => {
   const navigate = useNavigate();
   const [favorite, setFavorite] = useState(favoriteItem || null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setFavorite(favoriteItem || null);
@@ -77,9 +74,7 @@ const ProductCard = ({ product, favoriteItem, isJustIn = false }) => {
   const discountPercentage = product.discount || 0;
   const finalPrice = originalPrice - (originalPrice * discountPercentage) / 100;
 
-  const handleCardClick = () => {
-    navigate(`/products/${product.id}`);
-  };
+  const handleCardClick = () => navigate(`/products/${product.id}`);
 
   const handleFavoriteClick = async (e) => {
     e.stopPropagation();
@@ -88,12 +83,16 @@ const ProductCard = ({ product, favoriteItem, isJustIn = false }) => {
       navigate(`/signin`);
       return;
     }
-
     if (isFavorited) {
       try {
         await removeFromFavoritesAPI(favorite.id);
         setFavorite(null);
-        toast.success(`${product.title} removed from favorites.`);
+        toast.success(
+          `${product.title
+            .split(" ")
+            .slice(0, 5)
+            .join(" ")} removed from favorites.`
+        );
       } catch (error) {
         toast.error(error.message);
       }
@@ -122,6 +121,17 @@ const ProductCard = ({ product, favoriteItem, isJustIn = false }) => {
     }
     try {
       await addToCartAPI(product.id);
+      
+      // Add to Redux store
+      dispatch(addToCart({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        discount: product.discount,
+        images: product.images,
+        quantity: 1
+      }));
+      
       toast.success(
         `${product.title.split(" ").slice(0, 5).join(" ")} added to cart!`
       );
@@ -135,11 +145,8 @@ const ProductCard = ({ product, favoriteItem, isJustIn = false }) => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-  console.log(product);
-  console.log(product.images?.[0]?.image);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <>
       <div className={styles.productCardContainer} onClick={handleCardClick}>
@@ -149,13 +156,16 @@ const ProductCard = ({ product, favoriteItem, isJustIn = false }) => {
             alt={product.title.split(" ").slice(0, 5).join(" ")}
             className={styles.productImage}
           />
-          {product.status === "new" ? (
-            <div className={styles.productBadge}>NEW</div>
-          ) : discountPercentage > 0 ? (
-            <div
-              className={styles.productBadge}
-            >{`-${discountPercentage}%`}</div>
-          ) : null}
+          <div className={styles.badgesContainer}>
+            {isNew && (
+              <div className={`${styles.badge} ${styles.newBadge}`}>NEW</div>
+            )}
+            {discountPercentage > 0 && (
+              <div className={`${styles.badge} ${styles.discountBadge}`}>
+                {`-${discountPercentage}%`}
+              </div>
+            )}
+          </div>
           <div className={styles.productActions}>
             <button
               className={styles.productActionBtn}
@@ -176,14 +186,13 @@ const ProductCard = ({ product, favoriteItem, isJustIn = false }) => {
           </div>
           <button
             className={`${styles.addToCartBtn} ${
-              isJustIn ? styles.isVisible : ""
+              isNew ? styles.isVisible : ""
             }`}
             onClick={handleAddToCart}
           >
             Add to cart
           </button>
         </div>
-
         <div className={styles.productInfo}>
           <h5 className={`card-title fw-normal mb-2 ${styles.customTitle}`}>
             {product.title.split(" ").slice(0, 5).join(" ")}
@@ -219,7 +228,6 @@ const ProductCard = ({ product, favoriteItem, isJustIn = false }) => {
           </div>
         </div>
       </div>
-
       {isModalOpen && (
         <div className={styles.imageModalOverlay} onClick={closeModal}>
           <div

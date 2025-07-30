@@ -3,7 +3,7 @@ import styles from "./SignIn.module.css";
 import { Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const customerLoginSchema = z.object({
@@ -89,7 +89,12 @@ const SignIn = ({ onLoginSuccess }) => {
     setShowPassword(!showPassword);
   };
 
-  const errorStyle = { color: "#d32f2f", fontSize: "0.8rem", marginTop: "4px" };
+  const errorStyle = {
+    color: "#d32f2f",
+    fontSize: "0.8rem",
+    marginTop: "2px",
+    marginBottom: "2px",
+  };
 
   return (
     <div className={styles.signinContainer}>

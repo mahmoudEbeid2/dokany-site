@@ -1,6 +1,6 @@
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import styles from "../../pages/cart/Cart.module.css";
+import styles from "../../pages/cart/cart.module.css";
 
 function CartItem({ item, onDelete, onUpdateQuantity, isUpdating }) {
   return (

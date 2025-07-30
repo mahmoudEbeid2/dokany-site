@@ -4,7 +4,6 @@ import ProductCard from "../productCard/ProductCard";
 
 const getToken = () => {
   let token = localStorage.getItem("token");
-
   return token;
 };
 
@@ -40,7 +39,14 @@ const JustIn = () => {
           throw new Error("Failed to fetch products.");
         }
         const productsData = await productsResponse.json();
-        const justIn = productsData.filter((p) => p.status === "new");
+        // for new products
+        const tenDaysAgo = new Date();
+        tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+        const justIn = productsData.filter((p) => {
+          const productCreationDate = new Date(p.created_date);
+          return productCreationDate >= tenDaysAgo;
+        });
+
         setNewProducts(justIn);
 
         if (favoritesResponse.ok) {
@@ -128,7 +134,7 @@ const JustIn = () => {
                         <ProductCard
                           product={product}
                           favoriteItem={favoriteItem}
-                          isJustIn={true}
+                          isNew={true}
                         />
                       </div>
                     );
@@ -138,6 +144,7 @@ const JustIn = () => {
             ))}
           </div>
 
+          {/* Tablet View */}
           <div className="d-none d-md-block d-lg-none">
             {productChunks.tablet.map((chunk, index) => (
               <div
@@ -145,11 +152,20 @@ const JustIn = () => {
                 key={`tablet-${index}`}
               >
                 <div className="row g-4">
-                  {chunk.map((product) => (
-                    <div className="col-md-6" key={product.id}>
-                      <ProductCard product={product} isNew={true} />
-                    </div>
-                  ))}
+                  {chunk.map((product) => {
+                    const favoriteItem = favorites.find(
+                      (fav) => fav.product_id === product.id
+                    );
+                    return (
+                      <div className="col-md-6" key={product.id}>
+                        <ProductCard
+                          product={product}
+                          favoriteItem={favoriteItem}
+                          isNew={true}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -163,9 +179,20 @@ const JustIn = () => {
                 key={`mobile-${index}`}
               >
                 <div className="row g-4 justify-content-center">
-                  <div className="col-10">
-                    <ProductCard product={chunk[0]} isNew={true} />
-                  </div>
+                  {chunk.map((product) => {
+                    const favoriteItem = favorites.find(
+                      (fav) => fav.product_id === product.id
+                    );
+                    return (
+                      <div className="col-10" key={product.id}>
+                        <ProductCard
+                          product={product}
+                          favoriteItem={favoriteItem}
+                          isNew={true}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}

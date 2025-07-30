@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import styles from "./Cart.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import styles from "./cart.module.css";
 import CartTable from "../../Components/Cart/CartTable";
 import Total from "../../Components/Cart/Total";
 import Loader from "../../Components/Loader/Loader";
+import { setIntialCart, deleteFromCart, removeFromCart } from "../../features/user/userSlice";
+
 function Cart() {
-  const [cartItems, setCartItems] = useState([]);
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [updatingItems, setUpdatingItems] = useState(new Set());
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZG1jdTZ5bzAwMzBseHJtNnZ5dXhhdTAiLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3NTM2NjIwOTksImV4cCI6MTc1NDI2Njg5OX0.NdwhH2nGMAxvSfrz15dfDXmuWoXbu5SOy78D7BmX5o8";
+  
   useEffect(() => {
     async function fetchCartItems() {
       try {
@@ -29,7 +34,7 @@ function Cart() {
         }
 
         const data = await response.json();
-        setCartItems(data.cart || data);
+        dispatch(setIntialCart(data.cart || data));
       } catch (error) {
         console.error("Error fetching cart items:", error);
         setError(error.message);
@@ -39,7 +44,7 @@ function Cart() {
       }
     }
     fetchCartItems();
-  }, []);
+  }, [dispatch]);
 
   const deleteCartItem = async (itemId) => {
     try {
@@ -54,10 +59,8 @@ function Cart() {
       );
 
       if (response.ok) {
-        // Remove item from local state
-        setCartItems((prevItems) =>
-          prevItems.filter((item) => item.id !== itemId)
-        );
+        // Remove item from Redux store
+        dispatch(deleteFromCart(itemId));
         toast.success("Item removed!");
       } else {
         throw new Error("Failed to remove item");
@@ -113,12 +116,21 @@ function Cart() {
       );
 
       if (response.ok) {
-        // Update item in local state
-        setCartItems((prevItems) =>
-          prevItems.map((item) =>
-            item.id === itemId ? { ...item, quantity: newQuantity } : item
-          )
-        );
+        // Update Redux store based on quantity change
+        if (newQuantity === 0) {
+          dispatch(deleteFromCart(itemId));
+        } else {
+          // For simplicity, we'll just update the cart from API
+          const cartResponse = await fetch(`${import.meta.env.VITE_API}/cart`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (cartResponse.ok) {
+            const cartData = await cartResponse.json();
+            dispatch(setIntialCart(cartData.cart || cartData));
+          }
+        }
         toast.success("Quantity updated!");
       } else {
         throw new Error("Failed to update quantity");
@@ -157,12 +169,12 @@ function Cart() {
             className={`${styles.cartContent} d-flex flex-column flex-md-row align-items-center`}
           >
             <CartTable
-              cartItems={cartItems}
+              cartItems={cart}
               onDeleteItem={deleteCartItem}
               onUpdateQuantity={updateQuantity}
               updatingItems={updatingItems}
             />
-            <Total cartItems={cartItems} onPay={handleCheckout} />
+            <Total cartItems={cart} onPay={handleCheckout} />
           </div>
         )}
       </div>

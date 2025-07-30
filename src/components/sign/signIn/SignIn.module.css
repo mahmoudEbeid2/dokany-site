@@ -161,7 +161,71 @@
 .passwordInput {
   padding-right: 3rem !important;
 }
+@media (max-width: 767px) {
+  .signinContainer {
+    flex-direction: column;
+    height: auto;
+  }
 
+  .signinImageSection {
+    height: auto;
+    padding: 1rem;
+  }
+
+  .signinImageSection img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+
+  .signinFormSection {
+    padding: 1rem;
+  }
+
+  .formRow {
+    flex-direction: column;
+  }
+
+  .formRow .inputGroup {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .signinContainer {
+    flex-direction: row;
+    height: 100vh;
+    background-color: #fff;
+  }
+
+  .signinImageSection {
+    flex: 1;
+    padding: 0;
+    height: 100vh;
+  }
+
+  .signinImageSection img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .signinFormSection {
+    flex: 1;
+    align-items: center;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .formRow {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .formRow .inputGroup {
+    flex: 1;
+  }
+}
 @media (min-width: 768px) {
   .signinContainer {
     flex-direction: row;

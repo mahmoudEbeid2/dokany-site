@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../pages/cart/Cart.module.css";
+import styles from "../../pages/cart/cart.module.css";
 
 export default function Total({ cartItems = [], onPay }) {
   // Calculate total from cart items

@@ -1,0 +1,47 @@
+.wishlist-page {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: "Inter", sans-serif;
+  min-height: 80vh;
+}
+
+.wishlist-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  font-family: Poppins;
+font-size: 3.375rem;
+font-weight: 500;
+line-height: 3.625rem; /* 107.407% */
+letter-spacing: -0.0625rem;
+}
+
+.wishlist-headers {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  color: var(--text-gray);
+  padding: 1rem 2rem;
+  border-bottom: 2px solid #e8ecef;
+  margin-bottom: 1rem;
+}
+
+.wishlist-header {
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wishlist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 400px;
+}

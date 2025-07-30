@@ -1,0 +1,65 @@
+.navbar{
+    padding: 1rem 0;
+}
+.navbar-brand{
+    color: var(--text);
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+.navbar .nav-item .nav-link{
+    color: var(--text-gray);
+    font-weight: 600;
+    font-size: .875rem;
+    margin: 0 1rem;
+}
+.navbar .nav-item .nav-link.active{
+    color: var(--text2);
+}
+.d-flex.navbar-nav i{
+    margin: 0.51rem;
+    font-size: 1.5rem;
+
+} 
+.d-flex.navbar-nav{
+    flex-direction: row;
+    align-items: center !important;
+
+}
+.d-flex.navbar-nav li{
+        display: flex;
+    flex-wrap: nowrap !important;
+    align-items: center;
+}
+.d-flex.navbar-nav span{
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: .5rem;
+    color: var(--bg);
+    background-color: var(--text2);
+    border-radius: 50%;
+}
+
+/* Cart counter styling - reverted to side positioning */
+.cart-count {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem !important;
+    color: var(--bg) !important;
+    background-color: var(--text2) !important;
+    border-radius: 50% !important;
+    font-size: 0.75rem !important;
+    font-weight: bold !important;
+    margin-left: 0.5rem !important;
+}
+
+.nav-item .nav-link.position-relative {
+    display: flex;
+    align-items: center;
+}
