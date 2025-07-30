@@ -28,13 +28,16 @@ function NavBar() {
         </li>
       </ul>
       <ul className="d-flex navbar-nav"  >
-        <li className="nav-item">
-            <i className="bi bi-person-circle"></i>
-        </li>
-
-        <li className="nav-item">
-            <i className="bi bi-heart"></i>
-        </li>
+      <li className="nav-item">
+                <NavLink to="/myaccount" className="nav-link">
+                  <i className="bi bi-person-circle"></i>
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/favorites" className="nav-link">
+                  <i className="bi bi-heart"></i>
+                </NavLink>
+              </li>
         <li className="nav-item">
             <i className="bi bi-bag"></i>
             <span className="cart-count">2</span>
