@@ -1,0 +1,105 @@
+/* ========================================
+   CSS RESET & GLOBAL VARIABLES
+   ======================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #fff;
+  --main-text: #000;
+  --secondary-text: #6c7275;
+  --ternary-text: #e8ecef;
+}
+
+/* ========================================
+   MAIN CONTAINER & LAYOUT
+   ======================================== */
+.container {
+  display: flex;
+  padding: 0 4.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 53.62rem;
+}
+
+.tableHead {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.375rem;
+  color: var(--secondary-text);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--secondary-text);
+}
+
+.tableRow {
+  display: flex;
+  width: 100%;
+  padding: 1.5rem 0;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--secondary-text);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.375rem;
+  color: var(--main-text);
+}
+
+.headline {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 2rem;
+  color: var(--main-text);
+  margin-bottom: 2.5rem;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Small tablets: ≥ 480px */
+@media (min-width: 480px) {
+  html {
+    font-size: 65%; /* 1rem = 9px */
+  }
+}
+
+/* Tablets: ≥ 765px */
+@media (min-width: 765px) {
+  html {
+    font-size: 66%; /* 1rem = 10px */
+  }
+}
+
+/* Desktop small: ≥ 916px */
+@media (min-width: 916px) {
+  html {
+    font-size: 75%; /* 1rem = 10px */
+  }
+
+  .totalContainer {
+    align-self: flex-start;
+  }
+}
+
+/* Desktop medium: ≥ 1024px */
+@media (min-width: 1024px) {
+  html {
+    font-size: 85%; /* 1rem = 11px */
+  }
+}
+
+/* Desktop large: ≥ 1280px */
+@media (min-width: 1280px) {
+  html {
+    font-size: 100%; /* 1rem = 12px */
+  }
+}

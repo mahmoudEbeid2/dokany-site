@@ -1,5 +1,4 @@
-
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -20,7 +19,7 @@ html {
 
 /* 3. Global body styling */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 1.6rem; /* = 16px */
   background-color: var(--bg);
   color: var(--text);
@@ -31,8 +30,7 @@ body {
 :root {
   --bg: #ffffff;
   --text: #121212;
-  --text-gray: #6C7275;
-
+  --text-gray: #6c7275;
 }
 
 /* img{
