@@ -1,14 +1,14 @@
 import "./App.css";
 import SupportSection from "./Components/SupportCard/SupportSection";
 import ReviewsSection from "./Components/ReviewSection/ReviewsSection";
-import ShopPage from "../pages/ShopPage/ShopPage";
+import MyAccount from "./Pages/MyAccount/MyAccount";
+import FavList from "./Pages/FavList/FavList";
 
 function App() {
   return (
     <>
-      <ShopPage />
-      <SupportSection />
-      <ReviewsSection />
+      <MyAccount/>
+      <FavList/>
     </>
   );
 }
