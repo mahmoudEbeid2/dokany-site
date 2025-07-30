@@ -7,7 +7,7 @@ import { store } from "./app/store";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./index.css";
+// import "./index.css";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -20,4 +20,3 @@ root.render(
     </Provider>
   </StrictMode>
 );
-

@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import styles from "./Cart.module.css";
-import CartTable from "../Components/Cart/CartTable";
-import Total from "../Components/Cart/Total";
-import Loader from "../Components/Loader/Loader";
+import CartTable from "../../Components/Cart/CartTable";
+import Total from "../../Components/Cart/Total";
+import Loader from "../../Components/Loader/Loader";
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -1,0 +1,139 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #fff;
+  --main-text: #000;
+  --secondary-text: #6c7275;
+  --ternary-text: #e8ecef;
+  --theard-text: white;
+}
+
+/* ========================================
+   MAIN CONTAINER & LAYOUT
+   ======================================== */
+
+.container {
+  padding: 5.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+.headline {
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 2.75rem;
+  letter-spacing: -0.025rem;
+  text-align: center;
+  color: var(--main-text);
+  text-transform: capitalize;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: 34.28rem;
+  padding: 1rem 2rem;
+  background-color: var(--ternary-text);
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--main-text);
+}
+
+.contactTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1rem;
+  text-transform: uppercase;
+  color: var(--secondary-text);
+}
+
+.contactMethod {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.625rem;
+  color: var(--main-text);
+}
+
+.from {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.from label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 0.75rem;
+  text-transform: uppercase;
+  margin-top: 1rem;
+  color: var(--secondary-text);
+}
+
+.from input {
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--secondary-text);
+  background-color: var(--bg);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  color: var(--secondary-text);
+  width: 34rem;
+}
+
+.from textarea {
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--secondary-text);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  color: var(--secondary-text);
+  width: 34rem;
+  height: 10rem;
+  resize: none;
+}
+
+.from textarea::placeholder,
+.from input::placeholder {
+  text-transform: capitalize;
+}
+
+.from button {
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  width: 17rem;
+  cursor: pointer;
+  background-color: var(--main-text);
+  color: var(--bg);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.75rem;
+  letter-spacing: -0.025rem;
+  color: var(--theard-text);
+  text-transform: capitalize;
+  transition: all 0.3s ease;
+}
+
+.from button:hover {
+  background-color: var(--secondary-text);
+}

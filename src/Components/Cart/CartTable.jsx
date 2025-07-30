@@ -1,7 +1,13 @@
 import React from "react";
-import styles from "../../pages/cart.module.css";
+import styles from "../../pages/cart/Cart.module.css";
+
 import CartItem from "./CartItem";
-function CartTable({ cartItems = [], onDeleteItem, onUpdateQuantity, updatingItems }) {
+function CartTable({
+  cartItems = [],
+  onDeleteItem,
+  onUpdateQuantity,
+  updatingItems,
+}) {
   return (
     <div>
       <div className={styles.table}>
@@ -13,9 +19,9 @@ function CartTable({ cartItems = [], onDeleteItem, onUpdateQuantity, updatingIte
         </div>
         {cartItems.length > 0 ? (
           cartItems.map((item, index) => (
-            <CartItem 
-              key={item.id || index} 
-              item={item} 
+            <CartItem
+              key={item.id || index}
+              item={item}
               onDelete={onDeleteItem}
               onUpdateQuantity={onUpdateQuantity}
               isUpdating={updatingItems.has(item.id)}
