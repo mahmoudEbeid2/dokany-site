@@ -15,6 +15,7 @@ import ShopPage from "../pages/ShopPage/ShopPage";
 import ProductDetailsPage from "./components/products/products/ProductDetailsPage";
 import ProtectedRoute from "./components/sign/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
+import NavBar from "./Components/NavBar/NavBar";
 function App() {
   const isAuthenticated = localStorage.getItem("token");
 
@@ -65,7 +66,9 @@ function App() {
 
   return (
     <>
+    <NavBar/>
       <Routes>
+        
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -75,6 +78,14 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/shoppage"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <ShopPage />
             </ProtectedRoute>
           }
         />
