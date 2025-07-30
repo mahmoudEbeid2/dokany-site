@@ -1,7 +1,18 @@
+# Node modules
+node_modules/
+
+# Env file
+.env
+
+# Prisma files
+prisma/dev.db
+prisma/migrations/
+
 # Logs
 logs
 *.log
 npm-debug.log*
+<<<<<<< HEAD
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
@@ -16,9 +27,21 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+=======
+
+# OS
+>>>>>>> 4a2385faddec9ab5ac221e165f702aa054b2e91c
 .DS_Store
+
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+
+
+# Optional
+dist/
+build/
+

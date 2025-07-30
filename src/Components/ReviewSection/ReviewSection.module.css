@@ -1,0 +1,37 @@
+.headingReview {
+  font-size: 1.4rem;
+  color: var(--text);
+}
+
+.reviewCardIcon {
+  color: var(--text);
+  font-size: 1.2rem;
+}
+
+.addReviewStars{
+  color: var(--text);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.textReview {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-gray);
+  font-family: inherit;
+}
+
+.btnPrimary1 {
+  background-color: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
+  padding: 0.375rem 2.5rem;
+  border-radius: 5rem;
+  transition: all 0.3s ease;
+}
+
+.btnPrimary1:hover {
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--text);
+}

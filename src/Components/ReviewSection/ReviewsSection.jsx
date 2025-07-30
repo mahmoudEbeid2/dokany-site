@@ -1,38 +1,15 @@
-import React, { useEffect, useState } from 'react';
 import ReviewCard from './ReviewCard';
 import AddReviewForm from './AddReviewForm';
-import './ReviewSection.css';
-import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 
-function ReviewsSection() {
+function ReviewsSection({ productId, reviews, handeledReviews }) {
 
-  const [reviews, setReviews] = useState([]);
-
-const [refresh, setRefreshcopy] = useState(false);
-const setRefresh = () => setRefreshcopy(!refresh);
- let customerId = "cmdlrou2t001klxrm5jqiydih";
-
-let productId= "cmdlqlrdd0016lxrm1f072u75";
-const api = import.meta.env.VITE_API;
- const fetchReviews = async () => {
-    try{
-        const response = await axios.get(`${api}/reviews/${productId}`);
-        setReviews(response.data);
-        console.log("reviews",response.data);
-    }catch(error){
-        console.log(error);
-    }
-    
-  };
-  useEffect(()=>{
-    fetchReviews();
-  },[refresh]);
-
-  let fullName = reviews[0]?.customer?.f_name + ' ' + reviews[0]?.customer?.l_name;
-  console.log(fullName);
+  let customerId = "cmdlrou2t001klxrm5jqiydih";
+  
   return (
     <div className="container mt-5">
-      <AddReviewForm setRefresh={setRefresh} />
+      <ToastContainer />
+      <AddReviewForm handeledReviews={handeledReviews} reviews={reviews} productId={productId} />
       <h4 className="mb-3">{reviews.length ? reviews.length : null} Reviews</h4>
       {reviews.length > 0 ? (
         reviews.map((review) => (
@@ -46,7 +23,8 @@ const api = import.meta.env.VITE_API;
             myCustomerId={customerId}
             customerId={review.customer_id}
             id={review.id}
-            setRefresh={setRefresh}
+            reviews={reviews}
+            handeledReviews={handeledReviews}
           />
         ))
       ) : (
