@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./ShopPage.css";
 import axios from "axios";
+import ProductCard from "../../src/components/products/productCard/ProductCard";
 function ShopPage() {
-  let sellerToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZGxxM3MwcjAwMTJseHJtajBldjlmYmciLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNzUzNjIzNDMwLCJleHAiOjE3NTQyMjgyMzB9.VmtRH3adwb0TVmfzhprYAkYJ2xVNXT-bTbXhQxHOD24";
 
   const api = import.meta.env.VITE_API;
 
@@ -184,10 +183,22 @@ function ShopPage() {
 
       {/* categories */}
       <div className="row">
+        {/* search */}
+        <div className="search col-md-6 col-12 my-4">
+          <p className="filter-text">Search</p>
+
+          <input
+            className="form-control me-2 filter-input"
+            type="search"
+            placeholder="Search by title"
+            value={search}
+            onChange={handelSearch}
+          />
+        </div>
         <div className="categories col-md-3 col-12 my-4">
-          <p className="text-muted">Categories</p>
+          <p className="filter-text">Categories</p>
           <select
-            className="form-select"
+            className="form-select filter-input"
             value={selectCategoryId}
             onChange={handelSelect}
           >
@@ -200,9 +211,9 @@ function ShopPage() {
           </select>
         </div>
         <div className="categories col-md-3 col-12 my-4">
-          <p className="text-muted">Price</p>
+          <p className="filter-text">Price</p>
           <select
-            className="form-select"
+            className="form-select filter-input"
             value={selectPtoducts}
             onChange={handelSelectProduct}
           >
@@ -212,40 +223,35 @@ function ShopPage() {
             <option value="discount">descount</option>
           </select>
         </div>
-        {/* search */}
-        <div className="search col-md-6 col-12 my-4">
-          <p className="text-muted">Search</p>
-
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search by title"
-            value={search}
-            onChange={handelSearch}
-          />
-        </div>
       </div>
       {/* products */}
       <div className="products container">
         <div className="row">
           {products?.map((product) => (
-            <div className="card col-sm-6 col-md-3" key={product.id}>
-              <img
-                src={product?.images[0].image}
-                className="card-img-top"
-                alt="..."
-              />
-              <div className="card-body">
-                <h5 className="card-title fw-bold">{product.title}</h5>
-                <p
-                  className="card-text "
-                  style={{ height: "100px", overflow: "hidden" }}
-                >
-                  {product.description}
-                </p>
-                <p className="card-text">{product.price}</p>
-              </div>
-            </div>
+              <div className="card col-sm-6 col-md-3" key={product.id}>
+            <ProductCard
+                          product={product}
+                          favoriteItem={[]}
+                          isJustIn={false}
+                        />
+                        </div>
+            // <div className="card col-sm-6 col-md-3" key={product.id}>
+            //   <img
+            //     src={product?.images[0].image}
+            //     className="card-img-top"
+            //     alt="..."
+            //   />
+            //   <div className="card-body">
+            //     <h5 className="card-title fw-bold">{product.title}</h5>
+            //     <p
+            //       className="card-text "
+            //       style={{ height: "100px", overflow: "hidden" }}
+            //     >
+            //       {product.description}
+            //     </p>
+            //     <p className="card-text">{product.price}</p>
+            //   </div>
+            // </div>
           ))}
         </div>
 
@@ -262,7 +268,7 @@ function ShopPage() {
                 setPageSearch(pageSearch + 1);
               }
             }}
-            className="btn btn-primary1 "
+            className=" btn-primary2"
           >
             Load More
           </button>
