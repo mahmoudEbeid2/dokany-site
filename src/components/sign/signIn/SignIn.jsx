@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const customerLoginSchema = z.object({
   email: z.string().email("Invalid email address."),
@@ -11,18 +12,18 @@ const customerLoginSchema = z.object({
   subdomain: z.string().min(1, "Subdomain is required."),
 });
 
-const SignIn = ({ onLoginSuccess, onNavigateToSignUp }) => {
+const SignIn = ({ onLoginSuccess }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    subdomain: "",
+    subdomain: "mohamed-seller",
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -62,6 +63,7 @@ const SignIn = ({ onLoginSuccess, onNavigateToSignUp }) => {
       if (onLoginSuccess) {
         onLoginSuccess();
       }
+      navigate("/home");
     } catch (error) {
       console.error("Login Error:", error.response || error);
       const errorData = error.response?.data;
@@ -149,7 +151,7 @@ const SignIn = ({ onLoginSuccess, onNavigateToSignUp }) => {
               )}
             </div>
 
-            <div className={styles.inputGroup}>
+            {/* <div className={styles.inputGroup}>
               <label htmlFor="subdomain">Subdomain</label>
               <input
                 type="text"
@@ -162,7 +164,7 @@ const SignIn = ({ onLoginSuccess, onNavigateToSignUp }) => {
               {errors.subdomain && (
                 <p style={errorStyle}>{errors.subdomain[0]}</p>
               )}
-            </div>
+            </div> */}
 
             <div className={styles.rememberForgot}>
               <div className={styles.rememberMe}>
@@ -182,10 +184,7 @@ const SignIn = ({ onLoginSuccess, onNavigateToSignUp }) => {
               {loading ? "Signing In..." : "Sign In"}
             </button>
             <p className={styles.signupLink}>
-              Don't have an account?{" "}
-              <span onClick={onNavigateToSignUp} className={styles.linkSpan}>
-                Sign up
-              </span>
+              Don't have an account? <a href="/signup">Sign Up</a>
             </p>
           </form>
         </div>
