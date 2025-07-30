@@ -3,13 +3,10 @@ import Home from "./Pages/home/Home";
 import SignIn from "./components/sign/signIn/SignIn";
 import SignUp from "./components/sign/signUp/SignUp";
 import Products from "./components/products/products/Products";
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import SupportSection from './Components/SupportCard/SupportSection'
-import ReviewsSection from './Components/ReviewSection/ReviewsSection'
-import ShopPage from '../pages/ShopPage/ShopPage'
+import "./App.css";
+import SupportSection from "./Components/SupportCard/SupportSection";
+import ReviewsSection from "./Components/ReviewSection/ReviewsSection";
+import ShopPage from "../pages/ShopPage/ShopPage";
 import ProductDetailsPage from "./components/products/products/ProductDetailsPage";
 import ProtectedRoute from "./components/sign/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
@@ -40,7 +37,6 @@ function App() {
           }
         />
 
-    
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <ToastContainer
@@ -55,10 +51,9 @@ function App() {
         pauseOnHover
         theme="light"
       />
-//     <ShopPage/>
-//       <SupportSection/>
-//       <ReviewsSection/>
-
+      {/* <ShopPage/>
+      <SupportSection/>
+      <ReviewsSection/> */}
     </>
   );
 }

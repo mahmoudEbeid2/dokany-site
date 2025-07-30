@@ -47,7 +47,7 @@
   align-items: center;
   gap: 0.5rem;
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .profileImageUploader p {
@@ -57,8 +57,8 @@
 }
 
 .profileImagePreview {
-  width: 5rem;
-  height: 5rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
   border: 2px dashed #ccc;
   display: flex;
@@ -86,6 +86,7 @@
   font-weight: 400;
   line-height: 1.625rem;
   color: #6c7275;
+  margin-top: 0.5rem;
 }
 .formWrapper .signinLink a {
   color: #38cb89;
@@ -217,6 +218,10 @@
   }
   .formRow {
     flex-direction: row;
+  }
+  /* This new rule makes the input groups inside a row share the space */
+  .formRow .inputGroup {
+    flex: 1;
   }
 }
 

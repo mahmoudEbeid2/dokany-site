@@ -43,7 +43,7 @@ const initialState = {
   country: "",
   password: "",
   confirmPassword: "",
-  seller_id: "",
+  seller_id: "cmdlq3s0r0012lxrmj0ev9fbg",
   profile_imge: null,
   agreedToTerms: false,
 };
@@ -298,8 +298,6 @@ const SignUp = () => {
                   <p style={errorStyle}>{errors.governorate[0]}</p>
                 )}
               </div>
-            </div>
-            <div className={styles.formRow}>
               <div className={styles.inputGroup}>
                 <label htmlFor="country">Country</label>
                 <input
@@ -314,7 +312,9 @@ const SignUp = () => {
                   <p style={errorStyle}>{errors.country[0]}</p>
                 )}
               </div>
-              <div className={styles.inputGroup}>
+            </div>
+            {/* <div className={styles.formRow}>
+                <div className={styles.inputGroup}>
                 <label htmlFor="seller_id">Seller ID</label>
                 <input
                   type="text"
@@ -328,7 +328,7 @@ const SignUp = () => {
                   <p style={errorStyle}>{errors.seller_id[0]}</p>
                 )}
               </div>
-            </div>
+            </div> */}
             <div className={styles.formRow}>
               <div className={styles.inputGroup}>
                 <label htmlFor="password">Password</label>
