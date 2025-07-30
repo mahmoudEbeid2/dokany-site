@@ -45,9 +45,9 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
+      handeledReviews([...reviews, { ...response.data.review,customer: user }]);
       setRating(5);
       setComment('');
-      handeledReviews([...reviews, { ...response.data.review,customer: user }]);
       toast.success('Review added successfully');
     })
       .catch((error) => {
