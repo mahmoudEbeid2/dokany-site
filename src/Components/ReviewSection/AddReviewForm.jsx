@@ -44,10 +44,10 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }).then(() => {
+    }).then((response) => {
       setRating(5);
       setComment('');
-      handeledReviews([...reviews, { ...review,customer: user }]);
+      handeledReviews([...reviews, { ...response.data.review,customer: user }]);
       toast.success('Review added successfully');
     })
       .catch((error) => {
