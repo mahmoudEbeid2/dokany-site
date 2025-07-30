@@ -2,9 +2,11 @@
     font-size: 1.4rem;
     color: var(--text);
 }
-.revirw-card i{
+.review-card .bi-star-fill, .review-card .bi-star{
     color: var(--text);
+    font-size: 1.2rem ;
 }
+
 .text-review{
     font-size: 1rem;
     font-weight: 400;

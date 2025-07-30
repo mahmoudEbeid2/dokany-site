@@ -1,0 +1,195 @@
+:root {
+  --color-primary: #121212;
+  --color-background: #ffffff;
+  --color-border: #eee;
+  --color-overlay: rgba(0, 0, 0, 0.75);
+  --color-light-gray-bg: #f3f3f3;
+  --font-size-body: 1rem;
+  --font-size-small: 0.875rem;
+  --border-radius-main: 0.5rem;
+}
+.productCardContainer {
+  border: none;
+  background-color: transparent;
+  font-family: sans-serif;
+}
+.productCardImageWrapper {
+  position: relative;
+  aspect-ratio: 1 / 1.2;
+  overflow: hidden;
+  background-color: var(--color-light-gray-bg);
+}
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+.productCardImageWrapper:hover .productImage {
+  transform: scale(1.05);
+}
+.productBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: #38cb89;
+  color: #fefefe;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  z-index: 2;
+  display: flex;
+  padding: 0.25rem 0.875rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.productActions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+}
+
+.productCardImageWrapper:hover .productActions {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.productActionBtn {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+.productActionBtn:hover {
+  transform: scale(1.1);
+  background-color: #f5f5f5;
+}
+
+.addToCartBtn {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  width: 85%;
+  padding: 0.75rem;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border: none;
+  border-radius: var(--border-radius-main);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: var(--font-size-body);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+}
+
+.productCardImageWrapper:hover .addToCartBtn,
+.addToCartBtn.isVisible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.productInfo {
+  margin-top: 1rem;
+  padding: 0 0.3125rem;
+}
+.customTitle {
+  font-size: 1rem;
+  font-weight: 600 !important;
+  color: #141718;
+}
+.customPrice {
+  color: #121212;
+  font-size: var(--font-size-small);
+  font-weight: 500 !important;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+}
+.customStarts {
+  color: #343839;
+  font-size: var(--font-size-small);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+}
+.customStartsdisabled {
+  color: transparent;
+  -webkit-text-stroke: 1px #343839;
+}
+.textDark {
+  color: var(--color-primary) !important;
+}
+
+.imageModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-overlay);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  padding: 1.25rem;
+}
+.imageModalContent {
+  position: relative;
+  max-width: 600px;
+  max-height: 90vh;
+  animation: zoomIn 0.3s ease;
+}
+.modalImage {
+  width: 100%;
+  height: auto;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--border-radius-main);
+}
+.modalCloseBtn {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  background: var(--color-background);
+  color: var(--color-primary);
+  border: none;
+  border-radius: 50%;
+  width: 1.875rem;
+  height: 1.875rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
