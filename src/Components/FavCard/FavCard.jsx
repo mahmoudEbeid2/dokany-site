@@ -1,11 +1,39 @@
 import React, { useState, useMemo } from 'react';
 import './FavCard.css';
 import notFoundImage from '../../assets/produtNotFound.jpg';
+import { toast } from 'react-toastify';
 
 const FavCard = ({ product, onRemove }) => {
   const title = product?.title || 'No Title';
   const price = product?.price || '0.00';
   const [imageError, setImageError] = useState(false);
+
+  const token = localStorage.getItem("token"); 
+
+  const handleAddToCart = async () => {
+    try {
+      const res = await fetch('https://dokany-api-production.up.railway.app/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          product_id: product.id,
+          quantity: 1,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to add to cart');
+      }
+
+      toast.success('✅ Product added to cart!');
+    } catch (error) {
+      console.error('Add to cart error:', error);
+      toast.error('❌ Failed to add to cart');
+    }
+  };
 
   const getImageSource = () => {
     if (product?.images && Array.isArray(product.images) && product.images.length > 0) {
@@ -53,7 +81,7 @@ const FavCard = ({ product, onRemove }) => {
       </div>
 
       <div className="fav-price">${price}</div>
-      <button className="add-btn">Add to cart</button>
+      <button className="add-btn" onClick={handleAddToCart}>Add to cart</button>
     </div>
   );
 };

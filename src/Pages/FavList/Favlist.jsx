@@ -8,34 +8,38 @@ import 'react-toastify/dist/ReactToastify.css';
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
+const token = localStorage.getItem("token");
 
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZG1jdTZ5bzAwMzBseHJtNnZ5dXhhdTAiLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3NTM2NjIwOTksImV4cCI6MTc1NDI2Njg5OX0.NdwhH2nGMAxvSfrz15dfDXmuWoXbu5SOy78D7BmX5o8';
+useEffect(() => {
+  if (!token) {
+    toast.error("Please login to view wishlist.");
+    return;
+  }
 
-  useEffect(() => {
-    const fetchWishlist = async () => {
-      try {
-        const response = await fetch(
-          'https://dokany-api-production.up.railway.app/favorites',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = await response.json();
-        const filtered = data.filter((item) => item.product);
-        setWishlist(filtered);
-      } catch (error) {
-        console.error('Error fetching wishlist:', error);
-        toast.error('Error fetching wishlist');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchWishlist = async () => {
+    try {
+      const response = await fetch(
+        'https://dokany-api-production.up.railway.app/favorites',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      const filtered = data.filter((item) => item.product);
+      setWishlist(filtered);
+    } catch (error) {
+      console.error('Error fetching wishlist:', error);
+      toast.error('Error fetching wishlist');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchWishlist();
-  }, []);
+  fetchWishlist();
+}, []);
+
 
   const handleRemove = async (id) => {
     try {
