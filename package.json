@@ -11,9 +11,10 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "lucide-react": "^0.526.0",
     "axios": "^1.11.0",
     "bootstrap": "^5.3.7",
-    "lucide-react": "^0.526.0",
+    "bootstrap-icons": "^1.13.1",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.0",
