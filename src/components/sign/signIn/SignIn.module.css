@@ -166,16 +166,18 @@
     flex-direction: column;
     height: auto;
   }
-
-  .signinImageSection {
-    height: auto;
-    padding: 1rem;
+  .formWrapper h2 {
+    text-align: center;
+    font-family: Poppins;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 2.75rem;
+    letter-spacing: -0.025rem;
+    margin-bottom: 2rem;
   }
-
-  .signinImageSection img {
-    width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
+  .signinImageSection {
+    display: none;
   }
 
   .signinFormSection {

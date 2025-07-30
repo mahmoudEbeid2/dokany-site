@@ -229,15 +229,20 @@
     flex-direction: column;
     height: auto;
   }
+  .formWrapper h2 {
+    text-align: center;
+    font-family: Poppins;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 500;
+
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
   .signupImageSection {
-    height: auto;
-    padding: 1rem;
+    display: none;
   }
-  .signupImageSection img {
-    width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
-  }
+
   .signupFormSection {
     padding: 1rem;
   }

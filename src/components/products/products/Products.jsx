@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../productCard/ProductCard";
+import Loader from "../../Loader/Loader";
 
 const getToken = () => {
   let token = localStorage.getItem("token");
@@ -58,11 +59,7 @@ const Products = () => {
   };
 
   if (loading) {
-    return (
-      <div className="container py-5 text-center">
-        <h2>Loading Products...</h2>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (error) {

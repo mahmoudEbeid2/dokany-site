@@ -2,6 +2,7 @@ import React from "react";
 import Products from "../../components/products/products/Products";
 import JustIn from "../../components/products/justIn/JustIn";
 import BestSellers from "../../components/products/bestSellers/BestSellers";
+import LogoutButton from "../../Components/sign/logout/LogoutButton";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Products />
       <JustIn />
       <BestSellers />
+      <LogoutButton />
     </>
   );
 }

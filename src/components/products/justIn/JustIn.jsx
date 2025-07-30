@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./JustIn.module.css";
 import ProductCard from "../productCard/ProductCard";
-
+import Loader from "../../Loader/Loader";
 const getToken = () => {
   let token = localStorage.getItem("token");
   return token;
@@ -40,11 +40,11 @@ const JustIn = () => {
         }
         const productsData = await productsResponse.json();
         // for new products
-        const tenDaysAgo = new Date();
-        tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+        const threeDaysAgo = new Date();
+        threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
         const justIn = productsData.filter((p) => {
           const productCreationDate = new Date(p.created_date);
-          return productCreationDate >= tenDaysAgo;
+          return productCreationDate >= threeDaysAgo;
         });
 
         setNewProducts(justIn);
@@ -84,8 +84,7 @@ const JustIn = () => {
     </div>
   );
 
-  if (loading)
-    return <div className="container text-center py-5">Loading...</div>;
+  if (loading) return <Loader />;
   if (error)
     return (
       <div className="container text-center py-5 text-danger">

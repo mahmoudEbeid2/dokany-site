@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Components
 import NavBar from "./Components/NavBar/NavBar";
-import Home from "./pages/home/Home";
+import Home from "./Pages/home/Home";
 import SignIn from "./Components/sign/signIn/SignIn";
 import SignUp from "./Components/sign/signUp/SignUp";
 import Products from "./components/products/products/Products";
