@@ -6,7 +6,7 @@ import styles from "./cart.module.css";
 import CartTable from "../../Components/Cart/CartTable";
 import Total from "../../Components/Cart/Total";
 import Loader from "../../Components/Loader/Loader";
-import { setIntialCart, deleteFromCart, removeFromCart } from "../../features/user/userSlice";
+import { setIntialCart, deleteFromCart } from "../../features/user/userSlice";
 
 function Cart() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function Cart() {
   const [updatingItems, setUpdatingItems] = useState(new Set());
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZG1jdTZ5bzAwMzBseHJtNnZ5dXhhdTAiLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3NTM2NjIwOTksImV4cCI6MTc1NDI2Njg5OX0.NdwhH2nGMAxvSfrz15dfDXmuWoXbu5SOy78D7BmX5o8";
-  
+
   useEffect(() => {
     async function fetchCartItems() {
       try {
@@ -75,7 +75,7 @@ function Cart() {
   const handleCheckout = async () => {
     try {
       const response = await fetch(
-        `https://dokany-api-production.up.railway.app/api/stripe/checkout`,
+        `${import.meta.env.VITE_API}/api/stripe/checkout`,
         {
           method: "POST",
           headers: {
@@ -102,7 +102,7 @@ function Cart() {
       setUpdatingItems((prev) => new Set(prev).add(itemId));
 
       const response = await fetch(
-        `https://dokany-api-production.up.railway.app/cart/update/${itemId}`,
+        `${import.meta.env.VITE_API}/cart/update/${itemId}`,
         {
           method: "PUT",
           headers: {
