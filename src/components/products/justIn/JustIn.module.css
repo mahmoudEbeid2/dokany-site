@@ -1,7 +1,7 @@
 .justInSection .justInTitle {
   font-size: 2.25rem;
   font-weight: 700;
-  color: #111;
+  color: #141718;
   font-family: "Poppins", sans-serif;
 }
 
@@ -21,10 +21,11 @@
   border: none;
   padding: 0;
   opacity: 1;
+  transition: background-color 0.3s ease;
 }
 
-.carouselIndicators :global(.active) {
-  background-color: #111;
+.carouselIndicators button:global(.active) {
+  background-color: #141718;
 }
 /* .carouselIndicators [data-bs-target] {
   background-color: #c7a66c;
