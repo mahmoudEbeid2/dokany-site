@@ -12,25 +12,8 @@ prisma/migrations/
 logs
 *.log
 npm-debug.log*
-<<<<<<< HEAD
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-.env
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-=======
 
 # OS
->>>>>>> 4a2385faddec9ab5ac221e165f702aa054b2e91c
 .DS_Store
 
 *.suo
