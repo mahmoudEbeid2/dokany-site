@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import './ReviewSection.css';
 
 function ReviewCard({ name="mohed", rating, comment, image="https://randomuser.me/api/portraits/women/12.jpg", customerId, myCustomerId ,id ,setRefresh}) {
 
