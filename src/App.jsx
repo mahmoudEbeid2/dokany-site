@@ -1,16 +1,7 @@
-import { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserInfo, setIntialCart, setIntialWatchlist, } from './features/user/userSlice';
-import axios from "axios";
-
-import Home from "./Pages/home/Home";
-import SignIn from "./components/sign/signIn/SignIn";
-import SignUp from "./components/sign/signUp/SignUp";
-import Products from "./components/products/products/Products";
 import "./App.css";
 import SupportSection from "./Components/SupportCard/SupportSection";
 import ReviewsSection from "./Components/ReviewSection/ReviewsSection";
+
 import ShopPage from "../pages/ShopPage/ShopPage";
 import ProductDetailsPage from "./components/products/products/ProductDetailsPage";
 import ProtectedRoute from "./components/sign/ProtectedRoute";
@@ -64,8 +55,14 @@ function App() {
   console.log(cart);
   console.log(watchlist);
 
+import MyAccount from "./Pages/MyAccount/MyAccount";
+import FavList from "./Pages/FavList/FavList";
+
+
+function App() {
   return (
     <>
+
     <NavBar/>
       <Routes>
         
@@ -115,6 +112,10 @@ function App() {
       {/* <ShopPage/>
       <SupportSection/>
       <ReviewsSection/> */}
+
+      <MyAccount/>
+      <FavList/>
+
     </>
   );
 }

@@ -1,0 +1,256 @@
+.account-content {
+  display: flex;
+  padding: 2rem;
+  gap: 2rem;
+  max-width: 1300px;
+  margin: auto;
+}
+.account-container{
+    margin-top: 3%;
+}
+.account-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  font-family: Poppins;
+font-size: 3.375rem;
+font-weight: 500;
+line-height: 3.625rem; /* 107.407% */
+letter-spacing: -0.0625rem;
+}
+.account-sidebar {
+width: 16.37rem;  background-color: #F3F5F7;
+  padding: 1.5rem 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+    height: auto;
+
+}
+
+.profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+.labelMyAcc{
+ color: var(--text-gray);
+
+font-family: Inter;
+font-size: 1rem;
+font-style: normal;
+font-weight: 700;
+line-height: 0.75rem; /* 100% */
+text-transform: uppercase;
+margin-bottom: 7px;
+}
+.user-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 0rem;
+  text-align: left;
+}
+
+.sidebar-menu li {
+gap: 0.625rem;
+font-size: 1.5rem;
+  padding: 0.5rem 0;
+  color: #333;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding-left: 1rem;
+  font-family: Poppins;
+
+
+
+}
+
+.sidebar-menu li.active {
+  font-weight: bold;
+  border-bottom: 1px solid var(--neutral-07100, #141718);  
+
+}
+
+.account-details {
+  flex: 1;
+}
+
+
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+
+
+
+
+.save-btn {
+  width: fit-content;
+  background-color:var(--text);
+  color: var(--bg);
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+}
+.save-btn:hover {
+ background-color: var(--hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);  
+}
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; 
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-group input {
+  border-radius: 0.375rem;
+  border: 1px solid var(--Black-300, #CBCBCB);
+  background: var(--White, #FFF);
+  display: flex;
+  height: 2.5rem;
+  padding: 0 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: stretch;
+  font-size: 0.875rem;
+}
+.profile-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: auto;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+    position: relative;
+
+}
+
+.camera-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: #030303;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+}
+
+.camera-icon:hover {
+  background: #555;
+  transform: scale(1.1);
+}
+
+.camera-icon:hover {
+  background: #f0f0f0;
+}
+.user-name{
+     display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0rem;
+  font-family: Poppins;
+font-size: 1.375rem;
+font-weight: 500;
+line-height: 3.625rem; /* 107.407% */
+letter-spacing: -0.0625rem;
+color:#030303 ;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .account-content {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .account-sidebar {
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .account-title {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+  
+  .user-name {
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .profile-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .camera-icon {
+    width: 28px;
+    height: 28px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-container {
+    margin-top: 1%;
+  }
+  
+  .account-title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  
+  .profile-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .camera-icon {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+  }
+}
