@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../productCard/ProductCard";
-
 const getToken = () => {
   let token = localStorage.getItem("token");
-
   return token;
 };
 
@@ -33,7 +31,7 @@ const BestSellers = () => {
           throw new Error("Failed to fetch best sellers.");
         }
         const productsData = await productsResponse.json();
-        setAllProducts(productsData);
+        setAllProducts(productsData); // We still keep all products in state
 
         if (favoritesResponse.ok) {
           const favoritesData = await favoritesResponse.json();
@@ -49,9 +47,21 @@ const BestSellers = () => {
     fetchData();
   }, []);
 
+  // --- Start of Modified Section ---
+
+  // 1. Filter products based on your criteria
+  const bestSellers = allProducts.filter((product) => {
+    const hasEnoughReviews = product.reviews && product.reviews.length > 3;
+    const hasHighRating = product.averageRating > 2.5;
+    return hasEnoughReviews && hasHighRating;
+  });
+
+  // 2. Update the "View All" handler to use the filtered list's length
   const handleViewAll = () => {
-    setVisibleProducts(allProducts.length);
+    setVisibleProducts(bestSellers.length);
   };
+
+  // --- End of Modified Section ---
 
   if (loading) {
     return (
@@ -69,13 +79,19 @@ const BestSellers = () => {
     );
   }
 
+  // Hide the whole section if there are no products that match the criteria
+  if (bestSellers.length === 0) {
+    return null;
+  }
+
   return (
     <div className="container py-5">
       <h2 className="display-5 fw-bold text-black text-center mb-5">
         Best sellers
       </h2>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-        {allProducts.slice(0, visibleProducts).map((product) => {
+        {/* 3. Map over the new filtered list */}
+        {bestSellers.slice(0, visibleProducts).map((product) => {
           const favoriteItem = favorites.find(
             (fav) => fav.product_id === product.id
           );
@@ -87,7 +103,8 @@ const BestSellers = () => {
         })}
       </div>
 
-      {visibleProducts < allProducts.length && (
+      {/* 4. Update the condition to show the button */}
+      {visibleProducts < bestSellers.length && (
         <div className="text-center mt-5">
           <button className="btn btn-dark px-4 py-2" onClick={handleViewAll}>
             View All Products

@@ -89,7 +89,12 @@ const SignIn = ({ onLoginSuccess }) => {
     setShowPassword(!showPassword);
   };
 
-  const errorStyle = { color: "#d32f2f", fontSize: "0.8rem", marginTop: "4px" };
+  const errorStyle = {
+    color: "#d32f2f",
+    fontSize: "0.8rem",
+    marginTop: "2px",
+    marginBottom: "2px",
+  };
 
   return (
     <div className={styles.signinContainer}>

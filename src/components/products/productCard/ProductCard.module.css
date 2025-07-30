@@ -28,23 +28,34 @@
 .productCardImageWrapper:hover .productImage {
   transform: scale(1.05);
 }
-.productBadge {
+
+/* New Badge Styles */
+.badgesContainer {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  background-color: #38cb89;
-  color: #fefefe;
-  padding: 0.375rem 0.75rem;
-  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.badge {
+  padding: 0.25rem 0.875rem;
   font-size: var(--font-size-small);
   font-weight: 600;
-  z-index: 2;
-  display: flex;
-  padding: 0.25rem 0.875rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
+  color: #121212;
   border-radius: 0.25rem;
+  text-align: center;
+}
+
+.newBadge {
+  background-color: #fff;
+}
+
+.discountBadge {
+  background-color: #38cb89;
+  color: #fff;
 }
 
 .productActions {
@@ -59,12 +70,10 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 2;
 }
-
 .productCardImageWrapper:hover .productActions {
   opacity: 1;
   transform: translateX(0);
 }
-
 .productActionBtn {
   background-color: var(--color-background);
   border: 1px solid var(--color-border);
@@ -81,7 +90,6 @@
   transform: scale(1.1);
   background-color: #f5f5f5;
 }
-
 .addToCartBtn {
   position: absolute;
   bottom: 1.25rem;
@@ -100,13 +108,11 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 2;
 }
-
 .productCardImageWrapper:hover .addToCartBtn,
 .addToCartBtn.isVisible {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
-
 .productInfo {
   margin-top: 1rem;
   padding: 0 0.3125rem;
@@ -138,7 +144,6 @@
 .textDark {
   color: var(--color-primary) !important;
 }
-
 .imageModalOverlay {
   position: fixed;
   top: 0;
