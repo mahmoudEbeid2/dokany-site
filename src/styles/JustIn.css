@@ -1,0 +1,24 @@
+.just-in-section .just-in-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #000;
+  font-family: "Poppins", sans-serif;
+}
+.just-in-section .carousel-indicators {
+  position: static;
+  margin: 0;
+  padding: 0;
+}
+.just-in-section .carousel-indicators button {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: #989ea1;
+  border: none;
+  opacity: 1;
+  margin: 0 0.25rem;
+}
+.just-in-section .carousel-indicators .active {
+  background-color: #141718;
+  outline: 1px solid #141718;
+}
