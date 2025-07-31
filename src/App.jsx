@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, Navigate } from "react-router-dom";
+// Import useLocation from react-router-dom
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,7 +34,12 @@ import "./App.css";
 function App() {
   const isAuthenticated = localStorage.getItem("token");
   const dispatch = useDispatch();
-  const { userInfo, cart, watchlist } = useSelector((state) => state.user);
+
+  // Get the current location object
+  const location = useLocation();
+
+  const isSignPage =
+    location.pathname === "/signin" || location.pathname === "/signup";
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -88,7 +94,8 @@ function App() {
 
   return (
     <>
-      <NavBar />
+      {!isSignPage && <NavBar />}
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
@@ -143,10 +150,11 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      <Footer />
+
+      {!isSignPage && <Footer />}
+
       <ToastContainer
         position="top-right"
         autoClose={2000}
