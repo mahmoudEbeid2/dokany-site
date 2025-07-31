@@ -45,3 +45,9 @@ letter-spacing: -0.0625rem;
   gap: 1rem;
   min-height: 400px;
 }
+@media (max-width: 480px) {
+ 
+.wishlist-headers{
+  display: none;
+}
+}

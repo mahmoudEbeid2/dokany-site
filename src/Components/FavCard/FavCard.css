@@ -67,13 +67,11 @@
 /* Responsive Design */
 @media (max-width: 1300px) {
   .fav-price {
-    margin-right: 4rem;
+    margin-right: 6rem;
   }
 }
 @media (max-width: 768px) {
-  .fav-price {
-    margin-right: 3rem;
-  }
+
 
   .fav-image {
     width: 5rem;
@@ -82,13 +80,99 @@
 }
 
 @media (max-width: 480px) {
+  .fav-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    position: relative;
+  }
+
+  .fav-product {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .fav-image {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .fav-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+    color: var(--text);
+    text-transform: capitalize;
+
+  }
+
   .fav-price {
-    margin-right: 5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+   margin-top: -3rem;
+   margin-left: 4rem;
+  }
+
+  .remove-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: var(--text-gray);
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .add-btn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.65rem 1rem;
+    background-color: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    margin-top: 3rem;
+  }
+
+  .add-btn:hover {
+    background-color: var(--hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 }
 
-@media (max-width: 360px) {
-  .add-btn {
-    font-size: 1.2rem;
+
+
+@media (max-width: 420px) {
+   .fav-price {
+ 
+   margin-left: 6rem;
   }
 }
+@media (max-width: 380px) {
+   .fav-price {
+ 
+   margin-left: 8rem;
+  }
+}
+@media (max-width: 350px) {
+   .fav-price {
+ 
+   margin-left: 10rem;
+  }
+}
+
+
+
