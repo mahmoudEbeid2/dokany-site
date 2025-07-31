@@ -1,11 +1,13 @@
 import ReviewCard from './ReviewCard';
 import AddReviewForm from './AddReviewForm';
 import { ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 function ReviewsSection({ productId, reviews, handeledReviews }) {
 
-  let customerId = "cmdlrou2t001klxrm5jqiydih";
-  
+  const { userInfo } = useSelector((state) => state.user);
+  let customerId = userInfo?.id;
+
   return (
     <div className="container mt-5">
       <ToastContainer />

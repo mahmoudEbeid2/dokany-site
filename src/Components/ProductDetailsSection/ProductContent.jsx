@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './ProductDetails.module.css'; // <-- CSS Module
 import ProductDiscountTime from './ProductDiscountTime';
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
@@ -8,7 +8,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../features/user/userSlice';
+import { addToCart, addToWatchlist } from '../../features/user/userSlice';
 
 
 const ProductContent = ({ product, reviews }) => {
@@ -17,7 +17,7 @@ const ProductContent = ({ product, reviews }) => {
 
     const numReviews = reviews.length;
 
-    const customer_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZG1jdTZ5bzAwMzBseHJtNnZ5dXhhdTAiLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3NTM2NjIwOTksImV4cCI6MTc1NDI2Njg5OX0.NdwhH2nGMAxvSfrz15dfDXmuWoXbu5SOy78D7BmX5o8";
+    const token = localStorage.getItem("token")
 
     const [productCount, setProductCount] = useState(0);
     const [couponCode, setCouponCode] = useState('');
@@ -64,12 +64,14 @@ const ProductContent = ({ product, reviews }) => {
             { product_id: id },
             {
                 headers: {
-                    Authorization: `Bearer ${customer_token}`,
+                    Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             }
         )
-            .then(() => {
+            .then((response) => {
+                console.log(response.data);
+                // dispatch(addToWatchlist(id));
                 toast.success('Product added to watchlist successfully');
             })
             .catch((error) => {
@@ -86,7 +88,7 @@ const ProductContent = ({ product, reviews }) => {
         axios
             .get(`https://dokany-api-production.up.railway.app/api/coupon/check/${couponCode}?subdomain=mohamed-seller`, {
                 headers: {
-                    Authorization: `Bearer ${customer_token}`,
+                    Authorization: `Bearer ${token}`,
                 },
             })
             .then((response) => {
@@ -101,7 +103,7 @@ const ProductContent = ({ product, reviews }) => {
 
 
     const handleAddToCart = () => {
-        if (productCount === 0){
+        if (productCount === 0) {
             toast.error('Please add some products to cart');
             return
         }
@@ -111,7 +113,7 @@ const ProductContent = ({ product, reviews }) => {
             { product_id: id, quantity: productCount, coupon_code: couponDiscountValue > 0 ? couponCode : null },
             {
                 headers: {
-                    Authorization: `Bearer ${customer_token}`,
+                    Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             }
@@ -126,7 +128,7 @@ const ProductContent = ({ product, reviews }) => {
                     images: product.images,
                     quantity: productCount
                 }));
-                
+
                 toast.success('Product(s) added to cart successfully');
             })
             .catch((error) => {
