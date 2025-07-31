@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styles from "./JustIn.module.css";
+import React, { useState, useEffect, useMemo } from "react";
 import ProductCard from "../productCard/ProductCard";
 import Loader from "../../Loader/Loader";
-const getToken = () => {
-  let token = localStorage.getItem("token");
-  return token;
-};
+import styles from "./JustIn.module.css";
 
 const chunkProducts = (products, size) => {
   const chunkedArr = [];
@@ -15,67 +11,50 @@ const chunkProducts = (products, size) => {
   return chunkedArr;
 };
 
-const JustIn = () => {
-  const [newProducts, setNewProducts] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+const JustIn = ({ subdomain = "mohamed-seller" }) => {
+  const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        setLoading(true);
-        const subdomain = "mohamed-seller";
-        const [productsResponse, favoritesResponse] = await Promise.all([
-          fetch(
-            `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}`
-          ),
-          fetch(`${import.meta.env.VITE_API}/favorites`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-          }),
-        ]);
-
-        if (!productsResponse.ok) {
-          throw new Error("Failed to fetch products.");
-        }
-        const productsData = await productsResponse.json();
-        // for new products
-        const threeDaysAgo = new Date();
-        threeDaysAgo.setDate(threeDaysAgo.getDate() - 5);
-        const justIn = productsData.filter((p) => {
-          const productCreationDate = new Date(p.created_date);
-          return productCreationDate >= threeDaysAgo;
+        const productsData = await fetch(
+          `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}`
+        ).then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch products.");
+          return res.json();
         });
-
-        setNewProducts(justIn);
-
-        if (favoritesResponse.ok) {
-          const favoritesData = await favoritesResponse.json();
-          setFavorites(favoritesData);
-        }
+        setAllProducts(productsData);
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-
     fetchData();
-  }, []);
+  }, [subdomain]);
 
-  const productChunks = {
-    desktop: chunkProducts(newProducts, 4),
-    tablet: chunkProducts(newProducts, 2),
-    mobile: chunkProducts(newProducts, 1),
-  };
+  const newProducts = useMemo(() => {
+    const tenDaysAgo = new Date();
+    tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+    return allProducts.filter((p) => new Date(p.created_date) >= tenDaysAgo);
+  }, [allProducts]);
 
-  const renderIndicators = (chunks) => (
+  const productChunks = useMemo(
+    () => chunkProducts(newProducts, 4),
+    [newProducts]
+  );
+
+  const renderIndicators = (chunks, targetId) => (
     <div className={styles.carouselIndicators}>
       {chunks.map((_, index) => (
         <button
           key={index}
           type="button"
-          data-bs-target="#justInCarousel"
+          data-bs-target={`#${targetId}`}
           data-bs-slide-to={index}
           className={index === 0 ? "active" : ""}
           aria-label={`Slide ${index + 1}`}
@@ -93,109 +72,30 @@ const JustIn = () => {
     );
   if (newProducts.length === 0) return null;
 
+  const carouselId = "justInCarousel";
+
   return (
     <div className={`container ${styles.justInSection} my-5`}>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className={styles.justInTitle}>Just In</h2>
-        <div className="d-none d-lg-flex">
-          {renderIndicators(productChunks.desktop)}
-        </div>
-        <div className="d-none d-md-flex d-lg-none">
-          {renderIndicators(productChunks.tablet)}
-        </div>
-        <div className="d-flex d-md-none">
-          {renderIndicators(productChunks.mobile)}
-        </div>
+        {renderIndicators(productChunks, carouselId)}
       </div>
-
-      <div
-        id="justInCarousel"
-        className="carousel slide"
-        data-bs-ride="carousel"
-        data-bs-wrap="true"
-        data-bs-touch="true"
-      >
+      <div id={carouselId} className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-inner">
-          {/* Desktop View */}
-          <div className="d-none d-lg-block">
-            {productChunks.desktop.map((chunk, index) => (
-              <div
-                className={`carousel-item ${index === 0 ? "active" : ""}`}
-                key={`desktop-${index}`}
-              >
-                <div className="row g-4">
-                  {chunk.map((product) => {
-                    const favoriteItem = favorites.find(
-                      (fav) => fav.product_id === product.id
-                    );
-                    return (
-                      <div className="col-lg-3" key={product.id}>
-                        <ProductCard
-                          product={product}
-                          favoriteItem={favoriteItem}
-                          isNew={true}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
+          {productChunks.map((chunk, index) => (
+            <div
+              className={`carousel-item ${index === 0 ? "active" : ""}`}
+              key={index}
+            >
+              <div className="row g-4">
+                {chunk.map((product) => (
+                  <div className="col-12 col-md-6 col-lg-3" key={product.id}>
+                    <ProductCard product={product} isNew={true} />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-
-          {/* Tablet View */}
-          <div className="d-none d-md-block d-lg-none">
-            {productChunks.tablet.map((chunk, index) => (
-              <div
-                className={`carousel-item ${index === 0 ? "active" : ""}`}
-                key={`tablet-${index}`}
-              >
-                <div className="row g-4">
-                  {chunk.map((product) => {
-                    const favoriteItem = favorites.find(
-                      (fav) => fav.product_id === product.id
-                    );
-                    return (
-                      <div className="col-md-6" key={product.id}>
-                        <ProductCard
-                          product={product}
-                          favoriteItem={favoriteItem}
-                          isNew={true}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile View */}
-          <div className="d-block d-md-none">
-            {productChunks.mobile.map((chunk, index) => (
-              <div
-                className={`carousel-item ${index === 0 ? "active" : ""}`}
-                key={`mobile-${index}`}
-              >
-                <div className="row g-4 justify-content-center">
-                  {chunk.map((product) => {
-                    const favoriteItem = favorites.find(
-                      (fav) => fav.product_id === product.id
-                    );
-                    return (
-                      <div className="col-10" key={product.id}>
-                        <ProductCard
-                          product={product}
-                          favoriteItem={favoriteItem}
-                          isNew={true}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -1,29 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Heart, Eye } from "lucide-react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import styles from "./ProductCard.module.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../../features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToWatchlist,
+  removeFromWatchlist,
+  addToCart,
+} from "../../../features/user/userSlice";
 
 const getToken = () => localStorage.getItem("token");
-
-const addToCartAPI = async (productId) => {
-  const response = await fetch(`${import.meta.env.VITE_API}/cart`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`,
-    },
-    body: JSON.stringify({ product_id: productId, quantity: 1 }),
-  });
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to add to cart");
-  }
-  return response.json();
-};
 
 const addToFavoritesAPI = async (productId) => {
   const response = await fetch(`${import.meta.env.VITE_API}/favorites`, {
@@ -36,7 +23,7 @@ const addToFavoritesAPI = async (productId) => {
   });
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to add to favorites");
+    throw new Error(errorData.message || "Failed to add to favorites.");
   }
   return response.json();
 };
@@ -51,22 +38,92 @@ const removeFromFavoritesAPI = async (favoriteId) => {
   );
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to remove from favorites");
+    throw new Error(errorData.message || "Failed to remove from favorites.");
   }
   return response.json();
 };
 
-const ProductCard = ({ product, favoriteItem, isNew = false }) => {
+const addToCartAPI = async (productId) => {
+  const response = await fetch(`${import.meta.env.VITE_API}/cart`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ product_id: productId, quantity: 1 }),
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to add to cart.");
+  }
+  return response.json();
+};
+
+const ProductCard = ({ product, isNew = false }) => {
   const navigate = useNavigate();
-  const [favorite, setFavorite] = useState(favoriteItem || null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setFavorite(favoriteItem || null);
-  }, [favoriteItem]);
+  const { watchlist, userInfo } = useSelector((state) => state.user);
+  const favoriteItem = watchlist.find((fav) => fav.product_id === product.id);
+  const isFavorited = !!favoriteItem;
 
-  const isFavorited = !!favorite;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation();
+    if (!userInfo) {
+      toast.error("Please log in to manage favorites.");
+      return navigate(`/signin`);
+    }
+    if (isFavorited) {
+      removeFromFavoritesAPI(favoriteItem.id)
+        .then(() => {
+          dispatch(removeFromWatchlist(favoriteItem.id));
+          toast.success("Removed from favorites.");
+        })
+        .catch((err) => toast.error(err.message));
+    } else {
+      addToFavoritesAPI(product.id)
+        .then((newFavorite) => {
+          dispatch(addToWatchlist(newFavorite));
+          toast.success("Added to favorites!");
+        })
+        .catch((err) => toast.error(err.message));
+    }
+  };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    if (!userInfo) {
+      toast.error("Please log in to add to cart.");
+      return navigate(`/signin`);
+    }
+    addToCartAPI(product.id)
+      .then(() => {
+        dispatch(
+          addToCart({
+            id: product.id,
+            product_id: product.id,
+            title: product.title,
+            price: product.price,
+            discount: product.discount,
+            images: product.images,
+            quantity: 1,
+          })
+        );
+        toast.success(
+          `${product.title.split(" ").slice(0, 3).join(" ")} added to cart!`
+        );
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
+  const handleCardClick = () => navigate(`/products/${product.id}`);
+  const handleViewImage = (e) => {
+    e.stopPropagation();
+    setIsModalOpen(true);
+  };
+  const closeModal = () => setIsModalOpen(false);
 
   const averageRating = product.averageRating || 0;
   const reviewCount = product.reviews?.length || 0;
@@ -74,87 +131,12 @@ const ProductCard = ({ product, favoriteItem, isNew = false }) => {
   const discountPercentage = product.discount || 0;
   const finalPrice = originalPrice - (originalPrice * discountPercentage) / 100;
 
-  const handleCardClick = () => navigate(`/products/${product.id}`);
-
-  const handleFavoriteClick = async (e) => {
-    e.stopPropagation();
-    if (!getToken()) {
-      toast.error("Please log in to manage favorites.");
-      navigate(`/signin`);
-      return;
-    }
-    if (isFavorited) {
-      try {
-        await removeFromFavoritesAPI(favorite.id);
-        setFavorite(null);
-        toast.success(
-          `${product.title
-            .split(" ")
-            .slice(0, 5)
-            .join(" ")} removed from favorites.`
-        );
-      } catch (error) {
-        toast.error(error.message);
-      }
-    } else {
-      try {
-        const newFavorite = await addToFavoritesAPI(product.id);
-        setFavorite(newFavorite);
-        toast.success(
-          `${product.title
-            .split(" ")
-            .slice(0, 5)
-            .join(" ")} added to favorites!`
-        );
-      } catch (error) {
-        toast.error(error.message);
-      }
-    }
-  };
-
-  const handleAddToCart = async (e) => {
-    e.stopPropagation();
-    if (!getToken()) {
-      toast.error("Please log in to add to cart.");
-      navigate(`/signin`);
-      return;
-    }
-    try {
-      await addToCartAPI(product.id);
-
-      // Add to Redux store
-      dispatch(
-        addToCart({
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          discount: product.discount,
-          images: product.images,
-          quantity: 1,
-        })
-      );
-
-      toast.success(
-        `${product.title.split(" ").slice(0, 5).join(" ")} added to cart!`
-      );
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const handleViewImage = (e) => {
-    e.stopPropagation();
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => setIsModalOpen(false);
-
   return (
     <>
       <div className={styles.productCardContainer} onClick={handleCardClick}>
         <div className={styles.productCardImageWrapper}>
           <img
-            src={product.images?.[0]?.image}
+            src={`/public/productImages/1.png`}
             alt={product.title.split(" ").slice(0, 5).join(" ")}
             className={styles.productImage}
           />
