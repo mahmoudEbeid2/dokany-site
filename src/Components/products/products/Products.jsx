@@ -20,8 +20,14 @@ const Products = () => {
         if (!productsResponse.ok) {
           throw new Error("Failed to fetch products.");
         }
+
         const productsData = await productsResponse.json();
-        setAllProducts(productsData);
+
+        const discountedProducts = productsData.filter(
+          (product) => product.discount > 0
+        );
+
+        setAllProducts(discountedProducts);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -47,11 +53,13 @@ const Products = () => {
     );
   }
 
+  if (allProducts.length === 0) {
+    return null;
+  }
+
   return (
     <div className="container py-5">
-      <h2 className="display-5 fw-bold text-black text-center mb-5">
-        Products
-      </h2>
+      <h2 className="display-5 fw-bold mb-5">Discounted Products</h2>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
         {allProducts.slice(0, visibleProducts).map((product) => (
           <div className="col" key={product.id}>

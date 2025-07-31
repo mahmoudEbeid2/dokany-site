@@ -33,7 +33,7 @@ const BestSellers = () => {
 
   const bestSellers = allProducts.filter((product) => {
     const hasEnoughReviews = product.reviews && product.reviews.length > 3;
-    const hasHighRating = product.averageRating > 2.5;
+    const hasHighRating = product.averageRating > 1.5;
     return hasEnoughReviews && hasHighRating;
   });
 
@@ -59,9 +59,7 @@ const BestSellers = () => {
 
   return (
     <div className="container py-5">
-      <h2 className="display-5 fw-bold text-black text-center mb-5">
-        Best sellers
-      </h2>
+      <h2 className="display-5 fw-bold  mb-5">Best sellers</h2>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
         {bestSellers.slice(0, visibleProducts).map((product) => (
           <div className="col" key={product.id}>

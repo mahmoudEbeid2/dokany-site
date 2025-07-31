@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import ProductCard from "../productCard/ProductCard";
 import Loader from "../../Loader/Loader";
 import styles from "./JustIn.module.css";
+import Carousel from "react-bootstrap/Carousel";
 
 const chunkProducts = (products, size) => {
   const chunkedArr = [];
@@ -15,6 +16,12 @@ const JustIn = ({ subdomain = "mohamed-seller" }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [index, setIndex] = useState(0);
+
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,16 +55,15 @@ const JustIn = ({ subdomain = "mohamed-seller" }) => {
     [newProducts]
   );
 
-  const renderIndicators = (chunks, targetId) => (
+  const renderIndicators = (chunks) => (
     <div className={styles.carouselIndicators}>
-      {chunks.map((_, index) => (
+      {chunks.map((_, idx) => (
         <button
-          key={index}
+          key={idx}
           type="button"
-          data-bs-target={`#${targetId}`}
-          data-bs-slide-to={index}
-          className={index === 0 ? "active" : ""}
-          aria-label={`Slide ${index + 1}`}
+          onClick={() => setIndex(idx)}
+          className={idx === index ? "active" : ""}
+          aria-label={`Slide ${idx + 1}`}
         ></button>
       ))}
     </div>
@@ -72,32 +78,32 @@ const JustIn = ({ subdomain = "mohamed-seller" }) => {
     );
   if (newProducts.length === 0) return null;
 
-  const carouselId = "justInCarousel";
-
   return (
     <div className={`container ${styles.justInSection} my-5`}>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className={styles.justInTitle}>Just In</h2>
-        {renderIndicators(productChunks, carouselId)}
+        {renderIndicators(productChunks)}
       </div>
-      <div id={carouselId} className="carousel slide" data-bs-ride="carousel">
-        <div className="carousel-inner">
-          {productChunks.map((chunk, index) => (
-            <div
-              className={`carousel-item ${index === 0 ? "active" : ""}`}
-              key={index}
-            >
-              <div className="row g-4">
-                {chunk.map((product) => (
-                  <div className="col-12 col-md-6 col-lg-3" key={product.id}>
-                    <ProductCard product={product} isNew={true} />
-                  </div>
-                ))}
-              </div>
+
+      <Carousel
+        activeIndex={index}
+        onSelect={handleSelect}
+        interval={null}
+        controls={false}
+        indicators={false}
+      >
+        {productChunks.map((chunk, i) => (
+          <Carousel.Item key={i}>
+            <div className="row g-4">
+              {chunk.map((product) => (
+                <div className="col-12 col-md-6 col-lg-3" key={product.id}>
+                  <ProductCard product={product} isNew={true} />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </Carousel.Item>
+        ))}
+      </Carousel>
     </div>
   );
 };
