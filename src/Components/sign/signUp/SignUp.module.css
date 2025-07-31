@@ -1,0 +1,298 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+.signupContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #fff;
+}
+.signupImageSection {
+  display: block;
+  background-color: #ffffff;
+  padding: 0 1.25rem;
+}
+
+.signupImageSection img {
+  width: 100%;
+  height: auto;
+  width: 46rem;
+  height: 67.5rem;
+}
+
+.signupFormSection {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1.5rem 1.25rem;
+  background-color: #ffffff;
+}
+
+.formWrapper {
+  width: 100%;
+  max-width: 34rem;
+}
+
+.formWrapper h2 {
+  font-family: Poppins;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.025rem;
+  margin-bottom: 0;
+}
+.profileImageUploader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.profileImageUploader p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6c7275;
+}
+
+.profileImagePreview {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  transition: border-color 0.2s;
+}
+
+.profileImagePreview:hover {
+  border-color: #38cb89;
+}
+
+.profileImagePreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.formWrapper .signinLink {
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.625rem;
+  color: #6c7275;
+  margin-top: 0.5rem;
+}
+.formWrapper .signinLink a {
+  color: #38cb89;
+  text-decoration: none;
+  font-weight: 600;
+}
+.inputGroup {
+  position: relative;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.inputGroup label {
+  position: absolute;
+  top: -0.625rem;
+  left: 0.75rem;
+  background-color: #ffffff;
+  padding: 0 0.25rem;
+  font-size: 0.75rem;
+  color: #202425;
+  font-weight: 500;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.inputGroup input:focus {
+  border-color: #141718;
+}
+
+.inputGroup input::placeholder {
+  color: #aaa;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.formRow .inputGroup {
+  margin-bottom: 0;
+}
+
+.termsGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.termsGroup input[type="checkbox"] {
+  margin-right: 0.625rem;
+  width: 1rem;
+  height: 1rem;
+  accent-color: #141718;
+}
+
+.termsGroup label {
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.termsGroup a {
+  color: #141718;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.createAccountBtn {
+  width: 100%;
+  background-color: #141718;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  padding: 0.625rem 2.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.passwordIcon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6c7275;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.passwordInput {
+  padding-right: 3rem !important;
+}
+
+@media (min-width: 768px) {
+  .signupContainer {
+    flex-direction: row;
+    height: 100vh;
+  }
+  .signupImageSection {
+    flex: 1;
+    padding: 0;
+    height: 100vh;
+  }
+  .signupImageSection img {
+    height: 100%;
+    border-radius: 0;
+  }
+  .signupFormSection {
+    flex: 1;
+    align-items: center;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  .formRow {
+    flex-direction: row;
+  }
+  /* This new rule makes the input groups inside a row share the space */
+  .formRow .inputGroup {
+    flex: 1;
+  }
+}
+@media (max-width: 767px) {
+  .signupContainer {
+    flex-direction: column;
+    height: auto;
+  }
+  .formWrapper h2 {
+    text-align: center;
+    font-family: Poppins;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 500;
+
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
+  .signupImageSection {
+    display: none;
+  }
+
+  .signupFormSection {
+    padding: 1rem;
+  }
+  .formRow {
+    flex-direction: column;
+  }
+  .formRow .inputGroup {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .signupContainer {
+    flex-direction: row;
+    height: 100vh;
+    background-color: #fff;
+  }
+
+  .signupImageSection {
+    flex: 1;
+    padding: 0;
+    height: 100vh;
+  }
+
+  .signupImageSection img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .signupFormSection {
+    flex: 1;
+    align-items: center;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .formRow {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .formRow .inputGroup {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .signupFormSection {
+    justify-content: center;
+    padding-left: 0;
+  }
+}
