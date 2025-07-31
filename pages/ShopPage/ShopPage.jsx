@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./ShopPage.css";
 import axios from "axios";
 import ProductCard from "../../src/components/products/productCard/ProductCard";
+import { set } from "zod";
 function ShopPage() {
 
   const api = import.meta.env.VITE_API;
@@ -74,6 +75,7 @@ function ShopPage() {
 
   useEffect(() => {
     const fetchByCategory = async () => {
+      setLoading(true);
       if (!selectCategoryId) return;
       try {
         const response = await axios.get(
@@ -90,6 +92,7 @@ function ShopPage() {
           setHasMore(false);
         }
         console.log("products", response.data); //kkkk
+        setLoading(false);
       } catch (err) {
         console.log("error", err);
       }
@@ -144,6 +147,7 @@ function ShopPage() {
   };
   useEffect(() => {
     const fetchProductsBySearch = async () => {
+      setLoading(true);
       if (!search) return;
       try {
         //    products/search?title=iphone
@@ -165,6 +169,7 @@ function ShopPage() {
       } catch (err) {
         console.log("error", err);
       }
+      setLoading(false);
     };
     fetchProductsBySearch();
   }, [search, pageSearch]);
