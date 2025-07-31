@@ -18,6 +18,7 @@ import FavList from "./pages/FavList/Favlist";
 import Contact from "./pages/contact/contact.jsx";
 import Cart from "./pages/cart/Cart";
 import ProductDetails from "./Pages/ProductDetails.jsx";
+import Footer from "./Components/Footer/Footer";
 
 // Redux actions
 import {
@@ -145,7 +146,7 @@ function App() {
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-
+        <Footer/>
       <ToastContainer
         position="top-right"
         autoClose={3000}
