@@ -9,9 +9,9 @@ import { toast } from 'react-toastify';
 
 function ReviewCard({ name = "mohed", rating, comment, image = "https://randomuser.me/api/portraits/women/12.jpg", customerId, myCustomerId, id, reviews, handeledReviews }) {
 
-  let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZGxyb3UydDAwMWtseHJtNWpxaXlkaWgiLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3NTM2MjYxMDIsImV4cCI6MTc1NDIzMDkwMn0.1Z61T-MpuNkS_RGa9eUGuroYdWnATmNWTwPzOJRxfOc"
+  let token = localStorage.getItem("token");
 
-  
+
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
     const hasHalf = rating - fullStars >= 0.5;
@@ -34,16 +34,16 @@ function ReviewCard({ name = "mohed", rating, comment, image = "https://randomus
     return stars;
   };
   const deleteReview = async () => {
-     axios.delete(`https://dokany-api-production.up.railway.app/reviews/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then(() => {
-        toast.success('Review deleted successfully');
-        handeledReviews([...reviews.filter((review) => review.id !== id)]);
-      }).catch((error) => {
-        console.error("error", error);
-      })
+    axios.delete(`https://dokany-api-production.up.railway.app/reviews/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(() => {
+      toast.success('Review deleted successfully');
+      handeledReviews([...reviews.filter((review) => review.id !== id)]);
+    }).catch((error) => {
+      console.error("error", error);
+    })
   };
 
   return (

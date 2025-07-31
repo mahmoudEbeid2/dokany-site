@@ -8,12 +8,12 @@ const api = import.meta.env.VITE_API;
 
 function AddReviewForm({ handeledReviews, reviews, productId }) {
 
-  const [user, setUsser] = useState(false);
+  const [user, setUser] = useState(false);
   const [hoveredRating, setHoveredRating] = useState(null);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
 
-  let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtZGxyb3UydDAwMWtseHJtNWpxaXlkaWgiLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3NTM2MjYxMDIsImV4cCI6MTc1NDIzMDkwMn0.1Z61T-MpuNkS_RGa9eUGuroYdWnATmNWTwPzOJRxfOc"
+  let token = localStorage.getItem("token");
 
   useEffect(() => {
     axios
@@ -23,7 +23,7 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
         },
       })
       .then((response) => {
-        setUsser(response.data);
+        setUser(response.data);
       })
       .catch((error) => {
         console.error("error", error);

@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import ProductDetailsSection from '../Components/ProductDetailsSection/ProductDetailsSection';
 import ReviewsSection from '../Components/ReviewSection/ReviewsSection';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function ProductDetails() {
-  const productId = '47';
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [productReviews, setProductReviews] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
-      .get(`https://dokany-api-production.up.railway.app/products/${productId}`)
+      .get(`https://dokany-api-production.up.railway.app/products/${id}`)
       .then((response) => {
         setProduct(response.data);
         setLoading(false);
@@ -24,7 +25,7 @@ function ProductDetails() {
 
   useEffect(() => {
     axios
-      .get(`https://dokany-api-production.up.railway.app/reviews/${productId}`,)
+      .get(`https://dokany-api-production.up.railway.app/reviews/${id}`,)
       .then((response) => {
         setProductReviews(response.data);
       })
@@ -42,7 +43,7 @@ function ProductDetails() {
   return (
     <div>
       <ProductDetailsSection product={product} reviews={productReviews} />
-      <ReviewsSection productId={productId} reviews={productReviews} handeledReviews={setProductReviews}  />
+      <ReviewsSection id={id} reviews={productReviews} handeledReviews={setProductReviews}  />
     </div>
   );
 }

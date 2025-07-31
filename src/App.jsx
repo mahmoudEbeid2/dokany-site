@@ -12,12 +12,12 @@ import SignIn from "./Components/sign/signIn/SignIn";
 import SignUp from "./Components/sign/signUp/SignUp";
 import Products from "./components/products/products/Products";
 import ShopPage from "../pages/ShopPage/ShopPage";
-import ProductDetailsPage from "./Components/products/products/ProductDetailsPage";
 import ProtectedRoute from "./Components/sign/ProtectedRoute";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import FavList from "./pages/FavList/Favlist";
 import Contact from "./pages/contact/contact.jsx";
 import Cart from "./pages/cart/Cart";
+import ProductDetails from "./Pages/ProductDetails.jsx";
 
 // Redux actions
 import {
@@ -114,7 +114,7 @@ function App() {
           path="/products/:id"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <ProductDetailsPage />
+              <ProductDetails />
             </ProtectedRoute>
           }
         />
