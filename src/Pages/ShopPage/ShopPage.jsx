@@ -174,7 +174,7 @@ function ShopPage() {
     fetchProductsBySearch();
   }, [search, pageSearch]);
   return (
-    <div className="container">
+    <div className="container mb-5">
       <div className="shop-hero d-flex flex-column align-items-center">
         <p>
           {" "}

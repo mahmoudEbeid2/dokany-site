@@ -44,6 +44,9 @@
     background-color: var(--text2);
     border-radius: 50%;
 }
+.nav-item.icons .nav-link{
+    margin: 0 !important;
+}
 
 /* Cart counter styling - reverted to side positioning */
 .cart-count {
@@ -58,7 +61,7 @@
     border-radius: 50% !important;
     font-size: 0.75rem !important;
     font-weight: bold !important;
-    margin-left: 0.5rem !important;
+    /* margin-left: 0.5rem !important; */
 }
 
 .nav-item .nav-link.position-relative {
