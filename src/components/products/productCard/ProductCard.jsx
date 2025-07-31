@@ -121,17 +121,19 @@ const ProductCard = ({ product, favoriteItem, isNew = false }) => {
     }
     try {
       await addToCartAPI(product.id);
-      
+
       // Add to Redux store
-      dispatch(addToCart({
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        discount: product.discount,
-        images: product.images,
-        quantity: 1
-      }));
-      
+      dispatch(
+        addToCart({
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          discount: product.discount,
+          images: product.images,
+          quantity: 1,
+        })
+      );
+
       toast.success(
         `${product.title.split(" ").slice(0, 5).join(" ")} added to cart!`
       );

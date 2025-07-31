@@ -41,7 +41,7 @@ const JustIn = () => {
         const productsData = await productsResponse.json();
         // for new products
         const threeDaysAgo = new Date();
-        threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+        threeDaysAgo.setDate(threeDaysAgo.getDate() - 5);
         const justIn = productsData.filter((p) => {
           const productCreationDate = new Date(p.created_date);
           return productCreationDate >= threeDaysAgo;
