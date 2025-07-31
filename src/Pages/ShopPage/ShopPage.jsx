@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ShopPage.css";
 import axios from "axios";
-import ProductCard from "../../src/components/products/productCard/ProductCard";
+import ProductCard from "../../components/products/productCard/ProductCard";
 import { set } from "zod";
 function ShopPage() {
 
