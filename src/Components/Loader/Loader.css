@@ -12,14 +12,6 @@
   backdrop-filter: blur(5px);
 }
 
-.loader {
-  text-align: center;
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
 .spinner {
   width: 60px;
   height: 60px;
@@ -39,6 +31,10 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-} 
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
