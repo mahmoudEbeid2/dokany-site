@@ -43,7 +43,7 @@ function ProductDetails() {
   return (
     <div>
       <ProductDetailsSection product={product} reviews={productReviews} />
-      <ReviewsSection id={id} reviews={productReviews} handeledReviews={setProductReviews}  />
+      <ReviewsSection productId={id} reviews={productReviews} handeledReviews={setProductReviews}  />
     </div>
   );
 }
