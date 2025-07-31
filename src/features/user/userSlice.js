@@ -27,16 +27,16 @@ const userSlice = createSlice({
 
     // increase quantity of an item by 1 and optional take quantity (increase button in cart)
     addToCart: (state, action) => {
-      const { id, quantity = 1, ...rest } = action.payload;
+      const { product_id, quantity = 1, ...rest } = action.payload;
 
-      if (!id || quantity <= 0) return;
+      if (!product_id || quantity <= 0) return;
 
-      const exists = state.cart.find(item => item.id === id);
+      const exists = state.cart.find(item => item.product_id === product_id);
 
       if (exists) {
         exists.quantity += quantity;
       } else {
-        state.cart.push({ id, ...rest, quantity });
+        state.cart.push({ product_id, ...rest, quantity });
       }
     },
 
@@ -70,7 +70,7 @@ const userSlice = createSlice({
       state.watchlist = action.payload;
     },
     addToWatchlist: (state, action) => {
-      const exists = state.watchlist.find(item => item.id === action.payload.id);
+      const exists = state.watchlist.find(item => item.product_id === action.payload.product_id);
       if (!exists) {
         state.watchlist.push(action.payload);
       }
