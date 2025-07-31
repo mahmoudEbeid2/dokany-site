@@ -11,6 +11,7 @@
     font-weight: 600;
     font-size: .875rem;
     margin: 0 1rem;
+    text-align: center;
 }
 .navbar .nav-item .nav-link.active{
     color: var(--text2);
@@ -23,6 +24,7 @@
 .d-flex.navbar-nav{
     flex-direction: row;
     align-items: center !important;
+    justify-content: center !important;
 
 }
 .d-flex.navbar-nav li{
