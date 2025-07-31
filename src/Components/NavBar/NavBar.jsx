@@ -4,10 +4,19 @@ import { useSelector } from "react-redux";
 import "./NavBar.css";
 
 function NavBar() {
-  const { cart } = useSelector((state) => state.user);
+  const { cart , watchlist, userInfo} = useSelector((state) => state.user);
+  
+  // console.log("userInfo", userInfo);
+  const token = localStorage.getItem("token");
 
   // Calculate total items in cart
   const cartItemsCount = cart.reduce(
+    (total, item) => total + (item.quantity || 1),
+    0
+  );
+
+  // Calculate total items in watchlist
+  const watchlistItemsCount = watchlist.reduce(
     (total, item) => total + (item.quantity || 1),
     0
   );
@@ -53,14 +62,20 @@ function NavBar() {
               </li>
             </ul>
             <ul className="d-flex navbar-nav">
+              {
+                token ?(
+<>
               <li className="nav-item">
                 <NavLink to="/myaccount" className="nav-link">
                   <i className="bi bi-person-circle"></i>
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/favorites" className="nav-link">
+              <li className="nav-item icons">
+                <NavLink to="/favorites" className="nav-link d-flex align-items-center">
                   <i className="bi bi-heart"></i>
+                  {watchlistItemsCount > 0 && (
+                    <span className="cart-count">{watchlistItemsCount}</span>
+                  )}
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -74,6 +89,21 @@ function NavBar() {
                   )}
                 </NavLink>
               </li>
+              </>
+                ):(
+                  <>
+                  <li className="nav-item">
+                <NavLink
+                  to="/signin"
+                  className="nav-link  btn-primary2"
+                >
+                  {/* <i class="bi bi-box-arrow-in-right"></i> */}
+                  login
+                </NavLink>
+              </li>
+              </>
+                )
+              }
             </ul>
           </div>
         </div>
