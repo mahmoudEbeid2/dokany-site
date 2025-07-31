@@ -11,7 +11,7 @@ import Home from "./Pages/home/Home";
 import SignIn from "./Components/sign/signIn/SignIn";
 import SignUp from "./Components/sign/signUp/SignUp";
 import Products from "./components/products/products/Products";
-import ShopPage from "../pages/ShopPage/ShopPage";
+import ShopPage from "./Pages/ShopPage/ShopPage.jsx";
 import ProtectedRoute from "./Components/sign/ProtectedRoute";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import FavList from "./pages/FavList/Favlist";
