@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import styles from './ProductDetails.module.css'; // <-- CSS Module
 import ProductDiscountTime from './ProductDiscountTime';
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import { GrFavorite } from "react-icons/gr";
 import { RiCouponLine } from "react-icons/ri";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch } from 'react-redux';
-import { addToCart, addToWatchlist } from '../../features/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, addToWatchlist, removeFromWatchlist } from '../../features/user/userSlice';
+import { useEffect } from 'react';
 
 
 const ProductContent = ({ product, reviews }) => {
     const { title, description, price, discount, stock, category, id, averageRating, } = product;
     const dispatch = useDispatch();
+    const {watchlist, cart} = useSelector(state => state.user)
+    console.log(cart)
+    // const currentWatchlist = watchlist.find(item => item.product_id === id);
 
     const numReviews = reviews.length;
 
@@ -22,6 +27,7 @@ const ProductContent = ({ product, reviews }) => {
     const [productCount, setProductCount] = useState(0);
     const [couponCode, setCouponCode] = useState('');
     const [couponDiscountValue, setCouponDiscountValue] = useState(0);
+    // const [isAtWatchlist, setIsAtWatchlist] = useState(false);
 
 
     const incrementProductCount = () => {
@@ -58,7 +64,27 @@ const ProductContent = ({ product, reviews }) => {
         return stars;
     };
 
-    const handleWatchlist = () => {
+    // useEffect(() => {
+    //     axios
+    //         .get(`https://dokany-api-production.up.railway.app/favorites/check/${id}`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //         })
+    //         .then((response) => {
+    //             console.log(response.data);
+    //             setIsAtWatchlist(response.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error fetching watchlist:', error);
+    //         });
+    // }, [id, token]);
+
+    const handleAddToWatchlist = () => {
+        if (!token) {
+            toast.error('Please log in to add to watchlist.');
+            return;
+        }
         axios.post(
             'https://dokany-api-production.up.railway.app/favorites',
             { product_id: id },
@@ -71,7 +97,7 @@ const ProductContent = ({ product, reviews }) => {
         )
             .then((response) => {
                 console.log(response.data);
-                // dispatch(addToWatchlist(id));
+                dispatch(addToWatchlist({ ...response.data,product:product }));
                 toast.success('Product added to watchlist successfully');
             })
             .catch((error) => {
@@ -79,12 +105,47 @@ const ProductContent = ({ product, reviews }) => {
             });
     };
 
+    // const handleRemoveFromWatchlist = () => {
+    //     if (!token) {
+    //         toast.error('Please log in to remove from watchlist.');
+    //         return;
+    //     }
+
+    //     axios.delete(
+    //         `https://dokany-api-production.up.railway.app/favorites/${currentWatchlist.id}`,
+    //         {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //         }
+    //     )
+    //         .then((response) => {
+    //             console.log(response.data);
+    //             // dispatch(removeFromWatchlist(id));
+    //             setIsAtWatchlist(false);
+    //             toast.success('Product removed from watchlist successfully');
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error removing from watchlist:', error);
+    //             toast.error(error.response.data.error);
+    //         });
+    // };
+
     const handleChangeCoupon = (event) => {
         setCouponCode(event.target.value.trim());
     }
 
     const handleApplyCoupon = async () => {
-        console.log(couponCode);
+        if (!couponCode) {
+            toast.error('Please enter a coupon code');
+            return;
+        }
+
+        if (!token) {
+            toast.error('Please log in to apply a coupon');
+            return;
+        }
+
         axios
             .get(`https://dokany-api-production.up.railway.app/api/coupon/check/${couponCode}?subdomain=mohamed-seller`, {
                 headers: {
@@ -103,6 +164,11 @@ const ProductContent = ({ product, reviews }) => {
 
 
     const handleAddToCart = () => {
+        if (!token) {
+            toast.error("Please log in to add to cart.");
+            return;
+        }
+
         if (productCount === 0) {
             toast.error('Please add some products to cart');
             return
@@ -118,17 +184,8 @@ const ProductContent = ({ product, reviews }) => {
                 },
             }
         )
-            .then(() => {
-                // Add to Redux store
-                dispatch(addToCart({
-                    id: id,
-                    title: title,
-                    price: price,
-                    discount: discount,
-                    images: product.images,
-                    quantity: productCount
-                }));
-
+            .then((response) => {
+                dispatch(addToCart(response.data.cartItem));
                 toast.success('Product(s) added to cart successfully');
             })
             .catch((error) => {
@@ -136,7 +193,6 @@ const ProductContent = ({ product, reviews }) => {
                 console.error('Error adding to cart:', error);
             });
     };
-
     if (!product) return null;
 
     return (
@@ -195,13 +251,13 @@ const ProductContent = ({ product, reviews }) => {
                         <span className={styles.counterValue}>{productCount}</span>
                         <button className={styles.counterButton} disabled={productCount === stock} onClick={incrementProductCount}>+</button>
                     </div>
-
                     <div className={styles.watchList}>
-                        <button className={styles.watchListButton} onClick={handleWatchlist}>
+                        <button className={styles.watchListButton} onClick={handleAddToWatchlist}>
                             <GrFavorite />
                             <span>Watchlist</span>
                         </button>
                     </div>
+
                 </div>
 
                 <div className={styles.useCoupon}>

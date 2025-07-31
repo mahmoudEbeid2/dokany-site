@@ -4,14 +4,21 @@ import avatar from "../../assets/av_blank.png";
 import { Camera } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import Orders from "../../Components/Orders/Orders";
 
-const token = localStorage.getItem("token");
 
 const MyAccount = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("account");
+const token = localStorage.getItem("token");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
     const fetchUserData = async () => {
       try {
         const res = await fetch(
@@ -100,6 +107,12 @@ const MyAccount = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    toast.success("Logged out");
+    navigate("/");
+  };
+
   if (loading) {
     return (
       <div className="spinner-container">
@@ -110,7 +123,7 @@ const MyAccount = () => {
 
   return (
     <div className="account-container">
-      <ToastContainer position="top-right" autoClose={2500} hideProgressBar={false} />
+      <ToastContainer position="top-right" autoClose={2500} />
       <h1 className="account-title">My Account</h1>
 
       <div className="account-content">
@@ -132,106 +145,120 @@ const MyAccount = () => {
           </h3>
 
           <ul className="sidebar-menu">
-            <li className="active">Account</li>
-            <li>Orders</li>
-            <li>Log Out</li>
+            <li
+              className={activeTab === "account" ? "active" : ""}
+              onClick={() => setActiveTab("account")}
+            >
+              Account
+            </li>
+            <li
+              className={activeTab === "orders" ? "active" : ""}
+              onClick={() => setActiveTab("orders")}
+            >
+              Orders
+            </li>
+            <li onClick={handleLogout}>Log Out</li>
           </ul>
         </aside>
 
         <section className="account-details">
-          <form
-            className="account-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-          >
-            <div className="form-group">
-              <label className="labelMyAcc">User Name *</label>
-              <input
-                type="text"
-                name="user_name"
-                value={formData.user_name || ""}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-row">
+          {activeTab === "account" ? (
+            <form
+              className="account-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+            >
               <div className="form-group">
-                <label className="labelMyAcc">First Name *</label>
+                <label className="labelMyAcc">User Name *</label>
                 <input
                   type="text"
-                  name="f_name"
-                  value={formData.f_name || ""}
+                  name="user_name"
+                  value={formData.user_name || ""}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label className="labelMyAcc">First Name *</label>
+                  <input
+                    type="text"
+                    name="f_name"
+                    value={formData.f_name || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="labelMyAcc">Last Name *</label>
+                  <input
+                    type="text"
+                    name="l_name"
+                    value={formData.l_name || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="labelMyAcc">Email *</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email || ""}
                   onChange={handleChange}
                 />
               </div>
 
               <div className="form-group">
-                <label className="labelMyAcc">Last Name *</label>
+                <label className="labelMyAcc">Phone *</label>
                 <input
                   type="text"
-                  name="l_name"
-                  value={formData.l_name || ""}
+                  name="phone"
+                  value={formData.phone || ""}
                   onChange={handleChange}
                 />
               </div>
-            </div>
 
-            <div className="form-group">
-              <label className="labelMyAcc">Email *</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email || ""}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="labelMyAcc">Phone *</label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone || ""}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label className="labelMyAcc">City</label>
-                <input
-                  type="text"
-                  name="city"
-                  value={formData.city || ""}
-                  onChange={handleChange}
-                />
+              <div className="form-row">
+                <div className="form-group">
+                  <label className="labelMyAcc">City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={formData.city || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="labelMyAcc">Governorate</label>
+                  <input
+                    type="text"
+                    name="governorate"
+                    value={formData.governorate || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="labelMyAcc">Country</label>
+                  <input
+                    type="text"
+                    name="country"
+                    value={formData.country || ""}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-              <div className="form-group">
-                <label className="labelMyAcc">Governorate</label>
-                <input
-                  type="text"
-                  name="governorate"
-                  value={formData.governorate || ""}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label className="labelMyAcc">Country</label>
-                <input
-                  type="text"
-                  name="country"
-                  value={formData.country || ""}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
 
-            <button type="submit" className="save-btn">
-              Save changes
-            </button>
-          </form>
+              <button type="submit" className="save-btn">
+                Save changes
+              </button>
+            </form>
+          ) : (
+            <Orders />
+          )}
         </section>
       </div>
     </div>

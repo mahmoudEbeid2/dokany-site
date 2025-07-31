@@ -3,6 +3,7 @@ import ProductDetailsSection from '../Components/ProductDetailsSection/ProductDe
 import ReviewsSection from '../Components/ReviewSection/ReviewsSection';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Loader from '../Components/Loader/Loader';
 
 function ProductDetails() {
   const { id } = useParams();
@@ -34,7 +35,7 @@ function ProductDetails() {
       });
   }, []);
 
-  if (loading) return <p style={{ padding: '2rem', textAlign: 'center' }}>Loading product details...</p>;
+  if (loading) return <Loader />;
 
   if (!product) return <p style={{ padding: '2rem', textAlign: 'center' }}>Product not found.</p>;
 
@@ -43,7 +44,7 @@ function ProductDetails() {
   return (
     <div>
       <ProductDetailsSection product={product} reviews={productReviews} />
-      <ReviewsSection id={id} reviews={productReviews} handeledReviews={setProductReviews}  />
+      <ReviewsSection productId={id} reviews={productReviews} handeledReviews={setProductReviews}  />
     </div>
   );
 }
