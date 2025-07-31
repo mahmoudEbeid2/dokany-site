@@ -108,8 +108,7 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 2;
 }
-.productCardImageWrapper:hover .addToCartBtn,
-.addToCartBtn.isVisible {
+.productCardImageWrapper:hover .addToCartBtn {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }

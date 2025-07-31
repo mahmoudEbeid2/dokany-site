@@ -169,9 +169,7 @@ const ProductCard = ({ product, isNew = false }) => {
             </button>
           </div>
           <button
-            className={`${styles.addToCartBtn} ${
-              isNew ? styles.isVisible : ""
-            }`}
+            className={`${styles.addToCartBtn} `}
             onClick={handleAddToCart}
           >
             Add to cart

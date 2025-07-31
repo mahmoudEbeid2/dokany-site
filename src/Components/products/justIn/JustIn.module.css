@@ -27,11 +27,3 @@
 .carouselIndicators button:global(.active) {
   background-color: #141718;
 }
-/* .carouselIndicators [data-bs-target] {
-  background-color: #c7a66c;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 5px solid #fff;
-  box-shadow: 0 0 0 2px #c7a66c;
-} */
