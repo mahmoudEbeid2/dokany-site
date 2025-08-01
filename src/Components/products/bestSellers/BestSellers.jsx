@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "../productCard/ProductCard";
 import Loader from "../../Loader/Loader";
 
-const BestSellers = () => {
+const BestSellers = ({ subdomain }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +12,6 @@ const BestSellers = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const subdomain = "kemait";
         const productsResponse = await fetch(
           `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}`
         );

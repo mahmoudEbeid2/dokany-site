@@ -12,7 +12,7 @@ const chunkProducts = (products, size) => {
   return chunkedArr;
 };
 
-const JustIn = ({ subdomain = "kemait" }) => {
+const JustIn = ({ subdomain }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

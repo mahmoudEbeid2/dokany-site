@@ -13,10 +13,11 @@ const customerLoginSchema = z.object({
 });
 
 const SignIn = ({ onLoginSuccess }) => {
+  const subdomain = window.location.hostname.split(".")[0];
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    subdomain: "kemait",
+    subdomain: subdomain,
   });
 
   const [showPassword, setShowPassword] = useState(false);
