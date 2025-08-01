@@ -12,7 +12,7 @@ const FavCard = ({ product, onRemove }) => {
 
   const handleAddToCart = async () => {
     try {
-      const res = await fetch('https://dokany-api-production.up.railway.app/cart', {
+      const res = await fetch(`${import.meta.env.VITE_API}/cart`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

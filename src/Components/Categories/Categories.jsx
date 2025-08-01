@@ -31,15 +31,20 @@ const Categories = ({ subdomain }) => {
 
   return (
     <div className="categories-container">
-      {categories.map((category) => (
-        <CategoryCard
-          key={category.id}
-          name={category.name}
-          image={category.image}
-          id={category.id}
-          onClick={handleCategoryClick}
-        />
-      ))}
+      <h2 className="categories-header py-5 display-5 fw-bold  ">
+        Shop by Categories
+      </h2>
+
+      <div className="categories-content">
+        {categories.map((category) => (
+          <CategoryCard
+            key={category.id}
+            name={category.name}
+            image={category.image}
+            onClick={handleCategoryClick}
+          />
+        ))}
+      </div>
     </div>
   );
 };

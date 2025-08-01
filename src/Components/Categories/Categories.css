@@ -1,4 +1,4 @@
-.categories-container {
+.categories-content {
   display: flex;
   gap: 3rem;
   text-align: center;
@@ -6,4 +6,7 @@
   margin: 0 auto;
   flex-wrap: wrap;
   padding: 2rem 0;
+}
+.categories-container{
+    margin:0 6rem;
 }
