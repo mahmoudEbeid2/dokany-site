@@ -142,10 +142,6 @@
     line-height: 2.75rem;
     letter-spacing: -0.025rem;
     max-width: 60rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .productDescription {
@@ -293,6 +289,25 @@
     transition: background-color 0.3s ease;
 }
 
+.watchListButtonAdded{
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--bg);
+    line-height: 2rem;
+    background-color: var(--text);
+    border: 1px solid var(--text);
+    padding: 0.625rem 2.5rem;
+    height: 3.25rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 .useCoupon {
     display: flex;
     flex-direction: column;
@@ -393,36 +408,36 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
-.borderlessModal .modalContent {
-    border: none;
-    background-color: transparent;
-    box-shadow: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+:global(.borderless-modal .modal-content) {
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
 }
 
-.borderlessModal .carousel,
-.borderlessModal .carouselInner,
-.borderlessModal .carouselItem {
-    height: 100%;
-    max-width: 100%;
-    max-height: 40rem;
+:global(.borderless-modal .modal-header) {
+  border: none;
 }
 
-.modalHeader {
-    display: flex;
-    width: 100%;
-    justify-content: end;
-    align-items: end;
+:global(.borderless-modal .modal-body) {
+  padding: 0;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.imageModalOnly .btnClose {
+:global(.borderless-modal .carousel-item img) {
+  max-height: 80vh;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+:global(.borderless-modal.image-only-modal .modal-header .btn-close) {
     filter: invert(1);
     opacity: 1;
     margin-bottom: 0.5rem;
 }
+
 
 /* Responsive styles */
 @media screen and (max-width: 991px) {

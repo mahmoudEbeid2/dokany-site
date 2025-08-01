@@ -4,7 +4,7 @@ import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import styles from './ProductDetails.module.css'; // ملف CSS Module
 
 const ProductImagesGallery = ({ product_images, created_date, discount }) => {
-    const allImages = product_images;
+    const allImages = product_images.slice(0,3);
     const nowDate = new Date();
     const createdDate = new Date(created_date);
     const timeDiff = Math.abs(nowDate - createdDate);

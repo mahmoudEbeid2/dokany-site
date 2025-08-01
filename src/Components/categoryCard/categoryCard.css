@@ -3,6 +3,7 @@
   height: 10.4375rem;
   flex-shrink: 0;
   text-align: center;
+  cursor: pointer;
 }
 
 .category-image {
