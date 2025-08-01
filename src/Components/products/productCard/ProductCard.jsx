@@ -136,7 +136,7 @@ const ProductCard = ({ product, isNew = false }) => {
       <div className={styles.productCardContainer} onClick={handleCardClick}>
         <div className={styles.productCardImageWrapper}>
           <img
-            src={`/public/productImages/1.png`}
+            src={product.images?.[0]?.image}
             alt={product.title.split(" ").slice(0, 5).join(" ")}
             className={styles.productImage}
           />

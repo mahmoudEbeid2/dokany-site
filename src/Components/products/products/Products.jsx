@@ -12,7 +12,7 @@ const Products = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const subdomain = "mohamed-seller";
+        const subdomain = "kemait";
         const productsResponse = await fetch(
           `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}`
         );
