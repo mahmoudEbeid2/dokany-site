@@ -11,7 +11,7 @@ import NavBar from "./Components/NavBar/NavBar";
 import Home from "./Pages/home/Home";
 import SignIn from "./Components/sign/signIn/SignIn";
 import SignUp from "./Components/sign/signUp/SignUp";
-import Products from "./components/products/products/Products";
+import Products from "./Components/products/products/Products";
 import ShopPage from "./Pages/ShopPage/ShopPage.jsx";
 import ProtectedRoute from "./Components/sign/ProtectedRoute";
 import MyAccount from "./pages/MyAccount/MyAccount";

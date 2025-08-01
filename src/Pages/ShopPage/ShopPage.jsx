@@ -4,7 +4,6 @@ import axios from "axios";
 import ProductCard from "../../components/products/productCard/ProductCard";
 import { set } from "zod";
 function ShopPage() {
-
   const api = import.meta.env.VITE_API;
 
   const [products, setProducts] = useState([]);
@@ -158,9 +157,8 @@ function ShopPage() {
         // setProducts(response.data.enrichedProducts);
         if (pageSearch === 1) {
           setProducts(response.data.enrichedProducts);
-        }else{
-            
-            setProducts((prev) => [...prev, ...response.data.enrichedProducts]);
+        } else {
+          setProducts((prev) => [...prev, ...response.data.enrichedProducts]);
         }
         if (response.data.enrichedProducts.length === 0) {
           setHasMore(false);
@@ -233,13 +231,13 @@ function ShopPage() {
       <div className="products container">
         <div className="row">
           {products?.map((product) => (
-              <div className="card col-sm-6 col-md-3" key={product.id}>
-            <ProductCard
-                          product={product}
-                          favoriteItem={[]}
-                          isJustIn={false}
-                        />
-                        </div>
+            <div className="card col-sm-6 col-md-3" key={product.id}>
+              <ProductCard
+                product={product}
+                favoriteItem={[]}
+                isJustIn={false}
+              />
+            </div>
             // <div className="card col-sm-6 col-md-3" key={product.id}>
             //   <img
             //     src={product?.images[0].image}
@@ -261,23 +259,22 @@ function ShopPage() {
         </div>
 
         {hasMore && !loading && (
-            <div className="col-12 d-flex justify-content-center mt-5">
-
-          <button
-            onClick={() => {
-              if (getBy === "categories") {
-                setPageCategory(pageCategory + 1);
-              } else if (getBy === "products") {
-                setPageProduct(pageProduct + 1);
-              } else if (getBy === "search") {
-                setPageSearch(pageSearch + 1);
-              }
-            }}
-            className=" btn-primary2"
-          >
-            Load More
-          </button>
-            </div>
+          <div className="col-12 d-flex justify-content-center mt-5">
+            <button
+              onClick={() => {
+                if (getBy === "categories") {
+                  setPageCategory(pageCategory + 1);
+                } else if (getBy === "products") {
+                  setPageProduct(pageProduct + 1);
+                } else if (getBy === "search") {
+                  setPageSearch(pageSearch + 1);
+                }
+              }}
+              className=" btn-primary2"
+            >
+              Load More
+            </button>
+          </div>
         )}
 
         {loading && (

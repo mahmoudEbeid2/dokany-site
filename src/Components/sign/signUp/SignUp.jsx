@@ -43,7 +43,7 @@ const initialState = {
   country: "",
   password: "",
   confirmPassword: "",
-  seller_id: "cmdlq3s0r0012lxrmj0ev9fbg",
+  seller_id: "cmds44va80016rumfdbn7uya3",
   profile_imge: null,
   agreedToTerms: false,
 };
