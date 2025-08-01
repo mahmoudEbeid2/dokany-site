@@ -234,9 +234,9 @@ const ProductContent = ({ product, reviews }) => {
                     {currentWatchlist ?
 
                         <div className={styles.watchList}>
-                            <button className={styles.watchListButton} onClick={handleRemoveFromWatchlist}>
+                            <button className={styles.watchListButtonAdded} onClick={handleRemoveFromWatchlist}>
                                 <MdOutlineFavorite />
-                                <span>Already in watchlist</span>
+                                <span>Added to watchlist</span>
                             </button>
                         </div> :
                         <div className={styles.watchList}>
