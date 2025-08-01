@@ -3,22 +3,21 @@ import styles from './ProductDetails.module.css'; // <-- CSS Module
 import ProductDiscountTime from './ProductDiscountTime';
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
-import { GrFavorite } from "react-icons/gr";
 import { RiCouponLine } from "react-icons/ri";
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, addToWatchlist, removeFromWatchlist } from '../../features/user/userSlice';
-import { useEffect } from 'react';
 
 
 const ProductContent = ({ product, reviews }) => {
     const { title, description, price, discount, stock, category, id, averageRating, } = product;
     const dispatch = useDispatch();
-    const {watchlist, cart} = useSelector(state => state.user)
-    console.log(cart)
-    // const currentWatchlist = watchlist.find(item => item.product_id === id);
+    const { watchlist } = useSelector(state => state.user)
+
+    const currentWatchlist = watchlist.find(item => item.product_id === id);
+    console.log(currentWatchlist);
 
     const numReviews = reviews.length;
 
@@ -27,7 +26,6 @@ const ProductContent = ({ product, reviews }) => {
     const [productCount, setProductCount] = useState(0);
     const [couponCode, setCouponCode] = useState('');
     const [couponDiscountValue, setCouponDiscountValue] = useState(0);
-    // const [isAtWatchlist, setIsAtWatchlist] = useState(false);
 
 
     const incrementProductCount = () => {
@@ -64,21 +62,7 @@ const ProductContent = ({ product, reviews }) => {
         return stars;
     };
 
-    // useEffect(() => {
-    //     axios
-    //         .get(`https://dokany-api-production.up.railway.app/favorites/check/${id}`, {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         })
-    //         .then((response) => {
-    //             console.log(response.data);
-    //             setIsAtWatchlist(response.data);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error fetching watchlist:', error);
-    //         });
-    // }, [id, token]);
+
 
     const handleAddToWatchlist = () => {
         if (!token) {
@@ -96,8 +80,7 @@ const ProductContent = ({ product, reviews }) => {
             }
         )
             .then((response) => {
-                console.log(response.data);
-                dispatch(addToWatchlist({ ...response.data,product:product }));
+                dispatch(addToWatchlist({ ...response.data, product: product }));
                 toast.success('Product added to watchlist successfully');
             })
             .catch((error) => {
@@ -105,31 +88,29 @@ const ProductContent = ({ product, reviews }) => {
             });
     };
 
-    // const handleRemoveFromWatchlist = () => {
-    //     if (!token) {
-    //         toast.error('Please log in to remove from watchlist.');
-    //         return;
-    //     }
+    const handleRemoveFromWatchlist = () => {
+        if (!token) {
+            toast.error('Please log in to remove from watchlist.');
+            return;
+        }
 
-    //     axios.delete(
-    //         `https://dokany-api-production.up.railway.app/favorites/${currentWatchlist.id}`,
-    //         {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         }
-    //     )
-    //         .then((response) => {
-    //             console.log(response.data);
-    //             // dispatch(removeFromWatchlist(id));
-    //             setIsAtWatchlist(false);
-    //             toast.success('Product removed from watchlist successfully');
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error removing from watchlist:', error);
-    //             toast.error(error.response.data.error);
-    //         });
-    // };
+        axios.delete(
+            `https://dokany-api-production.up.railway.app/favorites/${currentWatchlist.id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        )
+            .then(() => {
+                dispatch(removeFromWatchlist(currentWatchlist.id));
+                toast.success('Product removed from watchlist successfully');
+            })
+            .catch((error) => {
+                console.error('Error removing from watchlist:', error);
+                toast.error(error.response.data.error);
+            });
+    };
 
     const handleChangeCoupon = (event) => {
         setCouponCode(event.target.value.trim());
@@ -197,7 +178,6 @@ const ProductContent = ({ product, reviews }) => {
 
     return (
         <div className={styles.productContent}>
-            <ToastContainer />
             <h1 className={styles.productTitle}>{title}</h1>
             <p className={styles.productDescription}>{description}</p>
 
@@ -251,13 +231,21 @@ const ProductContent = ({ product, reviews }) => {
                         <span className={styles.counterValue}>{productCount}</span>
                         <button className={styles.counterButton} disabled={productCount === stock} onClick={incrementProductCount}>+</button>
                     </div>
-                    <div className={styles.watchList}>
-                        <button className={styles.watchListButton} onClick={handleAddToWatchlist}>
-                            <GrFavorite />
-                            <span>Watchlist</span>
-                        </button>
-                    </div>
+                    {currentWatchlist ?
 
+                        <div className={styles.watchList}>
+                            <button className={styles.watchListButton} onClick={handleRemoveFromWatchlist}>
+                                <MdOutlineFavorite />
+                                <span>Already in watchlist</span>
+                            </button>
+                        </div> :
+                        <div className={styles.watchList}>
+                            <button className={styles.watchListButton} onClick={handleAddToWatchlist}>
+                                <MdOutlineFavoriteBorder />
+                                <span>Add to Watchlist</span>
+                            </button>
+                        </div>
+                    }
                 </div>
 
                 <div className={styles.useCoupon}>
