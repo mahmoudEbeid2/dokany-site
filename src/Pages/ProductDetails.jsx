@@ -4,6 +4,7 @@ import ReviewsSection from '../Components/ReviewSection/ReviewsSection';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Loader from '../Components/Loader/Loader';
+import { ToastContainer } from 'react-toastify';
 
 function ProductDetails() {
   const { id } = useParams();
@@ -43,8 +44,18 @@ function ProductDetails() {
 
   return (
     <div>
+      <ToastContainer position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light" />
       <ProductDetailsSection product={product} reviews={productReviews} />
-      <ReviewsSection productId={id} reviews={productReviews} handeledReviews={setProductReviews}  />
+      <ReviewsSection productId={id} reviews={productReviews} handeledReviews={setProductReviews} />
     </div>
   );
 }
