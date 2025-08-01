@@ -33,7 +33,8 @@ const ProductImagesGallery = ({ product_images, created_date, discount }) => {
                     indicators={false}
                     activeIndex={mainCarouselIndex}
                     onSelect={(i) => setMainCarouselIndex(i)}
-                    className='w-100 h-100 d-flex align-items-center justify-content-center '
+                    className={`w-100 h-100 d-flex align-items-center justify-content-center ${styles.carouselWrapper}`}
+                    
                     nextIcon={
                         <span className={styles.customCarouselIcon}>
                             <IoArrowForward />
@@ -87,6 +88,7 @@ const ProductImagesGallery = ({ product_images, created_date, discount }) => {
             {/* Mobile View */}
             <div className="d-lg-none w-100">
                 <Carousel
+                className={styles.carouselWrapper}
                     indicators={false}
                     nextIcon={
                         <span className={styles.customCarouselIcon}>
@@ -135,6 +137,7 @@ const ProductImagesGallery = ({ product_images, created_date, discount }) => {
                         indicators={false}
                         nextIcon={null}
                         prevIcon={null}
+                        className={styles.carouselWrapper}
                     >
                         {allImages.map((img, index) => (
                             <Carousel.Item key={index}>

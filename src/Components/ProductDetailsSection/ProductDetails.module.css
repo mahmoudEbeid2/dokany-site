@@ -26,14 +26,14 @@
     margin-bottom: 1.5rem;
 }
 
-:global(.carousel),
-:global(.carousel-inner),
-:global(.carousel-item),
-:global(.carousel-item.active) {
+.carouselWrapper :global(.carousel),
+.carouselWrapper :global(.carousel-inner),
+.carouselWrapper :global(.carousel-item),
+.carouselWrapper :global(.carousel-item.active) {
     height: 100%;
 }
 
-:global(.carousel-inner) {
+.carouselWrapper :global(.carousel-inner) {
     height: 100%;
     max-width: 34.25rem;
     max-height: 45.5625rem;
@@ -458,14 +458,14 @@
         max-width: 100%;
         max-height: 40rem;
     }
+.carouselWrapper :global(.carousel),
+.carouselWrapper :global(.carousel-inner),
+.carouselWrapper :global(.carousel-item),
+.carouselWrapper :global(.carousel-item.active) {
+  max-width: 100%;
+  max-height: 40rem;
+}
 
-    :global(.carousel),
-    :global(.carousel-inner),
-    :global(.carousel-item),
-    :global(.carousel-item.active) {
-        max-width: 100%;
-        max-height: 40rem;
-    }
 
 
     .productContent,
