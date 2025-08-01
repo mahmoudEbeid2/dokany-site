@@ -6,7 +6,7 @@ const Products = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visibleProducts, setVisibleProducts] = useState(8);
+  const [visibleProducts, setVisibleProducts] = useState(4);
 
   useEffect(() => {
     const fetchData = async () => {

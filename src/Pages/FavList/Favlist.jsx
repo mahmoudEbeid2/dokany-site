@@ -19,7 +19,7 @@ useEffect(() => {
   const fetchWishlist = async () => {
     try {
       const response = await fetch(
-        'https://dokany-api-production.up.railway.app/favorites',
+        `${import.meta.env.VITE_API}/favorites`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ useEffect(() => {
       setWishlist((prev) => prev.filter((item) => item.id !== id));
 
       const res = await fetch(
-        `https://dokany-api-production.up.railway.app/favorites/${id}`,
+        `${import.meta.env.VITE_API}/favorites/${id}`,
         {
           method: 'DELETE',
           headers: {

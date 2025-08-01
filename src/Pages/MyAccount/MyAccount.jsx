@@ -22,7 +22,7 @@ const token = localStorage.getItem("token");
     const fetchUserData = async () => {
       try {
         const res = await fetch(
-          "https://dokany-api-production.up.railway.app/api/customer/me",
+          `${import.meta.env.VITE_API}/api/customer/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -84,7 +84,7 @@ const token = localStorage.getItem("token");
   const handleSubmit = async (dataToSend = formData, showToast = true) => {
     try {
       const res = await fetch(
-        "https://dokany-api-production.up.railway.app/api/customer/me",
+        `${import.meta.env.VITE_API}/api/customer/me`,
         {
           method: "PUT",
           headers: {
