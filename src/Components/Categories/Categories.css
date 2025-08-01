@@ -1,0 +1,9 @@
+.categories-container {
+  display: flex;
+  gap: 3rem;
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  padding: 2rem 0;
+}

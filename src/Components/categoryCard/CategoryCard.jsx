@@ -1,12 +1,19 @@
 import React from 'react';
 import './categoryCard.css';
-import categoryImg from '../../assets/category.jpg';
+import defaultImg from '../../assets/category.jpg';
 
-const CategoryCard = () => {
+const CategoryCard = ({ name, image }) => {
   return (
     <div className="category-card">
-      <img src={categoryImg} alt="Category" className="category-image" />
-      <p className="category-title">Category Name</p>
+      <img
+        src={image || defaultImg}
+        alt={name}
+        className="category-image"
+        onError={(e) => {
+          e.target.src = defaultImg;
+        }}
+      />
+      <p className="category-title">{name}</p>
     </div>
   );
 };
