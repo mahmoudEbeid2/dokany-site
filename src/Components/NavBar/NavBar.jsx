@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import "./NavBar.css";
 
 function NavBar() {
-  const { cart , watchlist, userInfo} = useSelector((state) => state.user);
-  
+  const { cart, watchlist, } = useSelector((state) => state.user);
+  const { sellerInfo } = useSelector((state) => state.seller);
+
   // console.log("userInfo", userInfo);
   const token = localStorage.getItem("token");
 
@@ -21,12 +22,22 @@ function NavBar() {
     0
   );
 
+  if(!sellerInfo){
+    return null;
+  }
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg ">
         <div className="container">
           <NavLink className="navbar-brand" to="/">
-            3legant.
+          <div className="logo " style={{ cursor: "pointer",maxWidth:"50px",maxHeight:"50px" }}>
+            {sellerInfo.logo ? (
+              <img src={sellerInfo.logo} alt="Logo" style={{ maxWidth: "100%", maxHeight: "100%" }} />
+            ) : (
+              <span>{sellerInfo.subdomain}</span>
+            )}
+          </div>
           </NavLink>
           <button
             className="navbar-toggler"
@@ -63,45 +74,45 @@ function NavBar() {
             </ul>
             <ul className="d-flex navbar-nav">
               {
-                token ?(
-<>
-              <li className="nav-item">
-                <NavLink to="/myaccount" className="nav-link">
-                  <i className="bi bi-person-circle"></i>
-                </NavLink>
-              </li>
-              <li className="nav-item icons">
-                <NavLink to="/favorites" className="nav-link d-flex align-items-center">
-                  <i className="bi bi-heart"></i>
-                  {watchlistItemsCount > 0 && (
-                    <span className="cart-count">{watchlistItemsCount}</span>
-                  )}
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/cart"
-                  className="nav-link d-flex align-items-center"
-                >
-                  <i className="bi bi-bag"></i>
-                  {cartItemsCount > 0 && (
-                    <span className="cart-count">{cartItemsCount}</span>
-                  )}
-                </NavLink>
-              </li>
-              </>
-                ):(
+                token ? (
                   <>
-                  <li className="nav-item">
-                <NavLink
-                  to="/signin"
-                  className="nav-link  btn-primary2"
-                >
-                  {/* <i class="bi bi-box-arrow-in-right"></i> */}
-                  login
-                </NavLink>
-              </li>
-              </>
+                    <li className="nav-item">
+                      <NavLink to="/myaccount" className="nav-link">
+                        <i className="bi bi-person-circle"></i>
+                      </NavLink>
+                    </li>
+                    <li className="nav-item icons">
+                      <NavLink to="/favorites" className="nav-link d-flex align-items-center">
+                        <i className="bi bi-heart"></i>
+                        {watchlistItemsCount > 0 && (
+                          <span className="cart-count">{watchlistItemsCount}</span>
+                        )}
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink
+                        to="/cart"
+                        className="nav-link d-flex align-items-center"
+                      >
+                        <i className="bi bi-bag"></i>
+                        {cartItemsCount > 0 && (
+                          <span className="cart-count">{cartItemsCount}</span>
+                        )}
+                      </NavLink>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <NavLink
+                        to="/signin"
+                        className="nav-link  btn-primary2"
+                      >
+                        {/* <i class="bi bi-box-arrow-in-right"></i> */}
+                        login
+                      </NavLink>
+                    </li>
+                  </>
                 )
               }
             </ul>

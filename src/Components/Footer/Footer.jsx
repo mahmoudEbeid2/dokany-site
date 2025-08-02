@@ -1,15 +1,21 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import styles from './Footer.module.css';
+import { useSelector } from 'react-redux';
 
 const Footer = () => {
+    const { sellerInfo } = useSelector((state) => state.seller);
+
+    if (!sellerInfo) {
+        return null;
+    }
     return (
         <footer className={styles.footer}>
             <Container>
                 <Row className="d-flex justify-content-center justify-content-md-between align-items-center">
                     <Col md={6}>
                         <div className="d-flex flex-column align-items-center align-items-md-start gap-2">
-                            <h5 style={{ width: 'fit-content' }}>Dockany</h5>
+                            <div className="d-flex align-items-center" style={{ maxWidth: '50px', maxHeight: '50px' }}>{sellerInfo.logo ? <img src={sellerInfo.logo} alt="Logo" style={{ maxWidth: '100%', maxHeight: '100%' }} /> : <h5 style={{ width: 'fit-content' }}>{sellerInfo.subdomain}</h5 >}</div>
                             <p style={{ width: 'fit-content' }}>We are an online store providing high-quality products.</p>
                         </div>
                     </Col>
