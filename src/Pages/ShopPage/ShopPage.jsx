@@ -18,13 +18,15 @@ function ShopPage() {
   const [loading, setLoading] = useState(false);
   const [getBy, setGetBy] = useState("products");
   const [search, setSearch] = useState("");
-  
-  const subdomain = window.location.hostname.split('.')[0] ;
+
+  const subdomain = window.location.hostname.split(".")[0];
 
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const response = await axios.get(`${api}/categories/subdomain/${subdomain}`);
+        const response = await axios.get(
+          `${api}/categories/subdomain/${subdomain}`
+        );
         setCategories(response.data);
       } catch (err) {
         console.log("Error fetching categories:", err);
@@ -46,13 +48,13 @@ function ShopPage() {
         }
         const response = await axios.get(url);
         const data = response.data;
-        
+
         if (pageProduct === 1) {
           setProducts(data);
         } else {
           setProducts((prev) => [...prev, ...data]);
         }
-        
+
         if (data.length === 0) {
           setHasMore(false);
         }
@@ -75,7 +77,7 @@ function ShopPage() {
           `${api}/categories/subdomain/${subdomain}/${selectCategoryId}?page=${pageCategory}`
         );
         const data = response.data;
-        
+
         if (pageCategory === 1) {
           setProducts(data);
         } else {
@@ -141,7 +143,7 @@ function ShopPage() {
         } else {
           setProducts((prev) => [...prev, ...response.data.enrichedProducts]);
         }
-        
+
         if (response.data.enrichedProducts.length === 0) {
           setHasMore(false);
         }
@@ -164,15 +166,17 @@ function ShopPage() {
     }
   };
 
-  if (loading && products.length === 0) {
-    return <Loader />;
-  }
+  // if (loading && products.length === 0) {
+  // return <Loader />;
+  // }
 
   return (
     <div className="container py-5">
       {/* Hero Section */}
       <div className="shop-hero d-flex flex-column align-items-center mb-5">
-        <h1 className="text-4xl font-bold text-center text-uppercase py-3">Shop Page</h1>
+        <h1 className="text-4xl font-bold text-center text-uppercase py-3">
+          Shop Page
+        </h1>
         <p className="text-muted text-center">
           Let's design the place you always imagined.
         </p>
@@ -191,7 +195,7 @@ function ShopPage() {
             onChange={handleSearch}
           />
         </div>
-        
+
         {/* Categories */}
         <div className="col-md-3 col-12 mb-4">
           <label className="form-label fw-semibold mb-2">Categories</label>
@@ -208,7 +212,7 @@ function ShopPage() {
             ))}
           </select>
         </div>
-        
+
         {/* Price Sort */}
         <div className="col-md-3 col-12 mb-4">
           <label className="form-label fw-semibold mb-2">Price</label>
@@ -231,7 +235,10 @@ function ShopPage() {
           <>
             <div className="row g-3">
               {products.map((product) => (
-                <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={product.id}>
+                <div
+                  className="col-12 col-sm-6 col-md-4 col-lg-3"
+                  key={product.id}
+                >
                   <ProductCard product={product} />
                 </div>
               ))}
@@ -240,23 +247,20 @@ function ShopPage() {
             {/* Load More Button */}
             {hasMore && !loading && (
               <div className="text-center mt-5">
-                <button
-                  onClick={loadMore}
-                  className="btn btn-dark px-4 py-2"
-                >
+                <button onClick={loadMore} className="btn btn-dark px-4 py-2">
                   Load More
                 </button>
               </div>
             )}
 
             {/* Loading Indicator */}
-            {loading && (
+            {/* {loading && (
               <div className="text-center mt-4">
                 <div className="spinner-border text-primary" role="status">
-                  <span className="visually-hidden">Loading...</span>
+                  <span className="visually-hidden ">Loading...</span>
                 </div>
               </div>
-            )}
+            )} */}
           </>
         ) : (
           !loading && (
@@ -265,6 +269,12 @@ function ShopPage() {
               <p className="text-muted">Try adjusting your search or filters</p>
             </div>
           )
+        )}
+        {/* Loading Indicator */}
+        {loading && (
+          <div className="loader mt-5">
+            <div className="spinner"></div>
+          </div>
         )}
       </div>
     </div>
