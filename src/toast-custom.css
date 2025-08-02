@@ -1,32 +1,92 @@
 /* Custom Toast Styles */
 .Toastify__toast {
-  font-size: 15px !important;
-  padding: 8px 12px !important;
+  font-size: 16px !important;
+  padding: 16px 20px !important;
   min-height: auto !important;
-  max-width: 200px !important;
+  max-width: 400px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  margin-bottom: 8px !important;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
 }
 
 .Toastify__toast-body {
-  font-size: 12px !important;
+  font-size: 15px !important;
   padding: 0 !important;
   margin: 0 !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.2px !important;
 }
 
 .Toastify__close-button {
-  font-size: 14px !important;
+  font-size: 18px !important;
   padding: 0 !important;
+  opacity: 0.8 !important;
+  color: inherit !important;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1 !important;
+  transform: scale(1.1) !important;
+  transition: all 0.2s ease !important;
 }
 
 .Toastify__progress-bar {
-  height: 2px !important;
+  height: 4px !important;
+  border-radius: 2px !important;
 }
 
 /* Make toasts more compact */
 .Toastify__toast-container {
-  padding: 8px !important;
+  padding: 16px !important;
 }
 
 .Toastify__toast-container--top-right {
   top: 1rem !important;
   right: 1rem !important;
+}
+
+/* Success toast styling */
+.Toastify__toast--success {
+  background: linear-gradient(135deg, #4caf50, #45a049) !important;
+  color: white !important;
+  border-left: 4px solid #2e7d32 !important;
+}
+
+/* Error toast styling */
+.Toastify__toast--error {
+  background: linear-gradient(135deg, #f44336, #d32f2f) !important;
+  color: white !important;
+  border-left: 4px solid #c62828 !important;
+}
+
+/* Warning toast styling */
+.Toastify__toast--warning {
+  background: linear-gradient(135deg, #ff9800, #f57c00) !important;
+  color: white !important;
+  border-left: 4px solid #ef6c00 !important;
+}
+
+/* Info toast styling */
+.Toastify__toast--info {
+  background: linear-gradient(135deg, #2196f3, #1976d2) !important;
+  color: white !important;
+  border-left: 4px solid #1565c0 !important;
+}
+
+/* Animation improvements */
+.Toastify__toast {
+  animation: toastSlideIn 0.3s ease-out !important;
+}
+
+@keyframes toastSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

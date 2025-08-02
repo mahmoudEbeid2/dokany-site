@@ -5,6 +5,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "../src/toast-custom.css";
 
 // Components
 import NavBar from "./Components/NavBar/NavBar";
@@ -65,7 +66,6 @@ function App() {
         }
       });
 
-
     return () => {
       controller.abort();
     };
@@ -99,7 +99,6 @@ function App() {
     };
   }, [isAuthenticated, dispatch]);
 
-
   useEffect(() => {
     if (!isAuthenticated) return;
 
@@ -127,7 +126,6 @@ function App() {
       controller.abort();
     };
   }, [isAuthenticated, dispatch]);
-
 
   return (
     <>
@@ -181,7 +179,7 @@ function App() {
 
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={true}
         closeOnClick
@@ -190,6 +188,7 @@ function App() {
         draggable
         pauseOnHover
         theme="light"
+        limit={3}
       />
     </>
   );
