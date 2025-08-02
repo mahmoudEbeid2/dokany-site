@@ -6,7 +6,6 @@ const Categories = ({ subdomain }) => {
   const [categories, setCategories] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const sliderRef = useRef(null);
@@ -29,13 +28,8 @@ const Categories = ({ subdomain }) => {
     return categories.slice(startIndex, startIndex + itemsPerView);
   };
 
-  const pauseAutoPlay = () => {
-    setIsAutoPlaying(false);
-  };
 
-  const resumeAutoPlay = () => {
-    setIsAutoPlaying(true);
-  };
+
 
   const onTouchStart = (e) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -85,16 +79,7 @@ const Categories = ({ subdomain }) => {
     }
   };
 
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, nextSlide]);
-
+ 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
@@ -159,8 +144,6 @@ const Categories = ({ subdomain }) => {
       <div 
         ref={sliderRef}
         className="categories-slider-container"
-        onMouseEnter={pauseAutoPlay}
-        onMouseLeave={resumeAutoPlay}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -188,7 +171,6 @@ const Categories = ({ subdomain }) => {
               className={`slider-indicator ${index === currentIndex ? 'active' : ''}`}
               onClick={() => {
                 setCurrentIndex(index);
-                pauseAutoPlay();
               }}
               aria-label={`Go to slide ${index + 1}`}
             />
