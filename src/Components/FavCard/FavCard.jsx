@@ -2,13 +2,16 @@ import React, { useState, useMemo } from 'react';
 import './FavCard.css';
 import notFoundImage from '../../assets/produtNotFound.jpg';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../features/user/userSlice';
 
 const FavCard = ({ product, onRemove }) => {
   const title = product?.title || 'No Title';
   const price = product?.price || '0.00';
   const [imageError, setImageError] = useState(false);
 
-  const token = localStorage.getItem("token"); 
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   const handleAddToCart = async () => {
     try {
@@ -27,7 +30,7 @@ const FavCard = ({ product, onRemove }) => {
       if (!res.ok) {
         throw new Error('Failed to add to cart');
       }
-
+      dispatch(addToCart({ product_id: product.id, quantity: 1, product }));
       toast.success('✅ Product added to cart!');
     } catch (error) {
       console.error('Add to cart error:', error);

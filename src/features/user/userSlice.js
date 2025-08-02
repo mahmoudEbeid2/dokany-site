@@ -42,15 +42,15 @@ const userSlice = createSlice({
 
     // decrease quantity of an item by 1 (decrease button in cart)
     removeFromCart: (state, action) => {
-      const id = action.payload;
+      const {product_id, quantity} = action.payload;
 
-      const item = state.cart.find(item => item.id === id);
+      const item = state.cart.find(item => item.product_id === product_id);
 
       if (item) {
         if (item.quantity > 1) {
-          item.quantity -= 1;
+          item.quantity -= quantity;
         } else {
-          state.cart = state.cart.filter(p => p.id !== id);
+          state.cart = state.cart.filter(p => p.product_id !== product_id);
         }
       }
     },
@@ -59,7 +59,14 @@ const userSlice = createSlice({
       const id = action.payload;
       state.cart = state.cart.filter(item => item.id !== id);
     },
-
+    updateCart: (state, action) => {
+      const { product_id, quantity, final_price } = action.payload;
+      const item = state.cart.find(item => item.product_id === product_id);
+      if (item) {
+        item.quantity = quantity;
+        item.final_price = final_price;
+      }
+    },
 
     clearCart: (state) => {
       state.cart = [];
@@ -91,6 +98,7 @@ export const {
   addToCart,
   removeFromCart,
   deleteFromCart,
+  updateCart,
   clearCart,
   setIntialWatchlist,
   addToWatchlist,

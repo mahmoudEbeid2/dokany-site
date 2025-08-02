@@ -9,24 +9,48 @@ function Contact() {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const subdomain = window.location.hostname.split(".")[0];
   function handleSubmit(e) {
     e.preventDefault();
+    if (isSubmitting) return;
+
     if (!name || !email || !message) {
       toast.error("Please fill in all fields");
       return;
     }
-    
+
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      console.log(name, email, message);
-      toast.success("Message sent successfully!");
-      setName("");
-      setEmail("");
-      setMessage("");
-      setIsSubmitting(false);
-    }, 1000);
+
+    fetch(`${import.meta.env.VITE_API}/api/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        message,
+        subdomain: subdomain,
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Something went wrong");
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        toast.success("✅ Message sent successfully.");
+        setName("");
+        setEmail("");
+        setMessage("");
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("❌ Failed to send message.");
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   }
 
   return (
@@ -51,7 +75,7 @@ function Contact() {
                 <p className={styles.contactMethod}>+201033599984</p>
               </div>
             </div>
-            
+
             <div className={styles.contactInfo}>
               <div className={styles.iconWrapper}>
                 <i className={`bi bi-envelope ${styles.icon}`}></i>
@@ -61,16 +85,8 @@ function Contact() {
                 <p className={styles.contactMethod}>zTc9D@example.com</p>
               </div>
             </div>
-            
-            <div className={styles.contactInfo}>
-              <div className={styles.iconWrapper}>
-                <i className={`bi bi-geo-alt ${styles.icon}`}></i>
-              </div>
-              <div className={styles.contactDetails}>
-                <h3 className={styles.contactTitle}>Location</h3>
-                <p className={styles.contactMethod}>Cairo, Egypt</p>
-              </div>
-            </div>
+
+
           </div>
         </div>
 
@@ -92,7 +108,7 @@ function Contact() {
                 required
               />
             </div>
-            
+
             <div className={styles.formGroup}>
               <label htmlFor="email" className={styles.label}>
                 <i className="bi bi-envelope"></i>
@@ -108,7 +124,7 @@ function Contact() {
                 required
               />
             </div>
-            
+
             <div className={styles.formGroup}>
               <label htmlFor="message" className={styles.label}>
                 <i className="bi bi-chat-text"></i>
@@ -123,9 +139,9 @@ function Contact() {
                 required
               ></textarea>
             </div>
-            
-            <button 
-              type="submit" 
+
+            <button
+              type="submit"
               className={styles.submitButton}
               disabled={isSubmitting}
             >

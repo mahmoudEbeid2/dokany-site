@@ -1,62 +1,82 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import ProductDetailsSection from "../Components/ProductDetailsSection/ProductDetailsSection";
 import ReviewsSection from "../Components/ReviewSection/ReviewsSection";
 import RecommendedProducts from "../Components/products/recomendedProducts/RecommendedProducts";
-import axios from "axios";
-import { useParams } from "react-router-dom";
 import Loader from "../Components/Loader/Loader";
-import { ToastContainer } from "react-toastify";
+
+const api = import.meta.env.VITE_API;
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [productReviews, setProductReviews] = useState(null);
+  const [productReviews, setProductReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  // Fetch product and reviews together
   useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        setLoading(true);
-        const productResponse = await axios.get(
-          `https://dokany-api-production.up.railway.app/products/${id}`
-        );
-        setProduct(productResponse.data);
+    let isMounted = true;
 
-        const reviewsResponse = await axios.get(
-          `https://dokany-api-production.up.railway.app/reviews/${id}`
-        );
-        setProductReviews(reviewsResponse.data);
-      } catch (error) {
-        console.error("Error fetching product data:", error);
+    const fetchProductAndReviews = async () => {
+      setLoading(true);
+      setError("");
+
+      try {
+        const [productRes, reviewsRes] = await Promise.all([
+          axios.get(`${api}/products/${id}`),
+          axios.get(`${api}/reviews/${id}`)
+        ]);
+
+        if (isMounted) {
+          setProduct(productRes.data);
+          setProductReviews(reviewsRes.data);
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        if (isMounted) setError(err.message);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
-    fetchProductData();
+
+    fetchProductAndReviews();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
+  // Loader
   if (loading) return <Loader />;
 
-  if (!product)
+  // Error UI
+  if (error) {
     return (
-      <p style={{ padding: "2rem", textAlign: "center" }}>Product not found.</p>
+      <div style={{ padding: "2rem", textAlign: "center", color: "red" }}>
+        <h4>{error}</h4>
+      </div>
     );
+  }
+
+  // Product not found
+  if (!product) {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center" }}>
+        <h4>Product not found</h4>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+
       <ProductDetailsSection product={product} reviews={productReviews} />
+
       <ReviewsSection
         productId={id}
         reviews={productReviews}
@@ -74,3 +94,5 @@ function ProductDetails() {
 }
 
 export default ProductDetails;
+
+
