@@ -51,7 +51,7 @@ const CategoryProducts = () => {
         }
       } catch (error) {
         console.error("Error fetching category products:", error);
-        setError(`حدث خطأ في تحميل منتجات الفئة: ${error.message}`);
+        setError(`Failed to load products: ${error.message}`);
       } finally {
         setLoading(false);
       }
@@ -71,12 +71,12 @@ const CategoryProducts = () => {
           <div className="category-products-empty">
             <p className="text-danger">{error}</p>
             <button onClick={() => window.location.reload()} className="btn btn-primary mt-2">
-              إعادة المحاولة
+              Try Again
             </button>
           </div>
         ) : products.length === 0 ? (
           <div className="category-products-empty">
-            <p>لا توجد منتجات في هذه الفئة.</p>
+            <p>No products found in this category.</p>
           </div>
         ) : (
           <div className="row gy-4 category-products-grid justify-content-center">
