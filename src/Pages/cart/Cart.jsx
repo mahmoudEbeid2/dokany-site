@@ -85,9 +85,10 @@ function Cart() {
 
       if (response.ok) {
         const data = await response.json();
-        if (newQuantity === 1) {
+        if (newQuantity === 0) {
           dispatch(deleteFromCart(data.id));
         } else {
+          console.log(data);
           dispatch(updateCart({ product_id: data.product_id, quantity: data.quantity,final_price: data.final_price }));
         }
         toast.success("Quantity updated successfully!");
