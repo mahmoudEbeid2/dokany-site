@@ -34,7 +34,7 @@ function CartItem({ item, onDelete, onUpdateQuantity, isUpdating }) {
           </button>
         </div>
       </div>
-      <div className={`${styles.count} col-2`}>
+      <div className={`d-flex col-2`}>
         <button
           className={styles.quantityBtn}
           disabled={isUpdating}
