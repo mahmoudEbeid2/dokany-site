@@ -85,7 +85,7 @@ const ProductCard = ({ product, isNew = false }) => {
     } else {
       addToFavoritesAPI(product.id)
         .then((newFavorite) => {
-          dispatch(addToWatchlist({...newFavorite,product}));
+          dispatch(addToWatchlist({ ...newFavorite, product }));
           toast.success("Added to favorites!");
         })
         .catch((err) => toast.error(err.message));
@@ -99,16 +99,12 @@ const ProductCard = ({ product, isNew = false }) => {
       return navigate(`/signin`);
     }
     addToCartAPI(product.id)
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         dispatch(
           addToCart({
-            id: product.id,
-            product_id: product.id,
-            title: product.title,
-            price: product.price,
-            discount: product.discount,
-            images: product.images,
-            quantity: 1,
+            ...res.cartItem,
+            product,
           })
         );
         toast.success(
@@ -197,11 +193,10 @@ const ProductCard = ({ product, isNew = false }) => {
             {[...Array(5)].map((_, i) => (
               <i
                 key={i}
-                className={`bi bi-star-fill ${
-                  i < Math.round(averageRating)
+                className={`bi bi-star-fill ${i < Math.round(averageRating)
                     ? styles.customStarts
                     : styles.customStartsdisabled
-                }`}
+                  }`}
               ></i>
             ))}
             <span className="ms-2 text-muted" style={{ fontSize: "0.8rem" }}>
