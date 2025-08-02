@@ -29,8 +29,6 @@ const Categories = ({ subdomain }) => {
   };
 
 
-
-
   const onTouchStart = (e) => {
     setTouchStart(e.targetTouches[0].clientX);
   };
@@ -56,7 +54,7 @@ const Categories = ({ subdomain }) => {
     setTouchEnd(null);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = useCallback((e) => {
     switch (e.key) {
       case 'ArrowLeft':
         e.preventDefault();
@@ -77,37 +75,43 @@ const Categories = ({ subdomain }) => {
       default:
         break;
     }
-  };
+  }, [prevSlide, nextSlide, setCurrentIndex, totalSlides]);
 
- 
+
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchCategories = async () => {
       setIsLoading(true);
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API}/categories/subdomain/${subdomain}`
+          `${import.meta.env.VITE_API}/categories/subdomain/${subdomain}`,
+          { signal: controller.signal }
         );
 
-        if (!res.ok) {
-          throw new Error("Failed to fetch categories");
-        }
+        if (!res.ok) throw new Error("Failed to fetch categories");
 
         const data = await res.json();
         setCategories(data);
       } catch (error) {
-        console.error("Fetch error:", error);
+        if (error.name !== "AbortError") {
+          console.error("Fetch error:", error);
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchCategories();
+
+    return () => controller.abort();
   }, [subdomain]);
+
 
   if (isLoading) {
     return (
@@ -141,7 +145,7 @@ const Categories = ({ subdomain }) => {
         Shop by Categories
       </h2>
 
-      <div 
+      <div
         ref={sliderRef}
         className="categories-slider-container"
         onTouchStart={onTouchStart}

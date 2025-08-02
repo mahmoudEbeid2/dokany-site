@@ -7,7 +7,6 @@ import Categories from "../../Components/Categories/Categories";
 
 export default function Home() {
   const subdomain = window.location.hostname.split(".")[0];
-  console.log(subdomain);
 
   return (
     <>

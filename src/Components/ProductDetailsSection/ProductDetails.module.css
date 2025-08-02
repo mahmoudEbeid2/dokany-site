@@ -141,7 +141,8 @@
     color: var(--text);
     line-height: 2.75rem;
     letter-spacing: -0.025rem;
-    max-width: 60rem;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .productDescription {

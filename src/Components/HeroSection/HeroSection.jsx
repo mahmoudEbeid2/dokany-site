@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./HeroSection.module.css";
 import heroImage from "../../assets/herom.jpg";
 
@@ -10,7 +10,7 @@ const HeroSection = () => {
           <div className="col-md-6 text-center">
             <div className={`${styles.heroImgWrapper} position-relative`}>
               <div className={styles.heroImg}>
-                <img 
+                <img
                   src={heroImage}
                   alt="Modern Shopping Experience"
                   className={styles.heroImage}
@@ -27,9 +27,9 @@ const HeroSection = () => {
               trusted items, secure payments, and fast delivery right to your
               door.
             </p>
-            <a href="#" className={styles.heroBtn}>
+            <Link to="/shoppage" className={`${styles.heroBtn}`}>
               Shopping Now
-            </a>
+            </Link>
           </div>
         </div>
       </div>

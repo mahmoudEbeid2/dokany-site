@@ -14,14 +14,15 @@ const Products = ({ subdomain }) => {
       return;
     }
 
+    const controller = new AbortController();
+
     const fetchData = async () => {
       try {
         setLoading(true);
 
         const productsResponse = await fetch(
-          `${
-            import.meta.env.VITE_API
-          }/products/seller/subdomain/${subdomain}/all`
+          `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}/all`,
+          { signal: controller.signal }
         );
 
         if (!productsResponse.ok) {
@@ -29,20 +30,25 @@ const Products = ({ subdomain }) => {
         }
 
         const productsData = await productsResponse.json();
-
         const discountedProducts = productsData.filter(
           (product) => product.discount > 0
         );
 
         setAllProducts(discountedProducts);
       } catch (err) {
-        setError(err.message);
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
+
+    return () => controller.abort();
   }, [subdomain]);
+
 
   const handleViewMore = () => {
     setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 8);

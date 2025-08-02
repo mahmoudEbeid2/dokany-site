@@ -9,33 +9,29 @@ const BestSellers = ({ subdomain }) => {
   const [visibleProducts, setVisibleProducts] = useState(8);
 
   useEffect(() => {
-    if (!subdomain) {
-      setLoading(false);
-      return;
-    }
-
+    const controller = new AbortController();
     const fetchData = async () => {
       try {
         setLoading(true);
-        const productsResponse = await fetch(
-          `${
-            import.meta.env.VITE_API
-          }/products/seller/subdomain/${subdomain}/all`
+        const res = await fetch(
+          `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}/all`,
+          { signal: controller.signal }
         );
-
-        if (!productsResponse.ok) {
-          throw new Error("Failed to fetch products.");
-        }
-        const productsData = await productsResponse.json();
-        setAllProducts(productsData);
+        if (!res.ok) throw new Error("Failed to fetch products.");
+        const data = await res.json();
+        setAllProducts(data);
       } catch (err) {
-        setError(err.message);
+        if (err.name !== "AbortError") setError(err.message);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
+
+    return () => controller.abort();
   }, [subdomain]);
+
 
   const bestSellers = useMemo(() => {
     return allProducts
