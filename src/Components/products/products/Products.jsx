@@ -9,12 +9,19 @@ const Products = ({ subdomain }) => {
   const [visibleProducts, setVisibleProducts] = useState(8);
 
   useEffect(() => {
+    if (!subdomain) {
+      setLoading(false);
+      return;
+    }
+
     const fetchData = async () => {
       try {
         setLoading(true);
 
         const productsResponse = await fetch(
-          `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}`
+          `${
+            import.meta.env.VITE_API
+          }/products/seller/subdomain/${subdomain}/all`
         );
 
         if (!productsResponse.ok) {
@@ -35,10 +42,10 @@ const Products = ({ subdomain }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [subdomain]);
 
-  const handleViewAll = () => {
-    setVisibleProducts(allProducts.length);
+  const handleViewMore = () => {
+    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 8);
   };
 
   if (loading) {
@@ -71,8 +78,8 @@ const Products = ({ subdomain }) => {
       </div>
       {visibleProducts < allProducts.length && (
         <div className="text-center mt-5">
-          <button className="btn btn-dark px-4 py-2" onClick={handleViewAll}>
-            View All Products
+          <button className="btn btn-dark px-4 py-2" onClick={handleViewMore}>
+            View More
           </button>
         </div>
       )}
