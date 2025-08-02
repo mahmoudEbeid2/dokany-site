@@ -19,6 +19,7 @@ import FavList from "./pages/FavList/Favlist";
 import Contact from "./pages/contact/contact.jsx";
 import Cart from "./pages/cart/Cart";
 import ProductDetails from "./Pages/ProductDetails.jsx";
+import CategoryProducts from "./Pages/CategoryProducts.jsx";
 import Footer from "./Components/Footer/Footer";
 
 // Redux actions
@@ -102,6 +103,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/category/:id" element={<CategoryProducts />} />
         <Route path="/shoppage" element={<ShopPage />} />
 
         <Route

@@ -6,14 +6,12 @@ const Categories = ({ subdomain }) => {
   const [categories, setCategories] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const sliderRef = useRef(null);
 
-  const handleCategoryClick = (id) => {
-    console.log("Category ID:", id);
-  };
+
 
   const itemsPerView = 5;
   const totalSlides = Math.ceil(categories.length / itemsPerView);
@@ -169,12 +167,12 @@ const Categories = ({ subdomain }) => {
       >
         <div className="categories-slider-content">
           <div className="categories-slider-track">
-            {getCurrentCategories().map((category, index) => (
+            {getCurrentCategories().map((category) => (
               <div key={category.id} className="category-slide-item">
                 <CategoryCard
+                  id={category.id}
                   name={category.name}
                   image={category.image}
-                  onClick={() => handleCategoryClick(category.id)}
                 />
               </div>
             ))}
