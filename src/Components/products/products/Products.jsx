@@ -15,13 +15,14 @@ const Products = ({ subdomain }) => {
     }
 
     const controller = new AbortController();
-
     const fetchData = async () => {
       try {
         setLoading(true);
 
         const productsResponse = await fetch(
-          `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}/all`,
+          `${
+            import.meta.env.VITE_API
+          }/products/seller/subdomain/${subdomain}/all`,
           { signal: controller.signal }
         );
 
@@ -48,7 +49,6 @@ const Products = ({ subdomain }) => {
 
     return () => controller.abort();
   }, [subdomain]);
-
 
   const handleViewMore = () => {
     setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 8);

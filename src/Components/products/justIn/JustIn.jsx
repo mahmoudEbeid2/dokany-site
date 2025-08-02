@@ -48,7 +48,10 @@ const JustIn = ({ subdomain }) => {
   }, [products]);
 
   // Chunk new products into groups of 4 for carousel
-  const productChunks = useMemo(() => chunkProducts(newProducts, 4), [newProducts]);
+  const productChunks = useMemo(
+    () => chunkProducts(newProducts, 4),
+    [newProducts]
+  );
 
   // Custom carousel indicators
   const renderIndicators = () => (
@@ -67,7 +70,9 @@ const JustIn = ({ subdomain }) => {
   if (loading) return <Loader />;
   if (error)
     return (
-      <div className="container text-center py-5 text-danger">Error: {error}</div>
+      <div className="container text-center py-5 text-danger">
+        Error: {error}
+      </div>
     );
   if (newProducts.length === 0) return null;
 
@@ -107,4 +112,3 @@ const JustIn = ({ subdomain }) => {
 };
 
 export default JustIn;
-
