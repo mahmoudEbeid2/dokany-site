@@ -15,11 +15,14 @@ html {
 
 /* 3. Global body styling */
 body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-size: 1.6rem;
   /* = 16px */
   background-color: var(--bg);
   color: var(--text);
   transition: background-color 0.3s, color 0.3s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 4. Light mode (default) */
@@ -47,45 +50,7 @@ body {
   --hover: #bebebe;
 } */
 
-/* Default: Mobile first */
-html {
-  font-size: 50%;
-  /* 1rem = 8px */
-}
-
-/* Small tablets: ≥ 480px */
-
-/* Tablets: ≥ 768px */
-@media (min-width: 768px) {
-  html {
-    font-size: 62.5%;
-    /* 1rem = 10px */
-  }
-}
-
-/* Desktop small: ≥ 1024px */
-@media (min-width: 1024px) {
-  html {
-    font-size: 68.75%;
-    /* 1rem = 11px */
-  }
-}
-
-/* Desktop medium: ≥ 1280px */
-@media (min-width: 1280px) {
-  html {
-    font-size: 75%;
-    /* 1rem = 12px */
-  }
-}
-
-/* Desktop large: ≥ 1440px */
-@media (min-width: 1440px) {
-  html {
-    font-size: 100%;
-    /* 1rem = 16px */
-  }
-}
+/* Responsive font sizes are now handled in design-system.css */
 
 /* spinner */
 .spinner-container {

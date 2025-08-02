@@ -101,28 +101,14 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/shoppage" element={<ShopPage />} />
 
         <Route
           path="/products"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Products />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/shoppage"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <ShopPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/products/:id"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <ProductDetails />
             </ProtectedRoute>
           }
         />

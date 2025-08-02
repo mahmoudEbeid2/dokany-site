@@ -1,12 +1,239 @@
-.categories-content {
-  display: flex;
-  gap: 3rem;
-  text-align: center;
-  justify-content: center;
-  margin: 0 auto;
-  flex-wrap: wrap;
-  padding: 2rem 0;
+/* Categories Container */
+.categories-container {
+  margin: 0 var(--space-6);
+  position: relative;
 }
-.categories-container{
-    margin:0 6rem;
+
+.categories-header {
+  color: var(--text-primary);
+  margin-bottom: var(--space-8);
+}
+
+/* Slider Container */
+.categories-slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: var(--space-8) 0;
+  outline: none;
+}
+
+.categories-slider-container:focus {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
+  border-radius: var(--radius-lg);
+}
+
+/* Slider Content */
+.categories-slider-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.categories-slider-track {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-6);
+  transition: all var(--transition-normal);
+}
+
+.category-slide-item {
+  display: flex;
+  justify-content: center;
+}
+
+/* Slider Arrows */
+.slider-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.slider-arrow:hover {
+  background-color: var(--primary-600);
+  color: var(--text-inverse);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg);
+}
+
+.slider-arrow:active {
+  transform: scale(0.95);
+}
+
+.slider-arrow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.slider-arrow svg {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+/* Slider Indicators */
+.slider-indicators {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-1);
+  margin-top: var(--space-6);
+}
+
+.slider-indicator {
+  width: 0.8rem;
+  height: 0.8rem;
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: var(--gray-300);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.slider-indicator:hover {
+  background-color: var(--gray-400);
+  transform: scale(1.1);
+}
+
+.slider-indicator.active {
+  background-color: var(--text-primary);
+  transform: scale(1.2);
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .categories-slider-track {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .categories-slider-track {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .slider-arrow {
+    width: 4rem;
+    height: 4rem;
+  }
+  
+  .slider-arrow svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .categories-container {
+    margin: 0 var(--space-4);
+  }
+  
+  .categories-slider-track {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .slider-arrow {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+  
+  .slider-arrow svg {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+  
+  .slider-indicators {
+    margin-top: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-slider-track {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  
+  .slider-arrow {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+  
+  .slider-arrow svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+}
+
+/* Loading State */
+.categories-container .spinner {
+  border: 0.4rem solid var(--gray-200);
+  border-top: 0.4rem solid var(--primary-600);
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Focus States for Accessibility */
+.slider-arrow:focus,
+.slider-indicator:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
+}
+
+/* Smooth Transitions */
+.categories-slider-track {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .slider-arrow {
+    min-width: 4.4rem;
+    min-height: 4.4rem;
+  }
+  
+  .slider-indicator {
+    min-width: 1rem;
+    min-height: 1rem;
+  }
 }

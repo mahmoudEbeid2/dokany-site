@@ -10,82 +10,134 @@
 }
 
 :root {
-  --bg: #fff;
-  --main-text: #000;
-  --secondary-text: #6c7275;
-  --ternary-text: #e8ecef;
+  --bg: #ffffff;
+  --main-text: #1a1a1a;
+  --secondary-text: #6b7280;
+  --ternary-text: #f9fafb;
+  --accent-color: #3b82f6;
+  --accent-hover: #2563eb;
+  --border-color: #e5e7eb;
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-heavy: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ========================================
    MAIN CONTAINER & LAYOUT
    ======================================== */
 .container {
-  max-width: 70rem;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding-top: 5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
 }
 
 .headline {
-  font-size: 3.375rem;
-  font-weight: 500;
-  line-height: 3.625rem;
-  letter-spacing: -0.0625rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
   color: var(--main-text);
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   text-align: center;
+  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.headline::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+  border-radius: 2px;
 }
 
 .cartContent {
-  gap: 4rem;
+  gap: 2rem;
   width: 100%;
   margin: 0 auto;
   align-items: flex-start;
   justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 992px) {
+  .cartContent {
+    flex-direction: row;
+    gap: 3rem;
+  }
 }
 
 /* ========================================
    CART TABLE STYLES
    ======================================== */
 .table {
-  width: 41.5rem;
-  max-width: 41.5rem;
+  width: 100%;
+  max-width: 800px;
   flex: 1;
+  background: var(--bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
 }
 
 .tableHead,
 .tableRow {
   display: grid;
-  grid-template-columns: 5fr 3fr 2fr 2fr;
-  gap: 1rem;
+  grid-template-columns: 3fr 1fr 1fr 1fr auto;
+  gap: 1.5rem;
   align-items: center;
+  padding: 1.5rem;
 }
 
 .tableHead {
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--secondary-text);
-  font-size: 1rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.875rem;
   font-weight: 600;
-  color: var(--main-text);
+  color: var(--secondary-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .tableRow {
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--ternary-text);
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.tableRow:hover {
+  background-color: #fafafa;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
 }
 
 /* ========================================
    PRODUCT ITEM STYLES
    ======================================== */
 .tableImage {
-  width: 5rem;
-  height: 6rem;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
   overflow: hidden;
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-light);
+  background: var(--ternary-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tableImage img {
@@ -93,50 +145,78 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: var(--transition);
+}
+
+.tableImage:hover img {
+  transform: scale(1.05);
 }
 
 .productTitle {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
-  line-height: 1.375rem;
+  line-height: 1.4;
   color: var(--main-text);
   margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .removeBtn {
   cursor: pointer;
   font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1.375rem;
-  color: var(--secondary-text);
+  font-weight: 500;
+  color: #ef4444;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  margin-top: 0.25rem;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
   border: none;
   outline: none;
   background-color: transparent;
+  padding: 0.5rem;
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.removeBtn:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+  transform: translateY(-1px);
 }
 
 /* ========================================
-   QUANTITY CONTROLS
+   QUANTITY CONTROLS - MODERNIZED
    ======================================== */
 .quantityBtn {
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: var(--main-text);
   border: none;
   outline: none;
-  background-color: transparent;
-  transition: all 0.2s ease;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
+  background-color: #f3f4f6;
+  transition: var(--transition);
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  box-shadow: var(--shadow-light);
 }
 
 .quantityBtn:hover {
-  background-color: var(--ternary-text);
-  transform: scale(1.1);
+  background-color: var(--accent-color);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: var(--shadow-medium);
 }
 
 .quantityBtn:active {
@@ -144,31 +224,43 @@
 }
 
 .quantityBtn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
   transform: none;
 }
 
 .quantityBtn:disabled:hover {
-  background-color: transparent;
+  background-color: #f3f4f6;
+  color: var(--main-text);
   transform: none;
+  box-shadow: var(--shadow-light);
 }
 
 .count {
-  width: 6rem;
-  padding: 0.5rem;
-  border: 1px solid var(--secondary-text);
-  border-radius: 0.6rem;
+  width: 120px;
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--border-radius-sm);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--bg);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
+}
+
+.count:hover {
+  box-shadow: var(--shadow-medium);
 }
 
 .countNumber {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
-  line-height: 1.25rem;
+  line-height: 1.5;
   color: var(--main-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-width: 20px;
+  text-align: center;
 }
 
 /* ========================================
@@ -178,111 +270,286 @@
   color: var(--main-text);
   text-align: center;
   font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .price {
-  color: var(--main-text);
+  color: var(--secondary-text);
   text-align: center;
-  font-size: 1.125rem;
-  font-weight: 400;
-  line-height: 1.875rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  text-decoration: line-through;
 }
 
 /* ========================================
-   CART SUMMARY (STICKY SIDEBAR)
+   CART SUMMARY (MODERNIZED)
    ======================================== */
 .totalContainer {
   width: 100%;
-  max-width: 25.81rem;
-  min-height: 14.25rem;
-  border-radius: 0.375rem;
-  border: 1px solid var(--secondary-text);
+  max-width: 320px;
+  min-height: 250px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
   display: flex;
   padding: 1.5rem;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  position: sticky;
-  top: 2rem;
-  background-color: var(--bg);
+  background: var(--bg);
   z-index: 100;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-medium);
   align-self: flex-start;
+  backdrop-filter: blur(10px);
 }
 
 .totalTitle {
   font-size: 1.25rem;
-  font-weight: 500;
-  line-height: 1.75rem;
+  font-weight: 600;
+  line-height: 1.4;
   color: var(--main-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  margin-bottom: 0.25rem;
 }
 
 .totalPrice {
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 2rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
   color: var(--main-text);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 0.75rem 0;
+  border-top: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
 }
 
 .cheackOutBtn {
   width: 100%;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: var(--border-radius-sm);
   border: none;
   outline: none;
-  background-color: var(--main-text);
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
   color: var(--bg);
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  line-height: 1.5rem;
+  line-height: 1.5;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.cheackOutBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
 .cheackOutBtn:hover {
-  background-color: var(--secondary-text);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-heavy);
+}
+
+.cheackOutBtn:hover::before {
+  left: 100%;
+}
+
+.cheackOutBtn:active {
+  transform: translateY(0);
 }
 
 /* ========================================
-   RESPONSIVE DESIGN
+   ERROR & EMPTY STATES
    ======================================== */
-
-/* Small tablets: ≥ 480px */
-@media (min-width: 480px) {
-  html {
-    font-size: 65%; /* 1rem = 9px */
-  }
+.errorContainer {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--border-color);
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-/* Tablets: ≥ 765px */
-@media (min-width: 765px) {
-  html {
-    font-size: 66%; /* 1rem = 10px */
-  }
+.errorContainer h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--main-text);
+  margin: 1rem 0 0.5rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+.errorContainer p {
+  color: var(--secondary-text);
+  margin-bottom: 2rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.retryBtn {
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+  color: var(--bg);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-light);
+}
+
+.retryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.emptyCart {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: var(--bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--border-color);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.emptyCart h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--main-text);
+  margin: 1.5rem 0 0.5rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.emptyCart p {
+  color: var(--secondary-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - IMPROVED
+   ======================================== */
 
 /* Mobile & Small tablets: ≤ 768px */
 @media (max-width: 768px) {
-  .totalContainer {
-    width: 100%;
-    max-width: 41.5rem;
-    position: static;
-    margin: 2rem auto 0;
-    top: auto;
+  .container {
+    padding: 1rem;
+  }
+  
+  .headline {
+    font-size: 2rem;
+    margin-bottom: 2rem;
   }
   
   .cartContent {
     flex-direction: column;
     align-items: center;
-    padding-right: 0;
+    gap: 2rem;
+  }
+  
+  .totalContainer {
+    width: 100%;
+    max-width: 100%;
+    position: static;
+    margin: 2rem auto 0;
+    order: 1;
+    border-radius: var(--border-radius-sm);
+    padding: 1.25rem;
+    min-height: 200px;
+  }
+  
+  .table {
+    max-width: 100%;
+    border-radius: var(--border-radius-sm);
+  }
+  
+  .tableHead,
+  .tableRow {
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .tableImage {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .productTitle {
+    font-size: 0.875rem;
+  }
+  
+  .count {
+    width: 100px;
+    padding: 0.5rem;
+  }
+  
+  .countNumber {
+    font-size: 0.875rem;
+  }
+  
+  .quantityBtn {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .subtotal,
+  .price {
+    font-size: 0.875rem;
+  }
+  
+  .totalTitle {
+    font-size: 1.125rem;
+  }
+  
+  .totalPrice {
+    font-size: 1.5rem;
+    padding: 0.5rem 0;
+  }
+  
+  .cheackOutBtn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Tablets: 769px - 991px */
+@media (min-width: 769px) and (max-width: 991px) {
+  .cartContent {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .totalContainer {
+    max-width: 400px;
+    position: static;
+    margin: 2rem auto 0;
+    order: 1;
+    padding: 1.5rem;
   }
   
   .table {
@@ -290,28 +557,29 @@
   }
 }
 
-/* Desktop small: ≥ 916px */
-@media (min-width: 916px) {
-  html {
-    font-size: 75%; /* 1rem = 10px */
+/* Desktop: ≥ 992px */
+@media (min-width: 992px) {
+  .cartContent {
+    flex-direction: row;
+    align-items: flex-start;
   }
   
   .totalContainer {
-    align-self: flex-start;
+    position: sticky;
+    top: 2rem;
+    order: 0;
   }
 }
 
-/* Desktop medium: ≥ 1024px */
-@media (min-width: 1024px) {
-  html {
-    font-size: 85%; /* 1rem = 11px */
+/* Large Desktop: ≥ 1200px */
+@media (min-width: 1200px) {
+  .container {
+    padding: 3rem 2rem;
   }
-}
-
-/* Desktop large: ≥ 1280px */
-@media (min-width: 1280px) {
-  html {
-    font-size: 100%; /* 1rem = 12px */
+  
+  .headline {
+    font-size: 3rem;
+    margin-bottom: 4rem;
   }
 }
 

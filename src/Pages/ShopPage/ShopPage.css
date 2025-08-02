@@ -1,38 +1,202 @@
-:root {
-  --bg: #fff;
-  --text: #121212;
-  --text2: #141718;
-  --text-gray: #6C7275;
+/* Shop Page Styles */
+.shop-hero {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 3rem 2rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
 }
 
+.shop-hero h1 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
 
-.shop-hero{
-    background-image: url(../../images/shopePage.png);
-    background-size: cover;
-    background-position: center;
-    padding: 6rem 0;
+.shop-hero p {
+  font-size: 1.1rem;
+  max-width: 600px;
+  text-align: center;
 }
-.btn-primary2{
-    background-color: var(--bg)!important;
-    color: var(--text) !important;
-    border: 1px solid var(--text) !important;
-    border: 1px solid var(--text) !important;
-    padding: .375rem 2.5rem !important;
-    border-radius: 5rem !important;
+
+/* Filters Section */
+.form-label {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
- .btn-primary2:hover{
-    background-color: var(--text) !important;
-    color: var(--bg) !important;
+
+.form-control,
+.form-select {
+  border: 2px solid #e9ecef;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  font-size: 1rem;
 }
-.filter-text{
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.form-control::placeholder {
+  color: #6c757d;
+  opacity: 0.7;
+}
+
+/* Products Section */
+.products-section {
+  min-height: 400px;
+}
+
+/* Product Grid Improvements */
+.products-section .row {
+  margin: 0;
+}
+
+.products-section .col-12,
+.products-section .col-sm-6,
+.products-section .col-md-4,
+.products-section .col-lg-3 {
+  padding: 0.5rem;
+}
+
+/* Load More Button */
+.btn-dark {
+  background-color: var(--primary-600);
+  border-color: var(--primary-600);
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-dark:hover {
+  background-color: var(--primary-700);
+  border-color: var(--primary-700);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-dark:active {
+  transform: translateY(0);
+}
+
+/* Loading Spinner */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Empty State */
+.text-muted {
+  color: #6c757d !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .shop-hero {
+    padding: 2rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .shop-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .shop-hero p {
     font-size: 1rem;
-    color: var(--text-gray);
-    font-weight: 600;
-    text-transform: uppercase;
+  }
+  
+  .form-control,
+  .form-select {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .btn-dark {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .products-section .col-12,
+  .products-section .col-sm-6 {
+    padding: 0.25rem;
+  }
 }
-.filter-input{
-    border-radius: 0.5rem;
-    border: 2px solid var(--text-gray) !important;
-    padding: .5rem !important;
-    font-size: 1rem
+
+@media (max-width: 576px) {
+  .shop-hero {
+    padding: 1.5rem 1rem;
+  }
+  
+  .shop-hero h1 {
+    font-size: 1.75rem;
+  }
+  
+  .products-section .col-12 {
+    padding: 0.25rem;
+  }
+}
+
+/* Animation for products loading */
+.products-section .row {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover effects for form elements */
+.form-control:hover,
+.form-select:hover {
+  border-color: #ced4da;
+}
+
+/* Focus states for accessibility */
+.form-control:focus-visible,
+.form-select:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar for select elements */
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+}
+
+/* Breadcrumb styling */
+.shop-hero p span {
+  color: var(--primary-500);
+  font-weight: 500;
+}
+
+/* Filter section spacing */
+.row.mb-5 > div {
+  margin-bottom: 1rem;
+}
+
+/* Button states */
+.btn-dark:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btn-dark:disabled:hover {
+  transform: none;
+  box-shadow: none;
 }

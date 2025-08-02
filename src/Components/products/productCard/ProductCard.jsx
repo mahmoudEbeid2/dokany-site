@@ -146,7 +146,7 @@ const ProductCard = ({ product, isNew = false }) => {
             )}
             {discountPercentage > 0 && (
               <div className={`${styles.badge} ${styles.discountBadge}`}>
-                {`-${discountPercentage}%`}
+                {`-${Math.round(discountPercentage)}%`}
               </div>
             )}
           </div>

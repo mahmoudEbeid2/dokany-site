@@ -13,18 +13,30 @@
   background-color: transparent;
   font-family: sans-serif;
   cursor: pointer;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.productCardContainer:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .productCardImageWrapper {
   position: relative;
   aspect-ratio: 1 / 1.2;
   overflow: hidden;
-  background-color: var(--color-light-gray-bg);
+  background-color: #ffffff;
+  height: 280px;
+  width: 100%;
 }
 .productImage {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 0.3s ease-in-out;
 }
 .productCardImageWrapper:hover .productImage {
@@ -49,10 +61,13 @@
   color: #121212;
   border-radius: 0.25rem;
   text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .newBadge {
-  background-color: #fff;
+  background-color: #000000;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .discountBadge {
@@ -197,5 +212,21 @@
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+/* Responsive Design Improvements - Fixed Height */
+@media (max-width: 768px) {
+  .productCardContainer {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .productCardContainer {
+    margin-bottom: 0.5rem;
+  }
+  .productInfo {
+    margin-top: 0.5rem;
   }
 }

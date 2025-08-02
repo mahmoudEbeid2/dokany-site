@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Carousel, Modal } from 'react-bootstrap';
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
-import styles from './ProductDetails.module.css'; // ملف CSS Module
+import styles from './ProductDetails.module.css';
 
 const ProductImagesGallery = ({ product_images, created_date, discount }) => {
     const allImages = product_images.slice(0,3);
