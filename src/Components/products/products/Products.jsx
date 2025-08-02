@@ -6,7 +6,7 @@ const Products = ({ subdomain }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visibleProducts, setVisibleProducts] = useState(4);
+  const [visibleProducts, setVisibleProducts] = useState(8);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +59,9 @@ const Products = ({ subdomain }) => {
 
   return (
     <div className="container py-5">
-      <h2 className="text-4xl font-bold text-center text-uppercase py-3">Discounted Products</h2>
+      <h2 className="text-4xl font-bold text-center text-uppercase py-3">
+        Discounted Products
+      </h2>
       <div className="row g-3">
         {allProducts.slice(0, visibleProducts).map((product) => (
           <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={product.id}>

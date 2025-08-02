@@ -21,6 +21,7 @@ const RecommendedProducts = ({ categoryId, currentProductId }) => {
 
       try {
         const response = await axios.get(requestUrl);
+
         const products = response.data || [];
 
         const filteredProducts = products.filter(
