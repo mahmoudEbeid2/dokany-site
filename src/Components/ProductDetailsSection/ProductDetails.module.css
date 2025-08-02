@@ -97,34 +97,32 @@
 
 .newBadge {
     position: absolute;
-    top: 2rem;
-    left: 2rem;
-    width: 4.9375rem;
-    height: 2.125rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.25rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #000000;
     border-radius: 0.25rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    background-color: var(--bg);
-    color: var(--text);
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 }
 
 .discountBadge {
     position: absolute;
-    top: 4.6875rem;
-    left: 2rem;
-    width: 4.9375rem;
-    height: 2.125rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    top: 3.5rem;
+    left: 1rem;
+    padding: 0.25rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #38cb89;
     border-radius: 0.25rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    background-color: var(--secondary-color);
-    color: var(--bg);
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 }
 
 .productContent {
@@ -136,10 +134,10 @@
 }
 
 .productTitle {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 500;
     color: var(--text);
-    line-height: 2.75rem;
+    line-height: 2.25rem;
     letter-spacing: -0.025rem;
     max-width: 100%;
     overflow: hidden;

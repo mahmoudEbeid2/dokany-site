@@ -41,6 +41,7 @@ function CartItem({ item, onDelete, onUpdateQuantity, isUpdating }) {
           onClick={() => {
             const newQuantity = Math.max(1, (item?.quantity || 1) - 1);
             onUpdateQuantity(item.id, newQuantity);
+            if (newQuantity === 0) onDelete(item.id);
           }}
         >
           {isUpdating ? "..." : "-"}

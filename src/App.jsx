@@ -182,13 +182,15 @@ function App() {
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={true}
-        closeOnClick
+        closeOnClick={false}
         rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={true}
         theme="light"
         limit={3}
+        closeButton={true}
+        enableMultiContainer={false}
       />
     </>
   );

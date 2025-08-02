@@ -26,7 +26,7 @@ const ProductImagesGallery = ({ product_images = [], created_date, discount = 0 
     <>
       {isNew && index === 0 && <span className={styles.newBadge}>New</span>}
       {discount > 0 && index === 0 && (
-        <span className={styles.discountBadge}>-{discount}%</span>
+        <span className={styles.discountBadge}>-{Math.round(discount)}%</span>
       )}
     </>
   );

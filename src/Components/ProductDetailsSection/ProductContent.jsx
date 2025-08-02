@@ -142,7 +142,9 @@ const ProductContent = ({ product, reviews }) => {
   return (
     <div className={styles.productContent}>
       <h1 className={styles.productTitle}>{title}</h1>
-      <p className={styles.productDescription}>{description}</p>
+      <p className={styles.productDescription}>
+        {description.split(' ').slice(0, 200).join(' ')}
+      </p>
 
       <div className="d-flex align-items-center gap-2">
         <span className={styles.productPrice}>${finalPrice}</span>
