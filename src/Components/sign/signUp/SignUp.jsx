@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SignUp.module.css";
 import { Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
@@ -32,6 +32,7 @@ const signupSchema = z
     message: "Passwords do not match.",
     path: ["confirmPassword"],
   });
+
 const initialState = {
   f_name: "",
   l_name: "",
@@ -43,7 +44,7 @@ const initialState = {
   country: "",
   password: "",
   confirmPassword: "",
-  seller_id: "cmds44va80016rumfdbn7uya3",
+  seller_id: "",
   profile_imge: null,
   agreedToTerms: false,
 };
@@ -56,6 +57,45 @@ const SignUp = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState(null);
+
+  useEffect(() => {
+    const fetchSellerId = async () => {
+      const subdomain = window.location.hostname.split(".")[0];
+
+      if (subdomain === "localhost" || subdomain === "www") {
+        setApiError(
+          "Cannot create an account from this URL. Please use a seller's store URL."
+        );
+        return;
+      }
+
+      try {
+        const apiUrl = `${
+          import.meta.env.VITE_API
+        }/api/seller/get-id/${subdomain}`;
+        const response = await axios.get(apiUrl);
+
+        if (response.data.seller_id) {
+          setFormData((prev) => ({
+            ...prev,
+            seller_id: response.data.seller_id,
+          }));
+        } else {
+          setApiError("This seller's store could not be verified.");
+        }
+      } catch (error) {
+        console.error(
+          "Failed to fetch seller ID:",
+          error.response?.data?.error || error.message
+        );
+        setApiError(
+          "This seller store does not exist. Cannot create an account."
+        );
+      }
+    };
+
+    fetchSellerId();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -78,6 +118,13 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.seller_id) {
+      // EDITED: Translated from Arabic
+      setApiError(
+        "Could not verify seller information. Please refresh the page or use a valid store URL."
+      );
+      return;
+    }
     setApiError(null);
     setErrors({});
     const result = signupSchema.safeParse(formData);
@@ -318,22 +365,6 @@ const SignUp = () => {
                 )}
               </div>
             </div>
-            {/* <div className={styles.formRow}>
-                <div className={styles.inputGroup}>
-                <label htmlFor="seller_id">Seller ID</label>
-                <input
-                  type="text"
-                  id="seller_id"
-                  name="seller_id"
-                  value={formData.seller_id}
-                  onChange={handleChange}
-                  placeholder="Enter Seller ID"
-                />
-                {errors.seller_id && (
-                  <p style={errorStyle}>{errors.seller_id[0]}</p>
-                )}
-              </div>
-            </div> */}
             <div className={styles.formRow}>
               <div className={styles.inputGroup}>
                 <label htmlFor="password">Password</label>
