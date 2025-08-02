@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
+import { ShoppingCart, AlertCircle, RefreshCw } from "lucide-react";
 import styles from "./cart.module.css";
 import CartTable from "../../Components/Cart/CartTable";
 import Total from "../../Components/Cart/Total";
@@ -21,7 +22,6 @@ function Cart() {
       try {
         setLoading(true);
         setError(null);
-        //   get the cart items from the api using custmoer token
         const response = await fetch(`${import.meta.env.VITE_API}/cart`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -37,13 +37,13 @@ function Cart() {
       } catch (error) {
         console.error("Error fetching cart items:", error);
         setError(error.message);
-        toast.error("Failed to load!");
+        toast.error("Failed to load cart items!");
       } finally {
         setLoading(false);
       }
     }
     fetchCartItems();
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   const deleteCartItem = async (itemId) => {
     try {
@@ -58,19 +58,17 @@ function Cart() {
       );
 
       if (response.ok) {
-        // Remove item from Redux store
         dispatch(deleteFromCart(itemId));
-        toast.success("Item removed!");
+        toast.success("Item removed from cart!");
       } else {
         throw new Error("Failed to remove item");
       }
     } catch (error) {
       console.error("Error deleting cart item:", error);
-      toast.error("Failed to remove!");
+      toast.error("Failed to remove item!");
     }
   };
 
-  // api/stripe/create-checkout-session
   const handleCheckout = async () => {
     try {
       const response = await fetch(
@@ -91,13 +89,12 @@ function Cart() {
       }
     } catch (error) {
       console.error("Error initiating checkout:", error);
-      toast.error("Failed to checkout!");
+      toast.error("Failed to proceed to checkout!");
     }
   };
 
   const updateQuantity = async (itemId, newQuantity) => {
     try {
-      // Add item to updating set
       setUpdatingItems((prev) => new Set(prev).add(itemId));
 
       const response = await fetch(
@@ -115,11 +112,9 @@ function Cart() {
       );
 
       if (response.ok) {
-        // Update Redux store based on quantity change
         if (newQuantity === 0) {
           dispatch(deleteFromCart(itemId));
         } else {
-          // For simplicity, we'll just update the cart from API
           const cartResponse = await fetch(`${import.meta.env.VITE_API}/cart`, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -130,15 +125,14 @@ function Cart() {
             dispatch(setIntialCart(cartData.cart || cartData));
           }
         }
-        toast.success("Quantity updated!");
+        toast.success("Quantity updated successfully!");
       } else {
         throw new Error("Failed to update quantity");
       }
     } catch (error) {
       console.error("Error updating quantity:", error);
-      toast.error("Failed to update!");
+      toast.error("Failed to update quantity!");
     } finally {
-      // Remove item from updating set
       setUpdatingItems((prev) => {
         const newSet = new Set(prev);
         newSet.delete(itemId);
@@ -147,37 +141,48 @@ function Cart() {
     }
   };
 
-  return (
-    <>
-      {loading && <Loader />}
-      <div className={styles.container}>
-        <h1 className={styles.headline}>Cart</h1>
+  if (loading) {
+    return <Loader />;
+  }
 
-        {error ? (
-          <div className="text-center text-danger p-4">
-            <p>Error: {error}</p>
-            <button
-              className="btn btn-primary"
-              onClick={() => window.location.reload()}
-            >
-              Retry
-            </button>
-          </div>
-        ) : (
-          <div
-            className={`${styles.cartContent} d-flex flex-column flex-md-row align-items-center`}
-          >
-            <CartTable
-              cartItems={cart}
-              onDeleteItem={deleteCartItem}
-              onUpdateQuantity={updateQuantity}
-              updatingItems={updatingItems}
-            />
-            <Total cartItems={cart} onPay={handleCheckout} />
-          </div>
-        )}
+  return (
+    <div className={styles.container}>
+      <div className={styles.headline}>
+        <ShoppingCart size={40} style={{ marginRight: '1rem', display: 'inline-block' }} />
+        Shopping Cart
       </div>
-    </>
+
+      {error ? (
+        <div className={styles.errorContainer}>
+          <AlertCircle size={48} color="#dc3545" />
+          <h3>Something went wrong</h3>
+          <p>{error}</p>
+          <button
+            className={styles.retryBtn}
+            onClick={() => window.location.reload()}
+          >
+            <RefreshCw size={16} />
+            Try Again
+          </button>
+        </div>
+      ) : cart.length === 0 ? (
+        <div className={styles.emptyCart}>
+          <ShoppingCart size={64} color="#6c7275" />
+          <h3>Your cart is empty</h3>
+          <p>Add some products to get started!</p>
+        </div>
+      ) : (
+        <div className={styles.cartContent}>
+          <CartTable
+            cartItems={cart}
+            onDeleteItem={deleteCartItem}
+            onUpdateQuantity={updateQuantity}
+            updatingItems={updatingItems}
+          />
+          <Total cartItems={cart} onPay={handleCheckout} />
+        </div>
+      )}
+    </div>
   );
 }
 

@@ -58,10 +58,10 @@ const BestSellers = ({ subdomain }) => {
 
   return (
     <div className="container py-5">
-      <h2 className="display-5 fw-bold  mb-5">Best sellers</h2>
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+      <h2 className="text-4xl font-bold text-center text-uppercase py-3">Best Sellers</h2>
+      <div className="row g-3">
         {bestSellers.slice(0, visibleProducts).map((product) => (
-          <div className="col" key={product.id}>
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={product.id}>
             <ProductCard product={product} />
           </div>
         ))}
