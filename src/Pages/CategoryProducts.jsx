@@ -84,9 +84,9 @@ const CategoryProducts = () => {
           </div>
         ) : (
           <>
-            <div className="row gy-4 category-products-grid justify-content-center">
+            <div className="row  m-3 justify-content-center">
               {products.map((product) => (
-                <div className="col-lg-2 col-md-3 col-sm-4" key={product.id}>
+                <div className="col-lg-3 col-md-3 col-sm-4 mb-4" key={product.id}>
                   <ProductCard product={product} />
                 </div>
               ))}
