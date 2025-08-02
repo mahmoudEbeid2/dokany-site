@@ -2,12 +2,15 @@ import React from "react";
 import styles from "./contact.module.css";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import Loader from "../../Components/Loader/Loader";
 
 function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const {sellerInfo} = useSelector((state) => state.seller);
 
   const subdomain = window.location.hostname.split(".")[0];
   function handleSubmit(e) {
@@ -53,6 +56,10 @@ function Contact() {
       });
   }
 
+  if(!sellerInfo){
+    return <Loader/>
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -72,7 +79,7 @@ function Contact() {
               </div>
               <div className={styles.contactDetails}>
                 <h3 className={styles.contactTitle}>Phone Number</h3>
-                <p className={styles.contactMethod}>+201033599984</p>
+                <p className={styles.contactMethod}>{sellerInfo.phone}</p>
               </div>
             </div>
 
@@ -82,7 +89,7 @@ function Contact() {
               </div>
               <div className={styles.contactDetails}>
                 <h3 className={styles.contactTitle}>Email Address</h3>
-                <p className={styles.contactMethod}>zTc9D@example.com</p>
+                <p className={styles.contactMethod}>{sellerInfo.email}</p>
               </div>
             </div>
 

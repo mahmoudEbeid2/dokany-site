@@ -32,6 +32,9 @@ import {
 
 // Styles
 import "./App.css";
+import { setSellerInfo } from "./features/seller/sellerSlice.js";
+
+const api = import.meta.env.VITE_API;
 
 function App() {
   const isAuthenticated = localStorage.getItem("token");
@@ -42,6 +45,8 @@ function App() {
 
   const isSignPage =
     location.pathname === "/signin" || location.pathname === "/signup";
+  
+  const subdomain = window.location.hostname.split(".")[0];
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -49,7 +54,7 @@ function App() {
     const controller = new AbortController();
 
     axios
-      .get("https://dokany-api-production.up.railway.app/api/customer/me", {
+      .get(`${api}/api/customer/me`, {
         headers: {
           Authorization: `Bearer ${isAuthenticated}`,
         },
@@ -77,7 +82,35 @@ function App() {
     const controller = new AbortController();
 
     axios
-      .get("https://dokany-api-production.up.railway.app/cart", {
+      .get(`${api}/api/seller/get-id/${subdomain}`, {
+        headers: {
+          Authorization: `Bearer ${isAuthenticated}`,
+        },
+        signal: controller.signal,
+      })
+      .then((response) => {
+        dispatch(setSellerInfo(response.data));
+      })
+      .catch((error) => {
+        if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
+          console.log("Request canceled:", error.message);
+        } else {
+          console.error("Fetch error:", error);
+        }
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [isAuthenticated, dispatch]);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const controller = new AbortController();
+
+    axios
+      .get(`${api}/cart`, {
         headers: {
           Authorization: `Bearer ${isAuthenticated}`,
         },
@@ -105,7 +138,7 @@ function App() {
     const controller = new AbortController();
 
     axios
-      .get("https://dokany-api-production.up.railway.app/favorites", {
+      .get(`${api}/favorites`, {
         headers: {
           Authorization: `Bearer ${isAuthenticated}`,
         },
