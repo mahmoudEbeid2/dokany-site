@@ -92,7 +92,7 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
       <button
         type="submit"
         className={styles.btnPrimary1}
-        disabled={loading || !comment.trim()}
+        disabled={loading }
         style={{ opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
       >
         {loading ? 'Submitting...' : 'Submit Review'}
