@@ -86,15 +86,7 @@ function Contact() {
               </div>
             </div>
 
-            <div className={styles.contactInfo}>
-              <div className={styles.iconWrapper}>
-                <i className={`bi bi-geo-alt ${styles.icon}`}></i>
-              </div>
-              <div className={styles.contactDetails}>
-                <h3 className={styles.contactTitle}>Location</h3>
-                <p className={styles.contactMethod}>Cairo, Egypt</p>
-              </div>
-            </div>
+
           </div>
         </div>
 
