@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import ProductDetailsSection from '../Components/ProductDetailsSection/ProductDetailsSection';
-import ReviewsSection from '../Components/ReviewSection/ReviewsSection';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import Loader from '../Components/Loader/Loader';
-import { ToastContainer } from 'react-toastify';
+import React, { useEffect, useState } from "react";
+import ProductDetailsSection from "../Components/ProductDetailsSection/ProductDetailsSection";
+import ReviewsSection from "../Components/ReviewSection/ReviewsSection";
+import RecommendedProducts from "../Components/products/recomendedProducts/RecommendedProducts";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import Loader from "../Components/Loader/Loader";
+import { ToastContainer } from "react-toastify";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -13,38 +14,38 @@ function ProductDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`https://dokany-api-production.up.railway.app/products/${id}`)
-      .then((response) => {
-        setProduct(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching product:', error);
-        setLoading(false);
-      });
-  }, []);
+    const fetchProductData = async () => {
+      try {
+        setLoading(true);
+        const productResponse = await axios.get(
+          `https://dokany-api-production.up.railway.app/products/${id}`
+        );
+        setProduct(productResponse.data);
 
-  useEffect(() => {
-    axios
-      .get(`https://dokany-api-production.up.railway.app/reviews/${id}`,)
-      .then((response) => {
-        setProductReviews(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching product reviews:', error);
-      });
-  }, []);
+        const reviewsResponse = await axios.get(
+          `https://dokany-api-production.up.railway.app/reviews/${id}`
+        );
+        setProductReviews(reviewsResponse.data);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProductData();
+  }, [id]);
 
   if (loading) return <Loader />;
 
-  if (!product) return <p style={{ padding: '2rem', textAlign: 'center' }}>Product not found.</p>;
-
-  console.log(product);
+  if (!product)
+    return (
+      <p style={{ padding: "2rem", textAlign: "center" }}>Product not found.</p>
+    );
 
   return (
     <div>
-      <ToastContainer position="top-right"
+      <ToastContainer
+        position="top-right"
         autoClose={2000}
         hideProgressBar={false}
         newestOnTop={true}
@@ -53,12 +54,23 @@ function ProductDetails() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light" />
+        theme="light"
+      />
       <ProductDetailsSection product={product} reviews={productReviews} />
-      <ReviewsSection productId={id} reviews={productReviews} handeledReviews={setProductReviews} />
+      <ReviewsSection
+        productId={id}
+        reviews={productReviews}
+        handeledReviews={setProductReviews}
+      />
+
+      {product.category_id && (
+        <RecommendedProducts
+          categoryId={product.category_id}
+          currentProductId={product.id}
+        />
+      )}
     </div>
   );
 }
 
 export default ProductDetails;
-
