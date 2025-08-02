@@ -8,7 +8,6 @@ import CartTable from "../../Components/Cart/CartTable";
 import Total from "../../Components/Cart/Total";
 import Loader from "../../Components/Loader/Loader";
 import { setIntialCart, deleteFromCart, addToCart, removeFromCart, updateCart } from "../../features/user/userSlice";
-import { fi } from "zod/v4/locales";
 
 function Cart() {
   const dispatch = useDispatch();
