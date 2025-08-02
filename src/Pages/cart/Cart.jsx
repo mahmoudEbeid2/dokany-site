@@ -7,44 +7,17 @@ import styles from "./cart.module.css";
 import CartTable from "../../Components/Cart/CartTable";
 import Total from "../../Components/Cart/Total";
 import Loader from "../../Components/Loader/Loader";
-import { setIntialCart, deleteFromCart } from "../../features/user/userSlice";
+import { setIntialCart, deleteFromCart, addToCart, removeFromCart, updateCart } from "../../features/user/userSlice";
+import { fi } from "zod/v4/locales";
 
 function Cart() {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [updatingItems, setUpdatingItems] = useState(new Set());
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    async function fetchCartItems() {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await fetch(`${import.meta.env.VITE_API}/cart`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        dispatch(setIntialCart(data.cart || data));
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-        setError(error.message);
-        toast.error("Failed to load cart items!");
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCartItems();
-  }, [dispatch, token]);
-
+  console.log("Cart items:", cart);
   const deleteCartItem = async (itemId) => {
     try {
       const response = await fetch(
@@ -95,7 +68,7 @@ function Cart() {
 
   const updateQuantity = async (itemId, newQuantity) => {
     try {
-      setUpdatingItems((prev) => new Set(prev).add(itemId));
+      // setUpdatingItems((prev) => new Set(prev).add(itemId));
 
       const response = await fetch(
         `${import.meta.env.VITE_API}/cart/update/${itemId}`,
@@ -112,18 +85,11 @@ function Cart() {
       );
 
       if (response.ok) {
-        if (newQuantity === 0) {
-          dispatch(deleteFromCart(itemId));
+        const data = await response.json();
+        if (newQuantity === 1) {
+          dispatch(deleteFromCart(data.id));
         } else {
-          const cartResponse = await fetch(`${import.meta.env.VITE_API}/cart`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          if (cartResponse.ok) {
-            const cartData = await cartResponse.json();
-            dispatch(setIntialCart(cartData.cart || cartData));
-          }
+          dispatch(updateCart({ product_id: data.product_id, quantity: data.quantity,final_price: data.final_price }));
         }
         toast.success("Quantity updated successfully!");
       } else {
@@ -141,7 +107,7 @@ function Cart() {
     }
   };
 
-  if (loading) {
+  if (!cart) {
     return <Loader />;
   }
 
