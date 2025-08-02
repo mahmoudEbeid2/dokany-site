@@ -3,7 +3,6 @@ import ProductCard from "../productCard/ProductCard";
 import Loader from "../../Loader/Loader";
 import axios from "axios";
 
-// We no longer need the getToken function
 
 const RecommendedProducts = ({ categoryId, currentProductId }) => {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
@@ -21,12 +20,7 @@ const RecommendedProducts = ({ categoryId, currentProductId }) => {
       const requestUrl = `${import.meta.env.VITE_API}/categories/${categoryId}`;
 
       try {
-        // The request is now simple and public, without any headers
         const response = await axios.get(requestUrl);
-
-        // NOTE: Based on your backend controller, the products are nested
-        // inside the response. If it still fails, check if you should use
-        // response.data.products instead of response.data
         const products = response.data || [];
 
         const filteredProducts = products.filter(
