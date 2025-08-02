@@ -104,6 +104,7 @@ const ProductCard = ({ product, isNew = false }) => {
         dispatch(
           addToCart({
             ...res.cartItem,
+            quantity: 1,
             product,
           })
         );
