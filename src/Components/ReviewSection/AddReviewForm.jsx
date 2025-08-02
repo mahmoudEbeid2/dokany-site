@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { toast } from 'react-toastify';
+
 import styles from './ReviewSection.module.css';
 import axios from 'axios';
 
@@ -33,6 +34,8 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!comment.trim()) return toast.warn("Please write a comment.");
+   
+    if (!token) return toast.error('Please log in to add a review.');
 
     setLoading(true);
 
@@ -89,7 +92,7 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
       <button
         type="submit"
         className={styles.btnPrimary1}
-        disabled={loading || !comment.trim()}
+        disabled={loading }
         style={{ opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
       >
         {loading ? 'Submitting...' : 'Submit Review'}

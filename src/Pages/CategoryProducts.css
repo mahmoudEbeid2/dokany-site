@@ -10,6 +10,7 @@
   font-weight: 600;
   font-size: 2rem;
   text-align: center;
+  text-transform: capitalize;
 }
 
 .category-products-empty {

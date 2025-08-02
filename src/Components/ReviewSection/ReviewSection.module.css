@@ -1,5 +1,5 @@
 .headingReview {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: var(--text);
 }
 
@@ -7,7 +7,10 @@
   color: var(--text);
   font-size: 1.2rem;
 }
-
+.ratingStar {
+  color: var(--text);
+  font-size: 1rem;
+}
 .addReviewStars{
   color: var(--text);
   font-size: 1.3rem;
