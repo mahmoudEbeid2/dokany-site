@@ -1,276 +1,248 @@
-import React, { useState } from 'react';
-import styles from './ProductDetails.module.css'; // <-- CSS Module
+import {memo, useMemo, useState } from 'react';
+import styles from './ProductDetails.module.css';
 import ProductDiscountTime from './ProductDiscountTime';
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import { RiCouponLine } from "react-icons/ri";
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, addToWatchlist, removeFromWatchlist } from '../../features/user/userSlice';
+import {
+  addToCart,
+  addToWatchlist,
+  removeFromWatchlist,
+} from '../../features/user/userSlice';
+const api = import.meta.env.VITE_API;
 
 
 const ProductContent = ({ product, reviews }) => {
-    const { title, description, price, discount, stock, category, id, averageRating, } = product;
-    const dispatch = useDispatch();
-    const { watchlist } = useSelector(state => state.user)
+  const {
+    title, description, price, discount, stock,
+    category, id, averageRating
+  } = product;
 
-    const currentWatchlist = watchlist.find(item => item.product_id === id);
-    console.log(currentWatchlist);
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
+  const { watchlist } = useSelector((state) => state.user);
+  const currentWatchlist = watchlist.find((item) => item.product_id === id);
+  const subdomain = window.location.hostname.split(".")[0];
 
-    const numReviews = reviews.length;
+  const [productCount, setProductCount] = useState(0);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponDiscountValue, setCouponDiscountValue] = useState(0);
+  const [loadingCoupon, setLoadingCoupon] = useState(false);
+  const [addingToCart, setAddingToCart] = useState(false);
 
-    const token = localStorage.getItem("token")
+  const headers = useMemo(() => ({
+    Authorization: `Bearer ${token}`,
+  }), [token]);
 
-    const [productCount, setProductCount] = useState(0);
-    const [couponCode, setCouponCode] = useState('');
-    const [couponDiscountValue, setCouponDiscountValue] = useState(0);
+  const renderStars = useMemo(() => {
+    const stars = [];
+    const full = Math.floor(averageRating);
+    const half = averageRating - full >= 0.5;
+    const empty = 5 - full - (half ? 1 : 0);
 
+    for (let i = 0; i < full; i++)
+      stars.push(<FaStar key={`full-${i}`} className={`${styles.ratingStar} ${styles.full}`} />);
+    if (half)
+      stars.push(<FaStarHalfAlt key="half" className={`${styles.ratingStar} ${styles.half}`} />);
+    for (let i = 0; i < empty; i++)
+      stars.push(<FaRegStar key={`empty-${i}`} className={`${styles.ratingStar} ${styles.empty}`} />);
 
-    const incrementProductCount = () => {
-        if (productCount < product.stock) {
-            setProductCount(productCount + 1);
-        }
-    };
+    return stars;
+  }, [averageRating]);
 
-    const decrementProductCount = () => {
-        if (productCount > 0) {
-            setProductCount(productCount - 1);
-        }
-    };
+  const finalPrice = useMemo(() => {
+    const discounted = price * (1 - discount / 100);
+    return (discounted * (1 - couponDiscountValue / 100)).toFixed(2);
+  }, [price, discount, couponDiscountValue]);
 
-    const renderStars = (rating) => {
-        const fullStars = Math.floor(rating);
-        const hasHalf = rating - fullStars >= 0.5;
-        const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
+  const incrementProductCount = () => {
+    if (productCount < stock) setProductCount((c) => c + 1);
+  };
 
-        const stars = [];
+  const decrementProductCount = () => {
+    if (productCount > 0) setProductCount((c) => c - 1);
+  };
 
-        for (let i = 0; i < fullStars; i++) {
-            stars.push(<FaStar key={`full-${i}`} className={styles.ratingStar + " " + styles.full} />);
-        }
-
-        if (hasHalf) {
-            stars.push(<FaStarHalfAlt key="half" className={styles.ratingStar + " " + styles.half} />);
-        }
-
-        for (let i = 0; i < emptyStars; i++) {
-            stars.push(<FaRegStar key={`empty-${i}`} className={styles.ratingStar + " " + styles.empty} />);
-        }
-
-        return stars;
-    };
-
-
-
-    const handleAddToWatchlist = () => {
-        if (!token) {
-            toast.error('Please log in to add to watchlist.');
-            return;
-        }
-        axios.post(
-            'https://dokany-api-production.up.railway.app/favorites',
-            { product_id: id },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        )
-            .then((response) => {
-                dispatch(addToWatchlist({ ...response.data, product: product }));
-                toast.success('Product added to watchlist successfully');
-            })
-            .catch((error) => {
-                toast.error(error.response.data.error);
-            });
-    };
-
-    const handleRemoveFromWatchlist = () => {
-        if (!token) {
-            toast.error('Please log in to remove from watchlist.');
-            return;
-        }
-
-        axios.delete(
-            `https://dokany-api-production.up.railway.app/favorites/${currentWatchlist.id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        )
-            .then(() => {
-                dispatch(removeFromWatchlist(currentWatchlist.id));
-                toast.success('Product removed from watchlist successfully');
-            })
-            .catch((error) => {
-                console.error('Error removing from watchlist:', error);
-                toast.error(error.response.data.error);
-            });
-    };
-
-    const handleChangeCoupon = (event) => {
-        setCouponCode(event.target.value.trim());
+  const handleAddToWatchlist = async () => {
+    if (!token) return toast.error('Please log in to add to watchlist.');
+    try {
+      const { data } = await axios.post(
+        `${api}/favorites`,
+        { product_id: id },
+        { headers }
+      );
+      dispatch(addToWatchlist({ ...data, product }));
+      toast.success('Added to watchlist');
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Error adding to watchlist");
     }
+  };
 
-    const handleApplyCoupon = async () => {
-        if (!couponCode) {
-            toast.error('Please enter a coupon code');
-            return;
-        }
-
-        if (!token) {
-            toast.error('Please log in to apply a coupon');
-            return;
-        }
-
-        axios
-            .get(`https://dokany-api-production.up.railway.app/api/coupon/check/${couponCode}?subdomain=mohamed-seller`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
-                setCouponDiscountValue(response.data.discount_value);
-                toast.success('Coupon applied successfully');
-            }).catch((error) => {
-                setCouponDiscountValue(0);
-                toast.error(error.response.data.message);
-                console.error('Error fetching coupons:', error);
-            })
+  const handleRemoveFromWatchlist = async () => {
+    if (!token) return toast.error('Please log in to remove from watchlist.');
+    try {
+      await axios.delete(
+        `${api}/favorites/${currentWatchlist.id}`,
+        { headers }
+      );
+      dispatch(removeFromWatchlist(currentWatchlist.id));
+      toast.success('Removed from watchlist');
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Error removing from watchlist");
     }
+  };
 
+  const handleApplyCoupon = async () => {
+    if (!couponCode) return toast.error('Enter a coupon code');
+    if (!token) return toast.error('Please log in to apply a coupon');
 
-    const handleAddToCart = () => {
-        if (!token) {
-            toast.error("Please log in to add to cart.");
-            return;
-        }
+    setLoadingCoupon(true);
+    try {
+      const { data } = await axios.get(
+        `${api}/api/coupon/check/${couponCode}?subdomain=${subdomain}`,
+        { headers }
+      );
+      setCouponDiscountValue(data.discount_value);
+      toast.success('Coupon applied');
+    } catch (err) {
+      setCouponDiscountValue(0);
+      toast.error(err.response?.data?.message || "Invalid coupon");
+    } finally {
+      setLoadingCoupon(false);
+    }
+  };
 
-        if (productCount === 0) {
-            toast.error('Please add some products to cart');
-            return
-        }
+  const handleAddToCart = async () => {
+    if (!token) return toast.error('Please log in to add to cart.');
+    if (productCount === 0) return toast.error('Add product quantity first.');
 
-        axios.post(
-            'https://dokany-api-production.up.railway.app/cart',
-            { product_id: id, quantity: productCount, coupon_code: couponDiscountValue > 0 ? couponCode : null },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        )
-            .then((response) => {
-                dispatch(addToCart(response.data.cartItem));
-                toast.success('Product(s) added to cart successfully');
-            })
-            .catch((error) => {
-                toast.error(error.response.data.error);
-                console.error('Error adding to cart:', error);
-            });
-    };
-    if (!product) return null;
+    setAddingToCart(true);
+    try {
+      const { data } = await axios.post(
+        `${api}/cart`,
+        {
+          product_id: id,
+          quantity: productCount,
+          coupon_code: couponDiscountValue > 0 ? couponCode : null
+        },
+        { headers }
+      );
+      dispatch(addToCart({...data.cartItem, product}));
+      toast.success('Added to cart');
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Error adding to cart");
+    } finally {
+      setAddingToCart(false);
+    }
+  };
 
-    return (
-        <div className={styles.productContent}>
-            <h1 className={styles.productTitle}>{title}</h1>
-            <p className={styles.productDescription}>{description}</p>
+  return (
+    <div className={styles.productContent}>
+      <h1 className={styles.productTitle}>{title}</h1>
+      <p className={styles.productDescription}>{description}</p>
 
-            <div className="d-flex align-items-center gap-2">
-                {discount ? (
-                    <>
-                        <span className={styles.productPrice}>
-                            ${((price * (1 - discount / 100)) * (couponDiscountValue > 0 ? (1 - couponDiscountValue / 100) : 1)).toFixed(2)}
-                        </span>
-                        <span className={styles.productPriceDiscount}>
-                            ${price.toFixed(2)}
-                        </span>
-                    </>
-                ) : (
-                    <span className={styles.productPrice}>
-                        ${price.toFixed(2)}
-                    </span>
-                )}
-            </div>
+      <div className="d-flex align-items-center gap-2">
+        <span className={styles.productPrice}>${finalPrice}</span>
+        {(discount > 0 || couponDiscountValue > 0) && (
+          <span className={styles.productPriceDiscount}>${price.toFixed(2)}</span>
+        )}
+      </div>
 
-
-            {averageRating > 0 && (
-                <div className="d-flex align-items-center gap-2">
-                    <span className={`d-flex align-items-center gap-1 ${styles.productRating}`}>
-                        {renderStars(averageRating)}
-                    </span>
-                    <span className={styles.productReviews}>{numReviews} Reviews</span>
-                </div>
-            )}
-
-            {discount > 0 && <ProductDiscountTime />}
-
-            {category && (
-                <div className={`w-100 ${styles.category}`}>
-                    <h4 className={styles.sectionHeading}>Category</h4>
-                    <p>{category['name']}</p>
-                </div>
-            )}
-
-            {stock > 0 && (
-                <div className={`w-100 ${styles.stock}`}>
-                    <h4 className={styles.sectionHeading}>Stock</h4>
-                    <p>Available in stock: {stock}</p>
-                </div>
-            )}
-
-            <div className={styles.cartActions}>
-                <div className={styles.counterWatchListWrapper}>
-                    <div className={styles.counter}>
-                        <button className={styles.counterButton} disabled={productCount === 0} onClick={decrementProductCount}>-</button>
-                        <span className={styles.counterValue}>{productCount}</span>
-                        <button className={styles.counterButton} disabled={productCount === stock} onClick={incrementProductCount}>+</button>
-                    </div>
-                    {currentWatchlist ?
-
-                        <div className={styles.watchList}>
-                            <button className={styles.watchListButtonAdded} onClick={handleRemoveFromWatchlist}>
-                                <MdOutlineFavorite />
-                                <span>Added to watchlist</span>
-                            </button>
-                        </div> :
-                        <div className={styles.watchList}>
-                            <button className={styles.watchListButton} onClick={handleAddToWatchlist}>
-                                <MdOutlineFavoriteBorder />
-                                <span>Add to Watchlist</span>
-                            </button>
-                        </div>
-                    }
-                </div>
-
-                <div className={styles.useCoupon}>
-                    <div className={styles.useCouponAction}>
-                        <input type="text" onChange={handleChangeCoupon} className={styles.couponInput} placeholder="Enter your coupon code" />
-                        <button className={styles.couponButton} onClick={handleApplyCoupon}>Apply</button>
-                    </div>
-
-                    {(couponDiscountValue > 0 && couponCode) && (
-                        <div className={styles.useCouponApply}>
-                            <div className={styles.couponDiscountName}>
-                                <RiCouponLine />
-                                <span className={styles.couponDiscountLabel}>{couponCode}</span>
-                            </div>
-                            <span className={styles.couponDiscountValue}>-${price * (couponDiscountValue / 100)} [Remove]</span>
-                        </div>
-                    )}
-                </div>
-
-                <button onClick={handleAddToCart} className={styles.addToCartButton}>
-                    Add to Cart
-                </button>
-            </div>
+      {averageRating > 0 && (
+        <div className="d-flex align-items-center gap-2">
+          <span className={`d-flex align-items-center gap-1 ${styles.productRating}`}>
+            {renderStars}
+          </span>
+          <span className={styles.productReviews}>{reviews.length} Reviews</span>
         </div>
-    );
+      )}
+
+      {discount > 0 && <ProductDiscountTime />}
+
+      {category?.name && (
+        <div className={`w-100 ${styles.category}`}>
+          <h4 className={styles.sectionHeading}>Category</h4>
+          <p>{category.name}</p>
+        </div>
+      )}
+
+      {stock > 0 && (
+        <div className={`w-100 ${styles.stock}`}>
+          <h4 className={styles.sectionHeading}>Stock</h4>
+          <p>Available in stock: {stock}</p>
+        </div>
+      )}
+
+      <div className={styles.cartActions}>
+        <div className={styles.counterWatchListWrapper}>
+          <div className={styles.counter}>
+            <button onClick={decrementProductCount} disabled={productCount === 0} className={styles.counterButton}>-</button>
+            <span className={styles.counterValue}>{productCount}</span>
+            <button onClick={incrementProductCount} disabled={productCount === stock} className={styles.counterButton}>+</button>
+          </div>
+
+          <div className={styles.watchList}>
+            {currentWatchlist ? (
+              <button className={styles.watchListButtonAdded} onClick={handleRemoveFromWatchlist}>
+                <MdOutlineFavorite /> <span>Added to Watchlist</span>
+              </button>
+            ) : (
+              <button className={styles.watchListButton} onClick={handleAddToWatchlist}>
+                <MdOutlineFavoriteBorder /> <span>Add to Watchlist</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className={styles.useCoupon}>
+          <div className={styles.useCouponAction}>
+            <input
+              type="text"
+              className={styles.couponInput}
+              placeholder="Enter your coupon code"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value.trim())}
+              disabled={loadingCoupon}
+            />
+            <button
+              className={styles.couponButton}
+              onClick={handleApplyCoupon}
+              disabled={loadingCoupon}
+              style={{ opacity: loadingCoupon ? 0.6 : 1 }}
+            >
+              {loadingCoupon ? "Applying..." : "Apply"}
+            </button>
+          </div>
+
+          {(couponDiscountValue > 0 && couponCode) && (
+            <div className={styles.useCouponApply}>
+              <div className={styles.couponDiscountName}>
+                <RiCouponLine />
+                <span className={styles.couponDiscountLabel}>{couponCode}</span>
+              </div>
+              <span className={styles.couponDiscountValue}>
+                -${(price * (couponDiscountValue / 100)).toFixed(2)}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <button
+          onClick={handleAddToCart}
+          className={styles.addToCartButton}
+          disabled={addingToCart}
+          style={{ opacity: addingToCart ? 0.6 : 1 }}
+        >
+          {addingToCart ? "Adding..." : "Add to Cart"}
+        </button>
+      </div>
+    </div>
+  );
 };
 
-export default ProductContent;
+export default memo(ProductContent);
+
+

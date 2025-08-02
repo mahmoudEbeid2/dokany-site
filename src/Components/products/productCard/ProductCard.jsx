@@ -85,7 +85,7 @@ const ProductCard = ({ product, isNew = false }) => {
     } else {
       addToFavoritesAPI(product.id)
         .then((newFavorite) => {
-          dispatch(addToWatchlist(newFavorite));
+          dispatch(addToWatchlist({...newFavorite,product}));
           toast.success("Added to favorites!");
         })
         .catch((err) => toast.error(err.message));

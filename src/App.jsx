@@ -43,55 +43,91 @@ function App() {
     location.pathname === "/signin" || location.pathname === "/signup";
 
   useEffect(() => {
-    if (isAuthenticated) {
-      axios
-        .get("https://dokany-api-production.up.railway.app/api/customer/me", {
-          headers: {
-            Authorization: `Bearer ${isAuthenticated}`,
-          },
-        })
-        .then((response) => {
-          dispatch(setUserInfo(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    if (!isAuthenticated) return;
+
+    const controller = new AbortController();
+
+    axios
+      .get("https://dokany-api-production.up.railway.app/api/customer/me", {
+        headers: {
+          Authorization: `Bearer ${isAuthenticated}`,
+        },
+        signal: controller.signal,
+      })
+      .then((response) => {
+        dispatch(setUserInfo(response.data));
+      })
+      .catch((error) => {
+        if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
+          console.log("Request canceled:", error.message);
+        } else {
+          console.error("Fetch error:", error);
+        }
+      });
+
+
+    return () => {
+      controller.abort();
+    };
   }, [isAuthenticated, dispatch]);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      axios
-        .get("https://dokany-api-production.up.railway.app/cart", {
-          headers: {
-            Authorization: `Bearer ${isAuthenticated}`,
-          },
-        })
-        .then((response) => {
-          dispatch(setIntialCart(response.data.cart));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    if (!isAuthenticated) return;
+
+    const controller = new AbortController();
+
+    axios
+      .get("https://dokany-api-production.up.railway.app/cart", {
+        headers: {
+          Authorization: `Bearer ${isAuthenticated}`,
+        },
+        signal: controller.signal,
+      })
+      .then((response) => {
+        dispatch(setIntialCart(response.data.cart));
+      })
+      .catch((error) => {
+        if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
+          console.log("Cart request canceled:", error.message);
+        } else {
+          console.error("Cart fetch error:", error);
+        }
+      });
+
+    return () => {
+      controller.abort();
+    };
   }, [isAuthenticated, dispatch]);
 
+
   useEffect(() => {
-    if (isAuthenticated) {
-      axios
-        .get("https://dokany-api-production.up.railway.app/favorites", {
-          headers: {
-            Authorization: `Bearer ${isAuthenticated}`,
-          },
-        })
-        .then((response) => {
-          dispatch(setIntialWatchlist(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    if (!isAuthenticated) return;
+
+    const controller = new AbortController();
+
+    axios
+      .get("https://dokany-api-production.up.railway.app/favorites", {
+        headers: {
+          Authorization: `Bearer ${isAuthenticated}`,
+        },
+        signal: controller.signal,
+      })
+      .then((response) => {
+        dispatch(setIntialWatchlist(response.data));
+      })
+      .catch((error) => {
+        if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
+          console.log("Favorites request canceled");
+        } else {
+          console.error("Favorites fetch error:", error);
+        }
+      });
+
+    return () => {
+      controller.abort();
+    };
   }, [isAuthenticated, dispatch]);
+
 
   return (
     <>
