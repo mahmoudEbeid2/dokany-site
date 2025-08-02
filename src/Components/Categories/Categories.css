@@ -33,7 +33,7 @@
 .categories-slider-track {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-6);
+  gap: var(--space-3);
   transition: all var(--transition-normal);
 }
 
@@ -153,7 +153,7 @@
   
   .categories-slider-track {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
+    gap: var(--space-2);
   }
   
   .slider-arrow {
