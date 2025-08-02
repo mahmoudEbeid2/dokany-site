@@ -3,6 +3,7 @@ import ProductCard from "../productCard/ProductCard";
 import Loader from "../../Loader/Loader";
 import axios from "axios";
 
+
 const RecommendedProducts = ({ categoryId, currentProductId }) => {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
