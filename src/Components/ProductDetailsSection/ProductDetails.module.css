@@ -50,25 +50,27 @@
 }
 
 .customCarouselIcon {
-    width: 2.5rem;
-    height: 2.5rem;
-    background-color: var(--bg);
-    color: var(--text);
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    color: #000000;
     font-size: 1.5rem;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: transform 0.2s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
-    mix-blend-mode: normal;
-    filter: none;
-    isolation: isolate;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .customCarouselIcon:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .mainImage img {
@@ -82,11 +84,27 @@
     justify-content: space-between;
 }
 
+
+
 .productImageThumbnail {
     width: 10.4375rem;
     height: 10.4375rem;
     margin-bottom: 0.5rem;
     cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.productImageThumbnail:hover {
+    border-color: #000000;
+    transform: scale(1.05);
+}
+
+.productImageThumbnail.activeThumbnail {
+    border-color: #000000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .productImageThumbnail img {
@@ -95,18 +113,73 @@
     object-fit: cover;
 }
 
+.moreImagesIndicator {
+    width: 10.4375rem;
+    height: 10.4375rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px dashed #6c757d;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.moreImagesIndicator:hover {
+    border-color: #000000;
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+}
+
+.moreImagesIndicator span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.imageCounter {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    z-index: 5;
+    backdrop-filter: blur(10px);
+}
+
+.modalImageCounter {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
 .newBadge {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    padding: 0.25rem 0.875rem;
-    font-size: 0.875rem;
-    font-weight: 600;
+    padding: 0.375rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
     color: #ffffff;
-    background-color: #000000;
-    border-radius: 0.25rem;
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     z-index: 2;
 }
 
@@ -114,14 +187,16 @@
     position: absolute;
     top: 3.5rem;
     left: 1rem;
-    padding: 0.25rem 0.875rem;
-    font-size: 0.875rem;
-    font-weight: 600;
+    padding: 0.375rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
     color: #ffffff;
-    background-color: #38cb89;
-    border-radius: 0.25rem;
+    background: linear-gradient(135deg, #38cb89 0%, #2bb673 100%);
+    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     z-index: 2;
 }
 

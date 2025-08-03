@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Heart, Eye } from "lucide-react";
+import { Heart, Eye, Star } from "lucide-react";
 import { toast } from "react-toastify";
 import styles from "./ProductCard.module.css";
 import { useNavigate } from "react-router-dom";
@@ -128,6 +128,56 @@ const ProductCard = ({ product, isNew = false }) => {
   const discountPercentage = product.discount || 0;
   const finalPrice = originalPrice - (originalPrice * discountPercentage) / 100;
 
+  // Render stars function
+  const renderStars = (rating) => {
+    const stars = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    
+    // Add full stars
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(
+        <Star
+          key={`full-${i}`}
+          size={14}
+          fill="#000000"
+          color="#000000"
+          className={styles.star}
+        />
+      );
+    }
+    
+    // Add half star if needed
+    if (hasHalfStar) {
+      stars.push(
+        <Star
+          key="half"
+          size={14}
+          fill="#000000"
+          color="#000000"
+          className={styles.star}
+          style={{ clipPath: 'inset(0 50% 0 0)' }}
+        />
+      );
+    }
+    
+    // Add empty stars
+    const emptyStars = 5 - Math.ceil(rating);
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(
+        <Star
+          key={`empty-${i}`}
+          size={14}
+          fill="none"
+          color="#e0e0e0"
+          className={styles.starEmpty}
+        />
+      );
+    }
+    
+    return stars;
+  };
+
   return (
     <>
       <div className={styles.productCardContainer} onClick={handleCardClick}>
@@ -188,19 +238,9 @@ const ProductCard = ({ product, isNew = false }) => {
               </p>
             )}
           </div>
-          <div
-            className={`d-flex align-items-center mb-1 ${styles.customStarts}`}
-          >
-            {[...Array(5)].map((_, i) => (
-              <i
-                key={i}
-                className={`bi bi-star-fill ${i < Math.round(averageRating)
-                    ? styles.customStarts
-                    : styles.customStartsdisabled
-                  }`}
-              ></i>
-            ))}
-            <span className="ms-2 text-muted" style={{ fontSize: "0.8rem" }}>
+          <div className={styles.starContainer}>
+            {renderStars(averageRating)}
+            <span className={styles.reviewCount}>
               ({reviewCount})
             </span>
           </div>

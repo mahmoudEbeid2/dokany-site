@@ -46,28 +46,30 @@ function ReviewCard({
   }, [token, id, handeledReviews, reviews]);
 
   return (
-    <div className="border-bottom p-3 mb-3 d-flex gap-3 align-items-start">
-      <img
-        src={image || "https://via.placeholder.com/50"}
-        alt="User"
-        className="rounded-circle"
-        width="50"
-        height="50"
-      />
-      <div>
-        <h6 className={`fw-bold mb-1 ${styles.headingReview}`}>{name}</h6>
-        <div className="mb-2">{renderStars(rating)}</div>
-        <p className={`text-muted mb-0 ${styles.textReview}`}>{comment}</p>
-      </div>
-      {myCustomerId === customerId && (
-        <div
-          onClick={() => deleteReview()}
-          className={`text-danger ms-auto cursor-pointer ${styles.deleteIcon}`}
-          title="Delete review"
-        >
-          <BsTrash3 />
+    <div className={styles.reviewCard}>
+      <div className={styles.reviewHeader}>
+        <img
+          src={image || "https://via.placeholder.com/50"}
+          alt="User"
+          className={styles.reviewAvatar}
+        />
+        <div className={styles.reviewContent}>
+          <div className={styles.reviewMeta}>
+            <h6 className={styles.headingReview}>{name}</h6>
+          </div>
+          <div className={styles.starsContainer}>{renderStars(rating)}</div>
+          <p className={styles.textReview}>{comment}</p>
         </div>
-      )}
+        {myCustomerId === customerId && (
+          <div
+            onClick={() => deleteReview()}
+            className={styles.deleteIcon}
+            title="Delete review"
+          >
+            <BsTrash3 />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

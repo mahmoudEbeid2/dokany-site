@@ -5,7 +5,6 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../src/toast-custom.css";
 
 // Components
 import NavBar from "./Components/NavBar/NavBar";
@@ -21,6 +20,8 @@ import Contact from "./pages/contact/contact.jsx";
 import Cart from "./pages/cart/Cart";
 import ProductDetails from "./Pages/ProductDetails.jsx";
 import CategoryProducts from "./Pages/CategoryProducts.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
 import Footer from "./Components/Footer/Footer";
 
 // Redux actions
@@ -43,10 +44,12 @@ function App() {
   // Get the current location object
   const location = useLocation();
 
+  const subdomain = window.location.hostname.split(".")[0];
+  
   const isSignPage =
     location.pathname === "/signin" || location.pathname === "/signup";
   
-  const subdomain = window.location.hostname.split(".")[0];
+  const isLandingPage = location.pathname === "/" && (subdomain === "dockany" || subdomain === "localhost");
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -77,15 +80,13 @@ function App() {
   }, [isAuthenticated, dispatch]);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
-
     const controller = new AbortController();
 
     axios
       .get(`${api}/api/seller/get-id/${subdomain}`, {
-        headers: {
+        headers: isAuthenticated ? {
           Authorization: `Bearer ${isAuthenticated}`,
-        },
+        } : {},
         signal: controller.signal,
       })
       .then((response) => {
@@ -96,13 +97,18 @@ function App() {
           console.log("Request canceled:", error.message);
         } else {
           console.error("Fetch error:", error);
+          // Set default seller info if API fails
+          dispatch(setSellerInfo({
+            subdomain: subdomain,
+            logo: null
+          }));
         }
       });
 
     return () => {
       controller.abort();
     };
-  }, [isAuthenticated, dispatch]);
+  }, [isAuthenticated, dispatch, subdomain]);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -162,13 +168,15 @@ function App() {
 
   return (
     <>
-      {!isSignPage && <NavBar />}
+      {!isSignPage && !isLandingPage && <NavBar />}
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={(subdomain === "dockany" || subdomain === "localhost") ? <LandingPage /> : <Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/category/:id" element={<CategoryProducts />} />
         <Route path="/shoppage" element={<ShopPage />} />
@@ -208,22 +216,19 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
 
-      {!isSignPage && <Footer />}
+      {!isSignPage && !isLandingPage && <Footer />}
 
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={5000}
         hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick={false}
+        newestOnTop={false}
+        closeOnClick={true}
         rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
+        pauseOnFocusLoss={true}
+        draggable={true}
         pauseOnHover={true}
         theme="light"
-        limit={3}
-        closeButton={true}
-        enableMultiContainer={false}
       />
     </>
   );

@@ -387,8 +387,10 @@ const SignUp = () => {
                 onChange={handleChange}
               />
               <label htmlFor="agreedToTerms">
-                I agree with <a href="/privacy">Privacy Policy</a> and{" "}
-                <a href="/terms">Terms of Use</a>
+                I agree with{" "}
+                <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+                  Privacy Policy and Terms of Use
+                </a>
               </label>
             </div>
             {errors.agreedToTerms && (

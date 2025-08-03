@@ -99,3 +99,33 @@
     max-width: 100%;
   }
 }
+
+/* Custom Toast Styles - Smaller Text */
+.Toastify__toast {
+  font-size: 12px !important;
+  padding: 10px 14px !important;
+  min-height: auto !important;
+  max-width: 300px !important;
+  border-radius: 6px !important;
+  margin-bottom: 6px !important;
+}
+
+.Toastify__toast-body {
+  font-size: 11px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+}
+
+.Toastify__close-button {
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 12px !important;
+  top: 5px !important;
+  right: 5px !important;
+}
+
+.Toastify__progress-bar {
+  height: 2px !important;
+}

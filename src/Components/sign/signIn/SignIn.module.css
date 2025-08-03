@@ -6,31 +6,39 @@
   min-height: 100vh;
   width: 100%;
   background-color: #fff;
+  overflow-y: auto;
 }
 .signinImageSection {
   display: block;
   background-color: #ffffff;
   padding: 0 1.25rem;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .signinImageSection img {
   width: 100%;
-  height: auto;
-  width: 46rem;
-  height: 67.5rem;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
 }
 
 .signinFormSection {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 1.5rem 1.25rem;
+  align-items: center;
+  padding: 1rem 1rem;
   background-color: #ffffff;
+  min-height: 100vh;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .formWrapper {
   width: 100%;
   max-width: 34rem;
+  padding: 1rem;
+  margin: 1rem 0;
 }
 
 .formWrapper h2 {
@@ -38,9 +46,10 @@
   font-size: 2.5rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 2.75rem;
   letter-spacing: -0.025rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #141718;
 }
 
 .formWrapper .signupLink {
@@ -50,7 +59,8 @@
   font-weight: 400;
   line-height: 1.625rem;
   color: #6c7275;
-  margin-top: 1rem;
+  margin-top: 0.3rem;
+  text-align: center;
 }
 
 .formWrapper .signupLink a {
@@ -62,7 +72,8 @@
 
 .inputGroup {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
+  width: 100%;
 }
 .inputGroup label {
   position: absolute;
@@ -77,33 +88,47 @@
 
 .inputGroup input {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.7rem 1rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   font-size: 0.95rem;
   outline: none;
   transition: border-color 0.2s;
+  box-sizing: border-box;
 }
+
+.inputGroup input:focus {
+  border-color: #141718;
+}
+
+.inputGroup input::placeholder {
+  color: #aaa;
+}
+
 .rememberForgot {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
 }
+
 .rememberMe {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
+
 .rememberMe input {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   flex-shrink: 0;
+  accent-color: #141718;
 }
+
 .rememberMe p {
   color: #6c7275;
   font-family: Inter;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
   line-height: 1.625rem;
@@ -113,13 +138,6 @@
 .forgotPassword {
   text-align: right;
   margin-bottom: 0;
-}
-.inputGroup input:focus {
-  border-color: #141718;
-}
-
-.inputGroup input::placeholder {
-  color: #aaa;
 }
 
 .forgotPassword a {
@@ -143,7 +161,19 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  transition: background-color 0.2s;
+  margin-bottom: 1rem;
 }
+
+.signinBtn:hover {
+  background-color: #2a2d2e;
+}
+
+.signinBtn:disabled {
+  background-color: #6c7275;
+  cursor: not-allowed;
+}
+
 .passwordIcon {
   position: absolute;
   top: 50%;
@@ -161,37 +191,72 @@
 .passwordInput {
   padding-right: 3rem !important;
 }
+
+@media (min-width: 768px) {
+  .signinContainer {
+    flex-direction: row;
+    height: 100vh;
+  }
+  .signinImageSection {
+    flex: 0 0 50%;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .signinImageSection img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    flex-shrink: 0;
+  }
+
+  .signinFormSection {
+    flex: 1;
+    align-items: center;
+    overflow-y: auto;
+    padding: 2rem;
+    height: 100vh;
+    justify-content: center;
+  }
+  .formWrapper {
+    max-width: 28rem;
+    margin: 0;
+  }
+}
+
 @media (max-width: 767px) {
   .signinContainer {
     flex-direction: column;
     height: auto;
+    min-height: 100vh;
   }
   .formWrapper h2 {
     text-align: center;
     font-family: Poppins;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 500;
-    line-height: 2.75rem;
-    letter-spacing: -0.025rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    color: #141718;
   }
   .signinImageSection {
     display: none;
   }
 
   .signinFormSection {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
+    min-height: auto;
+    flex: 1;
   }
-
-  .formRow {
-    flex-direction: column;
-  }
-
-  .formRow .inputGroup {
-    width: 100%;
+  .formWrapper {
+    padding: 0.5rem;
+    margin: 0.5rem 0;
   }
 }
+
 @media (min-width: 768px) and (max-width: 1024px) {
   .signinContainer {
     flex-direction: row;
@@ -200,9 +265,11 @@
   }
 
   .signinImageSection {
-    flex: 1;
+    flex: 0 0 50%;
     padding: 0;
     height: 100vh;
+    overflow: hidden;
+    flex-shrink: 0;
   }
 
   .signinImageSection img {
@@ -210,51 +277,78 @@
     width: 100%;
     object-fit: cover;
     border-radius: 0;
+    flex-shrink: 0;
   }
 
   .signinFormSection {
     flex: 1;
     align-items: center;
     overflow-y: auto;
-    padding: 1rem;
-  }
-
-  .formRow {
-    flex-direction: row;
-    gap: 1rem;
-  }
-
-  .formRow .inputGroup {
-    flex: 1;
-  }
-}
-@media (min-width: 768px) {
-  .signinContainer {
-    flex-direction: row;
-    background-color: #ffffff;
+    padding: 1.5rem;
     height: 100vh;
-  }
-  .signinImageSection {
-    flex: 1;
-    padding: 0;
-    height: 100vh;
-  }
-  .signinImageSection img {
-    height: 100%;
-    border-radius: 0;
+    justify-content: center;
   }
 
-  .signinFormSection {
-    flex: 1;
-    align-items: center;
-    overflow-y: auto;
-    padding: 1rem;
+  .formWrapper {
+    max-width: 30rem;
+    margin: 0;
   }
 }
 
 @media (min-width: 1024px) {
   .signinFormSection {
     justify-content: center;
-    padding-left: 0;
+    padding: 3rem;
   }
+  .formWrapper {
+    max-width: 32rem;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .formWrapper h2 {
+    font-size: 1.75rem;
+    margin-top: 0.5rem;
+    color: #141718;
+  }
+  .formWrapper {
+    padding: 0.25rem;
+    margin-top: 0.25rem;
+  }
+  .signinFormSection {
+    padding: 1rem 0.5rem;
+  }
+  .inputGroup input {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.95rem;
+  }
+  .signinBtn {
+    padding: 0.875rem 2rem;
+    font-size: 0.95rem;
+  }
+}
+
+.termsLink {
+  font-family: Inter;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4rem;
+  color: #6c7275;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.termsLink a {
+  color: #141718;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.termsLink a:hover {
+  color: #38cb89;
+  text-decoration: none;
 }

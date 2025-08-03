@@ -44,8 +44,8 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
       const response = await axios.post(`${api}/reviews/${productId}`, review, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const newReview = { ...response.data.review, customer: user };
-      handeledReviews([...reviews, newReview]);
+             const newReview = { ...response.data.review, customer: user };
+       handeledReviews([newReview, ...reviews]);
       setRating(5);
       setComment('');
       toast.success('Review added successfully');
@@ -58,32 +58,36 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
-      <h5 className="mb-3">Add Your Review</h5>
+    <form onSubmit={handleSubmit} className={styles.addReviewForm}>
+      <h5 className={styles.addReviewTitle}>Add Your Review</h5>
 
-      <div className={`mb-3 d-flex align-items-center ${styles.addReviewStars}`}>
+      <div className={styles.starsContainer}>
         {[1, 2, 3, 4, 5].map((star) => {
           const isFilled = (hoveredRating ?? rating) >= star;
           return (
-            <span
+            <button
               key={star}
+              type="button"
               onClick={() => setRating(star)}
               onMouseEnter={() => setHoveredRating(star)}
               onMouseLeave={() => setHoveredRating(null)}
-              className="mx-1"
-              style={{ cursor: 'pointer' }}
+              className={styles.starButton}
             >
-              {isFilled ? <FaStar /> : <FaRegStar />}
-            </span>
+              {isFilled ? (
+                <FaStar className={styles.addReviewStars} />
+              ) : (
+                <FaRegStar className={styles.addReviewStars} />
+              )}
+            </button>
           );
         })}
       </div>
 
       <div className="mb-3">
         <textarea
-          className="form-control"
-          rows={3}
-          placeholder="Write your review..."
+          className={styles.reviewTextarea}
+          rows={4}
+          placeholder="Share your thoughts about this product..."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         ></textarea>
@@ -91,9 +95,8 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
 
       <button
         type="submit"
-        className={styles.btnPrimary1}
-        disabled={loading }
-        style={{ opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
+        className={styles.submitButton}
+        disabled={loading}
       >
         {loading ? 'Submitting...' : 'Submit Review'}
       </button>

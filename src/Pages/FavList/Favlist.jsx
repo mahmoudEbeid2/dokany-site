@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import FavCard from '../../components/FavCard/FavCard';
 import { removeFromWatchlist } from '../../features/user/userSlice';
@@ -52,7 +52,7 @@ const Wishlist = () => {
 
   return (
     <div className="wishlist-page">
-      <ToastContainer />
+
       <h2 className="wishlist-title">Your Wishlist</h2>
 
       {loading ? (

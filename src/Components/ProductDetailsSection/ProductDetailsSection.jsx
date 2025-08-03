@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import ProductImagesGallery from './ProductImagesGallery';
 import ProductContent from './ProductContent';
-import { ToastContainer } from 'react-toastify';
+
 
 const ProductDetailsSection = memo(({ product, reviews }) => {
   if (!product) {
@@ -22,18 +22,7 @@ const ProductDetailsSection = memo(({ product, reviews }) => {
 
   return (
     <div className="container my-5">
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+
       <div className="row justify-content-between">
         <div className="col-lg-6 mb-4 mb-lg-0">
           <ProductImagesGallery

@@ -6,18 +6,21 @@
   min-height: 100vh;
   width: 100%;
   background-color: #fff;
+  overflow-y: auto;
 }
 .signupImageSection {
   display: block;
   background-color: #ffffff;
   padding: 0 1.25rem;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .signupImageSection img {
   width: 100%;
-  height: auto;
-  width: 46rem;
-  height: 67.5rem;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
 }
 
 .signupFormSection {
@@ -26,11 +29,16 @@
   align-items: flex-start;
   padding: 1rem 1rem;
   background-color: #ffffff;
+  min-height: 100vh;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .formWrapper {
   width: 100%;
   max-width: 34rem;
+  padding: 1rem;
+  margin: 1rem 0;
 }
 
 .formWrapper h2 {
@@ -161,6 +169,12 @@
   color: #141718;
   font-weight: 600;
   text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.termsGroup a:hover {
+  color: #38cb89;
+  text-decoration: none;
 }
 
 .createAccountBtn {
@@ -205,16 +219,25 @@
     flex: 1;
     padding: 0;
     height: 100vh;
+    overflow: hidden;
   }
   .signupImageSection img {
     height: 100%;
+    width: 100%;
+    object-fit: cover;
     border-radius: 0;
   }
   .signupFormSection {
     flex: 1;
-    align-items: center;
+    align-items: flex-start;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 2rem;
+    height: 100vh;
+    justify-content: flex-start;
+  }
+  .formWrapper {
+    max-width: 28rem;
+    margin: 0;
   }
   .formRow {
     flex-direction: row;
@@ -227,29 +250,44 @@
   .signupContainer {
     flex-direction: column;
     height: auto;
+    min-height: 100vh;
   }
   .formWrapper h2 {
     text-align: center;
     font-family: Poppins;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 500;
-
     margin-bottom: 1rem;
-    margin-top: 0;
+    margin-top: 1rem;
+    color: #141718;
   }
   .signupImageSection {
     display: none;
   }
 
   .signupFormSection {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
+    min-height: auto;
+    flex: 1;
+  }
+  .formWrapper {
+    padding: 0.5rem;
+    margin: 0.5rem 0;
   }
   .formRow {
     flex-direction: column;
   }
   .formRow .inputGroup {
     width: 100%;
+  }
+  .profileImagePreview {
+    width: 5rem;
+    height: 5rem;
+  }
+  .profileImageUploader {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -263,6 +301,7 @@
     flex: 1;
     padding: 0;
     height: 100vh;
+    overflow: hidden;
   }
 
   .signupImageSection img {
@@ -274,9 +313,16 @@
 
   .signupFormSection {
     flex: 1;
-    align-items: center;
+    align-items: flex-start;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 1.5rem;
+    height: 100vh;
+    justify-content: flex-start;
+  }
+
+  .formWrapper {
+    max-width: 30rem;
+    margin: 0;
   }
 
   .formRow {
@@ -291,7 +337,11 @@
 
 @media (min-width: 1024px) {
   .signupFormSection {
-    justify-content: center;
-    padding-left: 0;
+    justify-content: flex-start;
+    padding: 3rem;
+  }
+  .formWrapper {
+    max-width: 32rem;
+    margin: 0;
   }
 }

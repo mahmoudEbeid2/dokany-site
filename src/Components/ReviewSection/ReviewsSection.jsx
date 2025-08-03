@@ -1,6 +1,6 @@
 import { lazy, Suspense, useMemo } from 'react';
-import { ToastContainer } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import styles from './ReviewSection.module.css';
 
 const ReviewCard = lazy(() => import('./ReviewCard'));
 const AddReviewForm = lazy(() => import('./AddReviewForm'));
@@ -31,18 +31,8 @@ function ReviewsSection({ productId, reviews, handeledReviews }) {
 
   return (
     <div className="container mt-5">
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+
+      
       <Suspense fallback={<div>Loading form...</div>}>
         <AddReviewForm
           handeledReviews={handeledReviews}
@@ -51,11 +41,14 @@ function ReviewsSection({ productId, reviews, handeledReviews }) {
         />
       </Suspense>
 
-      <h4 className="mb-3">{totalReviews > 0 ? `${totalReviews} Reviews` : null}</h4>
-
-      <Suspense fallback={<div>Loading reviews...</div>}>
-        {renderedReviews}
-      </Suspense>
+      {totalReviews > 0 && (
+        <div className={styles.reviewsSection}>
+          <h4 className={styles.reviewsTitle}>{totalReviews} Reviews</h4>
+          <Suspense fallback={<div>Loading reviews...</div>}>
+            {renderedReviews}
+          </Suspense>
+        </div>
+      )}
     </div>
   );
 }

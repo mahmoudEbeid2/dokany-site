@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Logo from "../Logo/Logo";
 import "./NavBar.css";
 
 function NavBar() {
@@ -10,34 +11,22 @@ function NavBar() {
   // console.log("userInfo", userInfo);
   const token = localStorage.getItem("token");
 
-  // Calculate total items in cart
-  const cartItemsCount = cart.reduce(
-    (total, item) => total + (item.quantity || 1),
-    0
-  );
+  // Calculate total unique products in cart
+  const cartItemsCount = cart.length;
 
-  // Calculate total items in watchlist
-  const watchlistItemsCount = watchlist.reduce(
-    (total, item) => total + (item.quantity || 1),
-    0
-  );
+  // Calculate total unique products in watchlist
+  const watchlistItemsCount = watchlist.length;
 
-  if(!sellerInfo){
-    return null;
-  }
+  // if(!sellerInfo){
+  //   return null;
+  // }
 
   return (
     <div>
       <nav className="navbar navbar-expand-sm ">
         <div className="container">
           <NavLink className="navbar-brand" to="/">
-          <div className="logo mb-0 pb-0 py-0 " style={{ cursor: "pointer",maxWidth:"100px",maxHeight:"75px" }}>
-            {sellerInfo.logo ? (
-              <img src={sellerInfo.logo} alt="Logo" style={{ maxWidth: "100%", maxHeight: "100%" }} />
-            ) : (
-              <span>{sellerInfo.subdomain}</span>
-            )}
-          </div>
+            <Logo variant="navbar" />
           </NavLink>
           <button
             className="navbar-toggler"

@@ -192,6 +192,12 @@ const SignIn = ({ onLoginSuccess }) => {
             <p className={styles.signupLink}>
               Don't have an account? <a href="/signup">Sign Up</a>
             </p>
+            <p className={styles.termsLink}>
+              By signing in, you agree to our{" "}
+              <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+                Privacy Policy and Terms of Use
+              </a>
+            </p>
           </form>
         </div>
       </div>

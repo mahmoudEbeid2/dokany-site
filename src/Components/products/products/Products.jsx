@@ -6,7 +6,6 @@ const Products = ({ subdomain }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visibleProducts, setVisibleProducts] = useState(8);
 
   useEffect(() => {
     if (!subdomain) {
@@ -22,7 +21,7 @@ const Products = ({ subdomain }) => {
         const productsResponse = await fetch(
           `${
             import.meta.env.VITE_API
-          }/products/seller/subdomain/${subdomain}/all`,
+          }/products/seller/subdomain/${subdomain}/discount?page=1`,
           { signal: controller.signal }
         );
 
@@ -35,7 +34,7 @@ const Products = ({ subdomain }) => {
           (product) => product.discount > 0
         );
 
-        setAllProducts(discountedProducts);
+        setAllProducts(discountedProducts.slice(0, 8));
       } catch (err) {
         if (err.name !== "AbortError") {
           setError(err.message);
@@ -50,9 +49,7 @@ const Products = ({ subdomain }) => {
     return () => controller.abort();
   }, [subdomain]);
 
-  const handleViewMore = () => {
-    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 8);
-  };
+
 
   if (loading) {
     return <Loader />;
@@ -76,19 +73,12 @@ const Products = ({ subdomain }) => {
         Discounted Products
       </h2>
       <div className="row g-3">
-        {allProducts.slice(0, visibleProducts).map((product) => (
+        {allProducts.map((product) => (
           <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={product.id}>
             <ProductCard product={product} />
           </div>
         ))}
       </div>
-      {visibleProducts < allProducts.length && (
-        <div className="text-center mt-5">
-          <button className="btn btn-dark px-4 py-2" onClick={handleViewMore}>
-            View More
-          </button>
-        </div>
-      )}
     </div>
   );
 };

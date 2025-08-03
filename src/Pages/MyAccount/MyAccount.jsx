@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./MyAccount.css";
 import avatar from "../../assets/av_blank.png";
 import { Camera } from "lucide-react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Orders from "../../Components/Orders/Orders";
@@ -123,7 +123,7 @@ const token = localStorage.getItem("token");
 
   return (
     <div className="account-container">
-      <ToastContainer position="top-right" autoClose={2500} />
+
       <h1 className="account-title">My Account</h1>
 
       <div className="account-content">

@@ -4,7 +4,7 @@ import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import styles from './ProductDetails.module.css';
 
 const ProductImagesGallery = ({ product_images = [], created_date, discount = 0 }) => {
-  const allImages = product_images.slice(0, 3);
+  const allImages = product_images;
 
   const isNew = (() => {
     const now = new Date();
@@ -61,11 +61,13 @@ const ProductImagesGallery = ({ product_images = [], created_date, discount = 0 
         </Carousel>
 
         <div className={styles.productImages}>
-          {allImages.map((img, index) => (
+          {allImages.slice(0, 4).map((img, index) => (
             <div
               key={index}
               onClick={() => setMainCarouselIndex(index)}
-              className={styles.productImageThumbnail}
+              className={`${styles.productImageThumbnail} ${
+                mainCarouselIndex === index ? styles.activeThumbnail : ''
+              }`}
             >
               <img
                 src={img.image}
@@ -78,11 +80,16 @@ const ProductImagesGallery = ({ product_images = [], created_date, discount = 0 
               />
             </div>
           ))}
+          {allImages.length > 4 && (
+            <div className={styles.moreImagesIndicator}>
+              <span>+{allImages.length - 4}</span>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Mobile View */}
-      <div className="d-lg-none w-100">
+      <div className="d-lg-none w-100 position-relative">
         <Carousel
           className={styles.carouselWrapper}
           indicators={false}
@@ -109,8 +116,8 @@ const ProductImagesGallery = ({ product_images = [], created_date, discount = 0 
             activeIndex={modalImageIndex}
             onSelect={setModalImageIndex}
             indicators={false}
-            nextIcon={null}
-            prevIcon={null}
+            nextIcon={<span className={styles.customCarouselIcon}><IoArrowForward /></span>}
+            prevIcon={<span className={styles.customCarouselIcon}><IoArrowBack /></span>}
             className={styles.carouselWrapper}
           >
             {allImages.map((img, index) => (
@@ -128,6 +135,9 @@ const ProductImagesGallery = ({ product_images = [], created_date, discount = 0 
               </Carousel.Item>
             ))}
           </Carousel>
+          <div className={styles.modalImageCounter}>
+            {modalImageIndex + 1} / {allImages.length}
+          </div>
         </Modal.Body>
       </Modal>
     </div>
