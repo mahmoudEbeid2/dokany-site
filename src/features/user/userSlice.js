@@ -27,7 +27,7 @@ const userSlice = createSlice({
 
     // increase quantity of an item by 1 and optional take quantity (increase button in cart)
     addToCart: (state, action) => {
-      const { product_id, quantity = 1, ...rest } = action.payload;
+      const { product_id, quantity = 1, final_price, ...rest } = action.payload;
 
       if (!product_id || quantity <= 0) return;
 
@@ -36,13 +36,13 @@ const userSlice = createSlice({
       if (exists) {
         exists.quantity += quantity;
       } else {
-        state.cart.push({ product_id, ...rest, quantity });
+        state.cart.push({ product_id, ...rest, quantity, final_price });
       }
     },
 
     // decrease quantity of an item by 1 (decrease button in cart)
     removeFromCart: (state, action) => {
-      const {product_id, quantity} = action.payload;
+      const { product_id, quantity } = action.payload;
 
       const item = state.cart.find(item => item.product_id === product_id);
 

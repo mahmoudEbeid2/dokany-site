@@ -3,6 +3,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import styles from "../../pages/cart/cart.module.css";
 
 function CartItem({ item, onDelete, onUpdateQuantity, isUpdating }) {
+  console.log(item);
   return (
     <div className={styles.tableRow}>
       <div className="col-6 d-flex align-items-center gap-4 ">
@@ -59,13 +60,11 @@ function CartItem({ item, onDelete, onUpdateQuantity, isUpdating }) {
         </button>
       </div>
       <div className={`${styles.price} col-2`}>
-        ${item?.unit_price || item?.product?.price || 0}
+        ${(item?.unit_price * (1 - (item?.product?.discount /100))).toFixed(2)}
       </div>
       <div className={`${styles.subtotal} col-2`}>
         $
-        {item?.final_price ||
-          (item?.quantity || 1) *
-            (item?.unit_price || item?.product?.price || 0)}
+        {((item?.unit_price * (1 - (item?.product?.discount /100))) * (item?.quantity)).toFixed(2) || 0}
       </div>
     </div>
   );
