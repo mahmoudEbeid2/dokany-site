@@ -105,7 +105,8 @@ const ProductCard = ({ product, isNew = false }) => {
           addToCart({
             ...res.cartItem,
             quantity: 1,
-            product,
+            final_price:res.cartItem.final_price,
+            product
           })
         );
         toast.success(
