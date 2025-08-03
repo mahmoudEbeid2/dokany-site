@@ -20,7 +20,7 @@ const signupSchema = z
     country: z.string().min(1, "Country is required."),
     password: z.string().min(8, "Password must be at least 8 characters long."),
     confirmPassword: z.string(),
-    seller_id: z.string().min(1, "Seller ID is required."),
+    subdomain: z.string().min(1, "Subdomain is required."),
     profile_imge: z.any().optional(),
     agreedToTerms: z.literal(true, {
       errorMap: () => ({
@@ -44,7 +44,7 @@ const initialState = {
   country: "",
   password: "",
   confirmPassword: "",
-  seller_id: "",
+  subdomain: "",
   profile_imge: null,
   agreedToTerms: false,
 };
@@ -59,42 +59,19 @@ const SignUp = () => {
   const [apiError, setApiError] = useState(null);
 
   useEffect(() => {
-    const fetchSellerId = async () => {
-      const subdomain = window.location.hostname.split(".")[0];
+    const subdomain = window.location.hostname.split(".")[0];
 
-      if (subdomain === "localhost" || subdomain === "www") {
-        setApiError(
-          "Cannot create an account from this URL. Please use a seller's store URL."
-        );
-        return;
-      }
+    if (subdomain === "localhost" || subdomain === "www") {
+      setApiError(
+        "Cannot create an account from this URL. Please use a seller's store URL."
+      );
+      return;
+    }
 
-      try {
-        const apiUrl = `${
-          import.meta.env.VITE_API
-        }/api/seller/get-id/${subdomain}`;
-        const response = await axios.get(apiUrl);
-
-        if (response.data.seller_id) {
-          setFormData((prev) => ({
-            ...prev,
-            seller_id: response.data.seller_id,
-          }));
-        } else {
-          setApiError("This seller's store could not be verified.");
-        }
-      } catch (error) {
-        console.error(
-          "Failed to fetch seller ID:",
-          error.response?.data?.error || error.message
-        );
-        setApiError(
-          "This seller store does not exist. Cannot create an account."
-        );
-      }
-    };
-
-    fetchSellerId();
+    setFormData((prev) => ({
+      ...prev,
+      subdomain: subdomain,
+    }));
   }, []);
 
   const handleChange = (e) => {
@@ -118,8 +95,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.seller_id) {
-      // EDITED: Translated from Arabic
+    if (!formData.subdomain) {
       setApiError(
         "Could not verify seller information. Please refresh the page or use a valid store URL."
       );
@@ -159,27 +135,15 @@ const SignUp = () => {
       console.error("Submission Error:", error.response || error);
       const errorData = error.response?.data;
 
-      if (!errorData) {
-        setApiError("A network error occurred. Please try again.");
-        setLoading(false);
-        return;
-      }
-
-      if (errorData.error === "Email already registered") {
-        setErrors({ email: ["This email is already registered."] });
-        setApiError(null);
-      } else if (
-        errorData.detail &&
-        (errorData.detail.includes("user_name") ||
-          errorData.detail.includes("username"))
-      ) {
-        setErrors({ user_name: ["This username is already taken."] });
-        setApiError(null);
-      } else if (errorData.details) {
+      if (errorData && errorData.details) {
         setErrors(errorData.details);
         setApiError("Please review the errors below.");
+      } else if (errorData && errorData.error) {
+        setApiError(errorData.error);
       } else {
-        setApiError(errorData.error || "An unexpected error occurred.");
+        setApiError(
+          "A network error occurred or the server is unreachable. Please try again."
+        );
       }
     } finally {
       setLoading(false);
@@ -211,8 +175,8 @@ const SignUp = () => {
   const errorStyle = {
     color: "#d32f2f",
     fontSize: "0.8rem",
-    marginTop: "2px",
-    marginBottom: "2px",
+    marginTop: "1px",
+    marginBottom: "1px",
   };
 
   return (
@@ -224,7 +188,6 @@ const SignUp = () => {
       <div className={styles.signupFormSection}>
         <div className={styles.formWrapper}>
           <h2>Sign up</h2>
-
           <form onSubmit={handleSubmit} noValidate>
             {apiError && (
               <p
@@ -232,7 +195,7 @@ const SignUp = () => {
                   ...errorStyle,
                   textAlign: "center",
                   fontSize: "1rem",
-                  marginBottom: "1rem",
+                  marginBottom: "0rem",
                 }}
               >
                 {apiError}

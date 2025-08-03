@@ -24,7 +24,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 1.5rem 1.25rem;
+  padding: 1rem 1rem;
   background-color: #ffffff;
 }
 
@@ -47,7 +47,7 @@
   align-items: center;
   gap: 0.5rem;
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .profileImageUploader p {
@@ -57,8 +57,8 @@
 }
 
 .profileImagePreview {
-  width: 6rem;
-  height: 6rem;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
   border: 2px dashed #ccc;
   display: flex;
@@ -86,7 +86,7 @@
   font-weight: 400;
   line-height: 1.625rem;
   color: #6c7275;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
 }
 .formWrapper .signinLink a {
   color: #38cb89;
@@ -95,7 +95,7 @@
 }
 .inputGroup {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   width: 100%;
 }
 .inputGroup label {
@@ -111,7 +111,7 @@
 
 .inputGroup input {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.7rem 1rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   font-size: 0.95rem;
@@ -219,7 +219,6 @@
   .formRow {
     flex-direction: row;
   }
-  /* This new rule makes the input groups inside a row share the space */
   .formRow .inputGroup {
     flex: 1;
   }
