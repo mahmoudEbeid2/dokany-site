@@ -23,7 +23,7 @@ import CategoryProducts from "./Pages/CategoryProducts.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import Footer from "./Components/Footer/Footer";
-
+import ResetPassword from "./Components/sign/resetPassword/ResetPassword";
 // Redux actions
 import {
   setUserInfo,
@@ -45,11 +45,15 @@ function App() {
   const location = useLocation();
 
   const subdomain = window.location.hostname.split(".")[0];
-  
+
   const isSignPage =
-    location.pathname === "/signin" || location.pathname === "/signup";
-  
-  const isLandingPage = location.pathname === "/" && (subdomain === "dockany" || subdomain === "localhost");
+    location.pathname === "/signin" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/reset-password";
+
+  const isLandingPage =
+    location.pathname === "/" &&
+    (subdomain === "dockany" || subdomain === "localhost");
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -84,9 +88,11 @@ function App() {
 
     axios
       .get(`${api}/api/seller/get-id/${subdomain}`, {
-        headers: isAuthenticated ? {
-          Authorization: `Bearer ${isAuthenticated}`,
-        } : {},
+        headers: isAuthenticated
+          ? {
+              Authorization: `Bearer ${isAuthenticated}`,
+            }
+          : {},
         signal: controller.signal,
       })
       .then((response) => {
@@ -98,10 +104,12 @@ function App() {
         } else {
           console.error("Fetch error:", error);
           // Set default seller info if API fails
-          dispatch(setSellerInfo({
-            subdomain: subdomain,
-            logo: null
-          }));
+          dispatch(
+            setSellerInfo({
+              subdomain: subdomain,
+              logo: null,
+            })
+          );
         }
       });
 
@@ -171,7 +179,16 @@ function App() {
       {!isSignPage && !isLandingPage && <NavBar />}
 
       <Routes>
-        <Route path="/" element={(subdomain === "dockany" || subdomain === "localhost") ? <LandingPage /> : <Home />} />
+        <Route
+          path="/"
+          element={
+            subdomain === "dockany" || subdomain === "localhost" ? (
+              <LandingPage />
+            ) : (
+              <Home />
+            )
+          }
+        />
         <Route path="/home" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -180,6 +197,7 @@ function App() {
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/category/:id" element={<CategoryProducts />} />
         <Route path="/shoppage" element={<ShopPage />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route
           path="/products"
@@ -213,6 +231,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
 

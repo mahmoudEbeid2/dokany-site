@@ -178,7 +178,7 @@ const SignIn = ({ onLoginSuccess }) => {
                 <p>Remember me</p>
               </div>
               <div className={styles.forgotPassword}>
-                <a href="/forgot-password">Forgot password?</a>
+                <a href="/reset-password">Forgot password?</a>
               </div>
             </div>
 
@@ -194,7 +194,11 @@ const SignIn = ({ onLoginSuccess }) => {
             </p>
             <p className={styles.termsLink}>
               By signing in, you agree to our{" "}
-              <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+              <a
+                href="/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Privacy Policy and Terms of Use
               </a>
             </p>
