@@ -28,10 +28,10 @@ function NavBar() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg ">
+      <nav className="navbar navbar-expand-sm ">
         <div className="container">
           <NavLink className="navbar-brand" to="/">
-          <div className="logo " style={{ cursor: "pointer",maxWidth:"50px",maxHeight:"50px" }}>
+          <div className="logo mb-0 pb-0 py-0 " style={{ cursor: "pointer",maxWidth:"100px",maxHeight:"75px" }}>
             {sellerInfo.logo ? (
               <img src={sellerInfo.logo} alt="Logo" style={{ maxWidth: "100%", maxHeight: "100%" }} />
             ) : (
@@ -54,7 +54,7 @@ function NavBar() {
             className="collapse navbar-collapse "
             id="navbarSupportedContent"
           >
-            <ul className="navbar-nav   m-auto">
+            <ul className="navbar-nav my-0 py-0 pm-0 mb-0 mt-0  m-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to={"/"}>
                   Home

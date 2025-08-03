@@ -1,5 +1,14 @@
 .navbar{
-    padding: 1rem 0;
+    padding: 0rem 0;
+}
+.logo{
+    margin-bottom: 0 !important;
+    display: flex;
+    text-align: center;
+    
+}
+.navbar>.container{
+    height: 55px !important;
 }
 .navbar-brand{
     color: var(--text);
@@ -67,4 +76,10 @@
 .nav-item .nav-link.position-relative {
     display: flex;
     align-items: center;
+}
+
+@media (max-width: 576px) {
+  .logo {
+    margin-top: -1.5rem;
+  }
 }
