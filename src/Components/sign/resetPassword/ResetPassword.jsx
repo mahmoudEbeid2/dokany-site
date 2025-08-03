@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./ResetPassword.module.css";
 import { z } from "zod";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const requestResetSchema = z.object({
   email: z.string().email("Invalid email address."),
@@ -44,17 +45,19 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log("Password reset link requested for:", result.data.email);
-      toast.success(
-        "If an account exists for this email, a reset link has been sent."
+      const response = await axios.post(
+        `${import.meta.env.VITE_API}/auth/customer/reset-password`,
+        result.data
       );
+
+      toast.success(response.data.message);
     } catch (error) {
       console.error("Request Reset Link Error:", error.response || error);
       const errorMsg =
         error.response?.data?.error ||
         "An unexpected error occurred. Please try again.";
       setApiError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
