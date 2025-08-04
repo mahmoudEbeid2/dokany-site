@@ -6,7 +6,7 @@ import "./NavBar.css";
 
 function NavBar() {
   const { cart, watchlist, } = useSelector((state) => state.user);
-  const { sellerInfo } = useSelector((state) => state.seller);
+  // const { sellerInfo } = useSelector((state) => state.seller);
 
   // console.log("userInfo", userInfo);
   const token = localStorage.getItem("token");

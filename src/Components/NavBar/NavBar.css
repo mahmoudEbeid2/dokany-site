@@ -36,7 +36,6 @@
   transition: all 0.3s ease;
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
-  border: 1px solid var(--navbar-link-border) !important;
   outline: none !important;
   box-shadow: none !important;
   text-decoration: none !important;
@@ -44,8 +43,7 @@
 
 .navbar .nav-item .nav-link:hover {
   color: var(--navbar-text-hover);
-  background-color: rgba(55, 125, 255, 0.1);
-  border-color: var(--navbar-text-hover) !important;
+
 }
 
 .navbar .nav-item .nav-link.active {
@@ -56,7 +54,6 @@
 
 /* Navbar Toggler */
 .navbar-toggler {
-  border: 1px solid var(--navbar-toggler-border);
   color: var(--navbar-toggler);
 }
 

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./HeroSection.module.css";
-import heroImage from "../../assets/herom.jpg";
+import heroImage from "../../../public/images/light.png";
 
 const HeroSection = () => {
   return (
@@ -15,7 +15,6 @@ const HeroSection = () => {
                   alt="Modern Shopping Experience"
                   className={styles.heroImage}
                 />
-                <div className={styles.overlay}></div>
               </div>
             </div>
           </div>
