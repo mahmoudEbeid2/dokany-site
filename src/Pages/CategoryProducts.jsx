@@ -95,7 +95,7 @@ const CategoryProducts = () => {
             {hasMore && !loading && (
               <div className="text-center mt-4">
                 <button
-                  className="btn btnLoadCat bg-black text-white p-3"
+                  className="btn btn-dark px-4 py-2"
                   onClick={() => {
                     const nextPage = page + 1;
                     setPage(nextPage);

@@ -1,4 +1,122 @@
 /* ========================================
+  }
+  
+  .totalContainer {
+    width: 100%;
+    max-width: 100%;
+    position: static;
+    margin: 2rem auto 0;
+    order: 1;
+    border-radius: 8px;
+    padding: 1.25rem;
+    min-height: 200px;
+  }
+  
+  .table {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+  .tableHead,
+  .tableRow {
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .tableImage {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .productTitle {
+    font-size: 0.875rem;
+  }
+  
+  .count {
+    width: 100px;
+    padding: 0.5rem;
+  }
+  
+  .countNumber {
+    font-size: 0.875rem;
+  }
+  
+  .quantityBtn {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .subtotal,
+  .price {
+    font-size: 0.875rem;
+  }
+  
+  .totalTitle {
+    font-size: 1.125rem;
+  }
+  
+  .totalPrice {
+    font-size: 1.5rem;
+    padding: 0.5rem 0;
+  }
+  
+  .cheackOutBtn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Tablets: 769px - 991px */
+@media (min-width: 769px) and (max-width: 991px) {
+  .cartContent {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .totalContainer {
+    max-width: 400px;
+    position: static;
+    margin: 2rem auto 0;
+    order: 1;
+    padding: 1.5rem;
+  }
+  
+  .table {
+    max-width: 100%;
+  }
+}
+
+/* Desktop: ≥ 992px */
+@media (min-width: 992px) {
+  .cartContent {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .totalContainer {
+    position: sticky;
+    top: 2rem;
+    order: 0;
+  }
+}
+
+/* Large Desktop: ≥ 1200px */
+@media (min-width: 1200px) {
+  .container {
+    padding: 3rem 2rem;
+  }
+  
+  .headline {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+  }
+}
+
+
+
+/* ========================================
    CSS RESET & GLOBAL VARIABLES
    ======================================== */
 *,
@@ -34,14 +152,14 @@
   margin: 0 auto;
   padding: 2rem 1rem;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  background: var(--cart-container-bg);
 }
 
 .headline {
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--main-text);
+  color: var(--cart-title);
   margin-bottom: 3rem;
   text-align: center;
   position: relative;
@@ -56,7 +174,7 @@
   transform: translateX(-50%);
   width: 60px;
   height: 3px;
-  background: var(--main-text);
+  background: var(--cart-title-underline);
   border-radius: 2px;
 }
 
@@ -84,11 +202,11 @@
   width: 100%;
   max-width: 800px;
   flex: 1;
-  background: var(--bg);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-light);
+  background: var(--cart-table-bg);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--cart-table-border);
 }
 
 .tableHead,
@@ -101,23 +219,25 @@
 }
 
 .tableHead {
-  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-  border-bottom: 1px solid var(--border-color);
+  background: var(--cart-table-header-bg);
+  border-bottom: 1px solid var(--cart-table-border);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--secondary-text);
+  color: var(--cart-table-header-text);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .tableRow {
-  border-bottom: 1px solid var(--border-color);
-  transition: var(--transition);
+  border-bottom: 1px solid var(--cart-table-border);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--cart-row-bg);
+  color: var(--cart-row-text);
 }
 
 .tableRow:hover {
-  background-color: #fafafa;
+  background-color: var(--cart-row-hover);
 }
 
 .tableRow:last-child {
@@ -132,9 +252,9 @@
   height: 80px;
   flex-shrink: 0;
   overflow: hidden;
-  border-radius: var(--border-radius-sm);
-  box-shadow: var(--shadow-light);
-  background: var(--ternary-text);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  background: #f9fafb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,7 +265,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: var(--transition);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tableImage:hover img {
@@ -156,7 +276,7 @@
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
-  color: var(--main-text);
+  color: var(--cart-product-title);
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   display: -webkit-box;
@@ -169,7 +289,7 @@
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #ef4444;
+  color: var(--cart-remove-btn);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -179,14 +299,14 @@
   outline: none;
   background-color: transparent;
   padding: 0.5rem;
-  border-radius: var(--border-radius-sm);
-  transition: var(--transition);
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .removeBtn:hover {
-  background-color: #fef2f2;
-  color: #dc2626;
+  background-color: var(--cart-remove-btn-bg-hover);
+  color: var(--cart-remove-btn-hover);
   transform: translateY(-1px);
 }
 
@@ -196,11 +316,11 @@
 .quantityBtn {
   cursor: pointer;
   font-size: 1.25rem;
-  color: var(--main-text);
+  color: var(--cart-quantity-btn);
   border: none;
   outline: none;
-  background-color: var(--bg);
-  transition: var(--transition);
+  background-color: var(--cart-quantity-btn-bg);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 0.5rem;
   border-radius: 50%;
   width: 3rem;
@@ -209,12 +329,12 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  box-shadow: var(--shadow-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .quantityBtn:hover {
-  background-color: var(--main-text);
-  color: white;
+  background-color: var(--cart-quantity-btn-hover);
+  color: var(--cart-quantity-btn-hover-text);
   transform: scale(1.05);
 }
 
@@ -230,32 +350,32 @@
 
 .quantityBtn:disabled:hover {
   background-color: #f3f4f6;
-  color: var(--main-text);
+  color: var(--cart-quantity-btn);
   transform: none;
-  box-shadow: var(--shadow-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .count {
   width: 120px;
   padding: 0.75rem;
   border: none;
-  border-radius: var(--border-radius-sm);
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--bg);
-  box-shadow: var(--shadow-light);
-  transition: var(--transition);
+  background: var(--cart-quantity-btn-bg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .count:hover {
-  box-shadow: var(--shadow-medium);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 .countNumber {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--main-text);
+  color: var(--cart-quantity-number);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   min-width: 20px;
   text-align: center;
@@ -268,7 +388,7 @@
    PRICE & SUBTOTAL STYLES
    ======================================== */
 .subtotal {
-  color: var(--main-text);
+  color: var(--cart-subtotal);
   text-align: center;
   font-size: 1.125rem;
   font-weight: 700;
@@ -277,7 +397,7 @@
 }
 
 .price {
-  color: var(--secondary-text);
+  color: var(--cart-price);
   text-align: center;
   font-size: 1rem;
   font-weight: 500;
@@ -293,16 +413,16 @@
   width: 100%;
   max-width: 320px;
   min-height: 250px;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  border: 1px solid var(--cart-table-border);
   display: flex;
   padding: 1.5rem;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  background: var(--bg);
+  background: var(--cart-total-container-bg);
   z-index: 100;
-  box-shadow: var(--shadow-medium);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
   align-self: flex-start;
   backdrop-filter: blur(10px);
 }
@@ -311,7 +431,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.4;
-  color: var(--main-text);
+  color: var(--cart-total-title);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   margin-bottom: 0.25rem;
 }
@@ -320,34 +440,34 @@
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--main-text);
+  color: var(--cart-total-price);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   padding: 0.75rem 0;
-  border-top: 2px solid var(--border-color);
-  border-bottom: 2px solid var(--border-color);
+  border-top: 2px solid var(--cart-table-border);
+  border-bottom: 2px solid var(--cart-table-border);
 }
 
 .cheackOutBtn {
   width: 100%;
   padding: 0.875rem 1.5rem;
-  border-radius: var(--border-radius-sm);
+  border-radius: 8px;
   border: none;
   outline: none;
-  background: var(--main-text);
-  color: var(--bg);
+  background: var(--cart-checkout-btn);
+  color: var(--cart-checkout-btn-text);
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.5;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: var(--shadow-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
   position: relative;
   overflow: hidden;
 }
@@ -365,7 +485,7 @@
 
 .cheackOutBtn:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-heavy);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .cheackOutBtn:hover::before {
@@ -382,10 +502,10 @@
 .errorContainer {
   text-align: center;
   padding: 4rem 2rem;
-  background: var(--bg);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-light);
-  border: 1px solid var(--border-color);
+  background: var(--cart-error-bg);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--cart-table-border);
   max-width: 500px;
   margin: 0 auto;
 }
@@ -393,45 +513,45 @@
 .errorContainer h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--main-text);
+  color: var(--cart-error-title);
   margin: 1rem 0 0.5rem;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .errorContainer p {
-  color: var(--secondary-text);
+  color: var(--cart-error-text);
   margin-bottom: 2rem;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .retryBtn {
-  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
-  color: var(--bg);
+  background: var(--cart-retry-btn);
+  color: var(--cart-retry-btn-text);
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius-sm);
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: var(--shadow-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .retryBtn:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-medium);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 .emptyCart {
   text-align: center;
   padding: 6rem 2rem;
-  background: var(--bg);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-light);
-  border: 1px solid var(--border-color);
+  background: var(--cart-empty-bg);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--cart-table-border);
   max-width: 400px;
   margin: 0 auto;
 }
@@ -439,13 +559,13 @@
 .emptyCart h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--main-text);
+  color: var(--cart-empty-title);
   margin: 1.5rem 0 0.5rem;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .emptyCart p {
-  color: var(--secondary-text);
+  color: var(--cart-empty-text);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1rem;
 }
@@ -477,14 +597,14 @@
     position: static;
     margin: 2rem auto 0;
     order: 1;
-    border-radius: var(--border-radius-sm);
+    border-radius: 8px;
     padding: 1.25rem;
     min-height: 200px;
   }
   
   .table {
     max-width: 100%;
-    border-radius: var(--border-radius-sm);
+    border-radius: 8px;
   }
   
   .tableHead,

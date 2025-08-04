@@ -1,33 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Smartphone, 
   Store, 
-  Users, 
   ShoppingCart, 
-  CreditCard, 
   BarChart3, 
   Globe, 
   Zap,
   CheckCircle,
-  Star,
   ArrowRight,
-  Play,
   Download,
   Mail,
   Phone,
-  MapPin,
-  Menu,
-  X,
-  ChevronRight,
-  ChevronLeft
+  MapPin
 } from 'lucide-react';
 import './LandingPage.css';
 
 const LandingPage = () => {
   const [currentFeature, setCurrentFeature] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   useEffect(() => {
@@ -100,30 +90,56 @@ const LandingPage = () => {
     "Ready-made themes"
   ];
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+
 
   return (
     <div className="landing-page">
       {/* Navigation */}
-      <nav className="navbar">
-        <div className="nav-container">
-          <div className="nav-logo">
-            <span className="logo-icon">🏪</span>
-            <span className="logo-text">Dockany</span>
+      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div className="container">
+          {/* Improved Logo Section with Bootstrap */}
+          <div className="navbar-brand d-flex align-items-center">
+            <div className="d-flex align-items-center">
+              <div className="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" style={{width: '40px', height: '40px'}}>
+                <span className="text-white fw-bold fs-5">🏪</span>
+              </div>
+              <span className="fw-bold text-dark fs-4">Dockany</span>
+            </div>
           </div>
           
-          <div className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-            <a href="#features" className="nav-link">Features</a>
-            <a href="#how-it-works" className="nav-link">How It Works</a>
-            <a href="#testimonials" className="nav-link">Testimonials</a>
-            <a href="#pricing" className="nav-link">Pricing</a>
-            <Link to="/signup" className="nav-btn-primary">Get Started</Link>
-          </div>
+          <button
+            className="navbar-toggler border-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#landingNavbar"
+            aria-controls="landingNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
           
-          <div className="nav-toggle" onClick={toggleMobileMenu}>
-            {isMobileMenuOpen ? <X /> : <Menu />}
+          <div className="collapse navbar-collapse" id="landingNavbar">
+            <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <a href="#features" className="nav-link fw-semibold px-3">Features</a>
+              </li>
+              <li className="nav-item">
+                <a href="#how-it-works" className="nav-link fw-semibold px-3">How It Works</a>
+              </li>
+              <li className="nav-item">
+                <a href="#testimonials" className="nav-link fw-semibold px-3">Testimonials</a>
+              </li>
+              <li className="nav-item">
+                <a href="#pricing" className="nav-link fw-semibold px-3">Pricing</a>
+              </li>
+            </ul>
+            
+            <div className="d-flex">
+              <Link to="/signup" className="btn btn-primary px-4 py-2 fw-semibold">
+                Get Started
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -136,63 +152,49 @@ const LandingPage = () => {
         <div className="container">
           <div className="hero-content">
             <div className="hero-text">
-              <h1 className="hero-title">
-                Create Your <span className="highlight">Mini E-Commerce</span> Store in Minutes
-              </h1>
+                             <h1 className="hero-title">
+                 <span className="title-line">Create Your</span>
+                 <span className="title-highlight">E-Commerce</span>
+                 <span className="title-line">Store in Minutes</span>
+               </h1>
               <p className="hero-subtitle">
                 Transform your business with our revolutionary platform. Create, manage, and grow your online store 
                 through our mobile app with custom subdomains and ready-made themes.
               </p>
-              <div className="hero-buttons">
-                <Link to="/signup" className="btn-primary">
-                  <Store className="btn-icon" />
-                  Start Your Store
-                  <ArrowRight className="btn-arrow" />
-                </Link>
-                <button className="btn-secondary">
-                  <Play className="btn-icon" />
-                  Watch Demo
-                </button>
-              </div>
-              <div className="hero-stats">
-                <div className="stat-item">
-                  <span className="stat-number">1000+</span>
-                  <span className="stat-label">Active Stores</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-number">50K+</span>
-                  <span className="stat-label">Products Sold</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-number">99%</span>
-                  <span className="stat-label">Satisfaction</span>
-                </div>
-              </div>
+                             <div className="hero-buttons">
+                 <Link to="/signup" className="btn-primary">
+                   <Store className="btn-icon" />
+                   Start Your Store
+                   <ArrowRight className="btn-arrow" />
+                 </Link>
+               </div>
+              
             </div>
             <div className="hero-visual">
-              <div className="phone-mockup">
-                <div className="phone-screen">
-                  <div className="app-interface">
-                    <div className="app-header">
-                      <div className="app-logo">🏪</div>
-                      <div className="app-title">My Store</div>
+              {/* Simple and Clean Design */}
+              <div className="hero-illustration">
+                <div className="main-card">
+                  <div className="card-header">
+                    <div className="app-icon">🏪</div>
+                    <h3>Your Store</h3>
+                  </div>
+                  <div className="card-content">
+                    <div className="feature-item">
+                      <Store className="feature-icon" />
+                      <span>Create Store</span>
                     </div>
-                    <div className="app-content">
-                      <div className="feature-card">
-                        <Store className="app-icon" />
-                        <span>Create Store</span>
-                      </div>
-                      <div className="feature-card">
-                        <ShoppingCart className="app-icon" />
-                        <span>Manage Products</span>
-                      </div>
-                      <div className="feature-card">
-                        <BarChart3 className="app-icon" />
-                        <span>View Analytics</span>
-                      </div>
+                    <div className="feature-item">
+                      <ShoppingCart className="feature-icon" />
+                      <span>Manage Products</span>
+                    </div>
+                    <div className="feature-item">
+                      <BarChart3 className="feature-icon" />
+                      <span>View Analytics</span>
                     </div>
                   </div>
                 </div>
+                
+                
               </div>
             </div>
           </div>

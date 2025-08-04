@@ -102,32 +102,39 @@
   align-items: center;
   gap: 1rem;
   padding: 1.5rem;
-  background: #f8f9fa;
+  background: var(--contact-info-bg, #f8f9fa);
   border-radius: 12px;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--contact-info-border, #e9ecef);
   transition: all 0.3s ease;
 }
 
 .contactInfo:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
-  border-color: var(--text);
+  border-color: var(--contact-info-hover-border, var(--text));
+  background: var(--contact-info-hover-bg, #f8f9fa);
 }
 
 .iconWrapper {
   width: 50px;
   height: 50px;
-  background: var(--text);
+  background: var(--contact-icon-bg, var(--text));
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.contactInfo:hover .iconWrapper {
+  background: var(--contact-icon-bg, var(--text));
+  transform: scale(1.1);
 }
 
 .icon {
   font-size: 1.2rem;
-  color: var(--bg);
+  color: var(--contact-icon-color, var(--bg));
 }
 
 .contactDetails {
@@ -137,7 +144,7 @@
 .contactTitle {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--text-gray);
+  color: var(--contact-title, var(--text-gray));
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 0.5rem;
@@ -146,8 +153,9 @@
 .contactMethod {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--text);
+  color: var(--contact-method, var(--text));
   margin: 0;
+  word-break: break-all;
 }
 
 /* ========================================

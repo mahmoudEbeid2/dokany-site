@@ -1,6 +1,6 @@
 .privacy-policy-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: var(--privacy-bg);
   padding: 2rem 0;
   font-family: 'Inter', sans-serif;
 }
@@ -9,27 +9,27 @@
   text-align: center;
   margin-bottom: 3rem;
   padding: 2rem 0;
-  border-bottom: 2px solid #e8e8e8;
+  border-bottom: 2px solid var(--privacy-header-border);
 }
 
 .privacy-header h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #141718;
+  color: var(--privacy-title);
   margin-bottom: 1rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .last-updated {
   font-size: 0.9rem;
-  color: #6c7275;
+  color: var(--privacy-subtitle);
   font-style: italic;
   margin-bottom: 1rem;
 }
 
 .policy-intro {
   font-size: 1.1rem;
-  color: #4a5568;
+  color: var(--privacy-intro);
   line-height: 1.6;
   max-width: 600px;
   margin: 0 auto;
@@ -39,11 +39,11 @@
 .privacy-content {
   max-width: 800px;
   margin: 0 auto;
-  background: #ffffff;
+  background: var(--privacy-container-bg);
   border-radius: 16px;
   padding: 3rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--privacy-header-border);
 }
 
 .policy-section {
@@ -57,10 +57,10 @@
 .policy-section h2 {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #141718;
+  color: var(--privacy-section-title);
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #000000;
+  border-bottom: 2px solid var(--privacy-section-border);
   position: relative;
 }
 
@@ -71,14 +71,14 @@
   left: 0;
   width: 50px;
   height: 2px;
-  background: linear-gradient(90deg, #000000, #333333);
+  background: var(--privacy-section-border-accent);
   border-radius: 1px;
 }
 
 .policy-section p {
   font-size: 1rem;
   line-height: 1.7;
-  color: #4a5568;
+  color: var(--privacy-text);
   margin-bottom: 1rem;
 }
 
@@ -90,35 +90,36 @@
 .policy-section li {
   font-size: 1rem;
   line-height: 1.6;
-  color: #4a5568;
+  color: var(--privacy-text);
   margin-bottom: 0.5rem;
   position: relative;
 }
 
 .policy-section li::before {
   content: '•';
-  color: #000000;
+  color: var(--privacy-bullet);
   font-weight: bold;
   position: absolute;
   left: -1.2rem;
 }
 
 .policy-section strong {
-  color: #141718;
+  color: var(--privacy-strong);
   font-weight: 700;
 }
 
 .contact-info {
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: var(--privacy-contact-bg);
   padding: 1.5rem;
   border-radius: 12px;
-  border-left: 4px solid #000000;
+  border-left: 4px solid var(--privacy-contact-border);
   margin-top: 1rem;
 }
 
 .contact-info p {
   margin-bottom: 0.5rem;
   font-weight: 500;
+  color: var(--privacy-text);
 }
 
 .contact-info p:last-child {
@@ -133,7 +134,7 @@
 
 .footer-note {
   font-size: 0.85rem;
-  color: #6c7275;
+  color: var(--privacy-footer-note);
   margin-top: 1rem;
   font-style: italic;
   max-width: 500px;
@@ -145,22 +146,22 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #000000 0%, #333333 100%);
-  color: #ffffff;
+  background: var(--privacy-btn-bg);
+  color: var(--privacy-btn-text);
   text-decoration: none;
   padding: 0.875rem 2rem;
   border-radius: 25px;
   font-weight: 600;
   font-size: 0.95rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--privacy-btn-shadow);
 }
 
 .btn-back:hover {
-  background: linear-gradient(135deg, #333333 0%, #000000 100%);
+  background: var(--privacy-btn-hover-bg);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  color: #ffffff;
+  box-shadow: var(--privacy-btn-shadow-hover);
+  color: var(--privacy-btn-text);
   text-decoration: none;
 }
 

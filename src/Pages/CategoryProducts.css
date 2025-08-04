@@ -1,11 +1,11 @@
 .category-products-container {
   min-height: 60vh;
   padding: 2rem 0;
-  background-color: #f8f9fa;
+  background-color: var(--category-page-bg);
 }
 
 .category-products-title {
-  color: #333;
+  color: var(--category-title);
   margin-bottom: 2rem;
   font-weight: 600;
   font-size: 2rem;
@@ -16,11 +16,12 @@
 .category-products-empty {
   text-align: center;
   padding: 3rem;
-  color: #666;
-  background-color: white;
+  color: var(--category-empty-text);
+  background-color: var(--category-empty-bg);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   margin: 2rem 0;
+  border: 1px solid var(--border-color);
 }
 
 .category-products-grid {

@@ -173,7 +173,7 @@ const SignUp = () => {
   );
 
   const errorStyle = {
-    color: "#d32f2f",
+    color: "var(--signup-error)",
     fontSize: "0.8rem",
     marginTop: "1px",
     marginBottom: "1px",

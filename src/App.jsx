@@ -31,6 +31,9 @@ import {
   setIntialWatchlist,
 } from "./features/user/userSlice";
 
+// Theme management
+import { useThemeManager } from "./hooks/useThemeManager";
+
 // Styles
 import "./App.css";
 import { setSellerInfo } from "./features/seller/sellerSlice.js";
@@ -40,6 +43,9 @@ const api = import.meta.env.VITE_API;
 function App() {
   const isAuthenticated = localStorage.getItem("token");
   const dispatch = useDispatch();
+
+  // تطبيق الثيم
+  useThemeManager();
 
   // Get the current location object
   const location = useLocation();
@@ -83,7 +89,7 @@ function App() {
     const controller = new AbortController();
 
     axios
-      .get(`${api}/api/seller/get-id/${subdomain}`, {
+      .get(`${api}/api/seller/subdomain/${subdomain}`, {
         headers: isAuthenticated ? {
           Authorization: `Bearer ${isAuthenticated}`,
         } : {},
@@ -167,7 +173,7 @@ function App() {
   }, [isAuthenticated, dispatch]);
 
   return (
-    <>
+    <div className="App">
       {!isSignPage && !isLandingPage && <NavBar />}
 
       <Routes>
@@ -230,7 +236,7 @@ function App() {
         pauseOnHover={true}
         theme="light"
       />
-    </>
+    </div>
   );
 }
 

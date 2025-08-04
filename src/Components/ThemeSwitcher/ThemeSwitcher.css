@@ -1,0 +1,16 @@
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  color: var(--text);
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--text2);
+  color: white;
+  transform: scale(1.1);
+} 

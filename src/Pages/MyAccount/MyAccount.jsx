@@ -7,14 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Orders from "../../Components/Orders/Orders";
 
-
 const MyAccount = () => {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("account");
-const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const token = localStorage.getItem("token");

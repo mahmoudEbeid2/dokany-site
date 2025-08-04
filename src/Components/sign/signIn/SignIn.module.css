@@ -5,12 +5,13 @@
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--signin-bg);
   overflow-y: auto;
 }
+
 .signinImageSection {
   display: block;
-  background-color: #ffffff;
+  background-color: var(--signin-container-bg);
   padding: 0 1.25rem;
   height: 100vh;
   overflow: hidden;
@@ -28,7 +29,7 @@
   justify-content: center;
   align-items: center;
   padding: 1rem 1rem;
-  background-color: #ffffff;
+  background-color: var(--signin-form-bg);
   min-height: 100vh;
   overflow-y: auto;
   flex: 1;
@@ -49,7 +50,7 @@
   letter-spacing: -0.025rem;
   margin-bottom: 1rem;
   text-align: center;
-  color: #141718;
+  color: var(--signin-title);
 }
 
 .formWrapper .signupLink {
@@ -58,16 +59,21 @@
   font-style: normal;
   font-weight: 400;
   line-height: 1.625rem;
-  color: #6c7275;
+  color: var(--signin-text);
   margin-top: 0.3rem;
   text-align: center;
 }
 
 .formWrapper .signupLink a {
-  color: #38cb89;
+  color: var(--signin-link);
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.formWrapper .signupLink a:hover {
+  color: var(--signin-link-hover);
 }
 
 .inputGroup {
@@ -75,34 +81,38 @@
   margin-bottom: 0.8rem;
   width: 100%;
 }
+
 .inputGroup label {
   position: absolute;
   top: -0.625rem;
   left: 0.75rem;
-  background-color: #ffffff;
+  background-color: var(--signin-form-bg);
   padding: 0 0.25rem;
   font-size: 0.75rem;
-  color: #202425;
+  color: var(--signin-label);
   font-weight: 500;
 }
 
 .inputGroup input {
   width: 100%;
   padding: 0.7rem 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--signin-input-border);
   border-radius: 0.5rem;
   font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
   box-sizing: border-box;
+  background-color: var(--signin-input-bg);
+  color: var(--signin-input-text);
 }
 
 .inputGroup input:focus {
-  border-color: #141718;
+  border-color: var(--signin-input-focus-border);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .inputGroup input::placeholder {
-  color: #aaa;
+  color: var(--signin-input-placeholder);
 }
 
 .rememberForgot {
@@ -122,11 +132,11 @@
   width: 1rem;
   height: 1rem;
   flex-shrink: 0;
-  accent-color: #141718;
+  accent-color: var(--signin-checkbox);
 }
 
 .rememberMe p {
-  color: #6c7275;
+  color: var(--signin-remember-text);
   font-family: Inter;
   font-size: 0.875rem;
   font-style: normal;
@@ -141,37 +151,67 @@
 }
 
 .forgotPassword a {
-  color: #141718;
+  color: var(--signin-forgot-link);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.forgotPassword a:hover {
+  color: var(--signin-forgot-hover);
 }
 
 .signinBtn {
   width: 100%;
-  background-color: #141718;
-  color: #ffffff;
+  background: var(--signin-btn-bg);
+  color: var(--signin-btn-text);
   border: none;
   border-radius: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
-  padding: 0.625rem 2.5rem;
+  padding: 0.875rem 2.5rem;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: var(--signin-btn-shadow);
   margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.signinBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
 .signinBtn:hover {
-  background-color: #2a2d2e;
+  background: var(--signin-btn-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.signinBtn:hover::before {
+  left: 100%;
+}
+
+.signinBtn:active {
+  transform: translateY(0);
 }
 
 .signinBtn:disabled {
-  background-color: #6c7275;
+  opacity: 0.7;
   cursor: not-allowed;
+  transform: none;
 }
 
 .passwordIcon {
@@ -182,14 +222,51 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #6c7275;
+  color: var(--signin-text);
   padding: 0.25rem;
   display: flex;
   align-items: center;
+  transition: color 0.3s ease;
+}
+
+.passwordIcon:hover {
+  color: var(--signin-link);
 }
 
 .passwordInput {
   padding-right: 3rem !important;
+}
+
+.termsLink {
+  font-family: Inter;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4rem;
+  color: var(--signin-terms-text);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.termsLink a {
+  color: var(--signin-terms-link);
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.termsLink a:hover {
+  color: var(--signin-terms-hover);
+  text-decoration: none;
+}
+
+/* Error styles */
+.errorStyle {
+  color: var(--signin-error) !important;
+  font-size: 0.8rem;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 @media (min-width: 768px) {
@@ -240,7 +317,7 @@
     font-weight: 500;
     margin-bottom: 1rem;
     margin-top: 1rem;
-    color: #141718;
+    color: var(--signin-title);
   }
   .signinImageSection {
     display: none;
@@ -261,7 +338,7 @@
   .signinContainer {
     flex-direction: row;
     height: 100vh;
-    background-color: #fff;
+    background-color: var(--signin-bg);
   }
 
   .signinImageSection {
@@ -310,7 +387,7 @@
   .formWrapper h2 {
     font-size: 1.75rem;
     margin-top: 0.5rem;
-    color: #141718;
+    color: var(--signin-title);
   }
   .formWrapper {
     padding: 0.25rem;
@@ -327,28 +404,4 @@
     padding: 0.875rem 2rem;
     font-size: 0.95rem;
   }
-}
-
-.termsLink {
-  font-family: Inter;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.4rem;
-  color: #6c7275;
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.termsLink a {
-  color: #141718;
-  text-decoration: underline;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.termsLink a:hover {
-  color: #38cb89;
-  text-decoration: none;
 }

@@ -9,13 +9,6 @@
   padding: 0;
 }
 
-:root {
-  --bg: #fff;
-  --main-text: #000;
-  --secondary-text: #6c7275;
-  --ternary-text: #e8ecef;
-}
-
 /* ========================================
    MAIN CONTAINER & LAYOUT
    ======================================== */
@@ -25,40 +18,102 @@
   flex-direction: column;
   align-items: flex-start;
   width: 53.62rem;
+  background-color: var(--orders-bg);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.headline {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2rem;
+  color: var(--orders-title);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.headline::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 3rem;
+  height: 3px;
+  background: var(--text2);
+  border-radius: 2px;
 }
 
 .tableHead {
   font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.375rem;
-  color: var(--secondary-text);
+  color: var(--orders-table-header);
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--secondary-text);
+  padding: 1rem 0;
+  border-bottom: 2px solid var(--orders-table-border);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .tableRow {
   display: flex;
   width: 100%;
-  padding: 1.5rem 0;
+  padding: 1.25rem 0;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--secondary-text);
+  border-bottom: 1px solid var(--orders-row-border);
   font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.375rem;
-  color: var(--main-text);
+  color: var(--orders-row-text);
+  transition: all 0.3s ease;
 }
 
-.headline {
-  font-size: 1.25rem;
+.tableRow:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+  transform: translateX(5px);
+  border-radius: 0.5rem;
+  padding: 1.25rem 1rem;
+}
+
+/* Status Colors */
+.tableRow .col-2:first-of-type {
   font-weight: 600;
-  line-height: 2rem;
-  color: var(--main-text);
-  margin-bottom: 2.5rem;
+  text-transform: capitalize;
+}
+
+/* Pending Status */
+.tableRow .col-2:first-of-type:contains("pending"),
+.tableRow .col-2:first-of-type:contains("Pending") {
+  color: var(--orders-status-pending);
+}
+
+/* Completed Status */
+.tableRow .col-2:first-of-type:contains("completed"),
+.tableRow .col-2:first-of-type:contains("Completed"),
+.tableRow .col-2:first-of-type:contains("delivered"),
+.tableRow .col-2:first-of-type:contains("Delivered") {
+  color: var(--orders-status-completed);
+}
+
+/* Cancelled Status */
+.tableRow .col-2:first-of-type:contains("cancelled"),
+.tableRow .col-2:first-of-type:contains("Cancelled"),
+.tableRow .col-2:first-of-type:contains("failed"),
+.tableRow .col-2:first-of-type:contains("Failed") {
+  color: var(--orders-status-cancelled);
+}
+
+/* Price Column */
+.tableRow .col-2:last-of-type {
+  font-weight: 700;
+  color: var(--text2);
 }
 
 /* ========================================
@@ -102,4 +157,45 @@
   html {
     font-size: 100%; /* 1rem = 12px */
   }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: 1rem;
+    margin: 0 1rem;
+  }
+  
+  .tableHead,
+  .tableRow {
+    font-size: 0.75rem;
+    padding: 0.75rem 0;
+  }
+  
+  .headline {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tableRow:hover {
+    transform: none;
+    padding: 0.75rem 0;
+  }
+}
+
+/* Status Styles */
+.statusPending {
+  color: var(--orders-status-pending) !important;
+  font-weight: 600;
+}
+
+.statusCompleted {
+  color: var(--orders-status-completed) !important;
+  font-weight: 600;
+}
+
+.statusCancelled {
+  color: var(--orders-status-cancelled) !important;
+  font-weight: 600;
 }

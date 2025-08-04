@@ -1,48 +1,115 @@
 /* Shop Page Styles */
 .shop-hero {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  padding: 3rem 2rem;
+  background: var(--shop-hero-bg);
+  padding: 4rem 2rem;
   border-radius: 1rem;
   margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.shop-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.03)" points="0,1000 1000,0 1000,1000"/></svg>');
+  background-size: cover;
+  z-index: 1;
 }
 
 .shop-hero h1 {
-  color: var(--text-primary);
+  color: var(--shop-hero-text);
   margin-bottom: 1rem;
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .shop-hero p {
-  font-size: 1.1rem;
+  color: var(--shop-hero-subtitle);
+  font-size: 1.2rem;
   max-width: 600px;
   text-align: center;
+  margin: 0 auto;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Filters Section */
+/* إلغاء تأثير Bootstrap للنص */
+.shop-hero .text-muted {
+  color: var(--shop-hero-subtitle) !important;
+}
+
+/* Filters Section - محسن */
 .form-label {
-  color: var(--text-primary);
+  color: var(--form-label);
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .form-control,
 .form-select {
-  border: 2px solid #e9ecef;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
+  background-color: var(--form-input-bg);
+  border: 2px solid var(--form-input-border);
+  border-radius: 0.75rem;
+  padding: 0.875rem 1rem;
   transition: all 0.3s ease;
   font-size: 1rem;
+  color: var(--form-input-text);
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-control::placeholder {
+  color: var(--form-input-placeholder);
+  opacity: 0.8;
+  font-weight: 400;
 }
 
 .form-control:focus,
 .form-select:focus {
-  border-color: var(--primary-500);
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  background-color: var(--form-input-bg);
+  border-color: var(--form-input-focus-border);
+  color: var(--form-input-text);
+  box-shadow: var(--form-input-focus-shadow);
   outline: none;
+  transform: translateY(-1px);
 }
 
-.form-control::placeholder {
-  color: #6c757d;
-  opacity: 0.7;
+.form-control:hover,
+.form-select:hover {
+  border-color: var(--form-input-focus-border);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Select Arrow */
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 16px 12px;
+  padding-right: 2.5rem;
+}
+
+/* Dark theme select arrow */
+[data-theme="dark"] .form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
 }
 
 /* Products Section */
@@ -64,19 +131,24 @@
 
 /* Load More Button */
 .btn-dark {
-  background-color: var(--primary-600);
-  border-color: var(--primary-600);
+  background-color: var(--view-more-btn-bg);
+  border-color: var(--view-more-btn-border);
+  color: var(--view-more-btn-text);
   padding: 0.75rem 2rem;
   font-weight: 600;
   border-radius: 0.5rem;
   transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--view-more-btn-shadow);
 }
 
 .btn-dark:hover {
-  background-color: var(--primary-700);
-  border-color: var(--primary-700);
+  background-color: var(--view-more-btn-hover-bg);
+  border-color: var(--view-more-btn-hover-bg);
+  color: var(--view-more-btn-hover-text);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--view-more-btn-shadow-hover);
 }
 
 .btn-dark:active {
@@ -91,27 +163,31 @@
 
 /* Empty State */
 .text-muted {
-  color: #6c757d !important;
+  color: var(--text-muted) !important;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .shop-hero {
-    padding: 2rem 1rem;
+    padding: 3rem 1rem;
     margin-bottom: 1.5rem;
   }
   
   .shop-hero h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
   
   .shop-hero p {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   
   .form-control,
   .form-select {
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .form-label {
     font-size: 0.9rem;
   }
   
@@ -128,11 +204,11 @@
 
 @media (max-width: 576px) {
   .shop-hero {
-    padding: 1.5rem 1rem;
+    padding: 2rem 1rem;
   }
   
   .shop-hero h1 {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
   
   .products-section .col-12 {
@@ -156,25 +232,11 @@
   }
 }
 
-/* Hover effects for form elements */
-.form-control:hover,
-.form-select:hover {
-  border-color: #ced4da;
-}
-
 /* Focus states for accessibility */
 .form-control:focus-visible,
 .form-select:focus-visible {
-  outline: 2px solid var(--primary-500);
+  outline: 2px solid var(--form-input-focus-border);
   outline-offset: 2px;
-}
-
-/* Custom scrollbar for select elements */
-.form-select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 16px 12px;
 }
 
 /* Breadcrumb styling */

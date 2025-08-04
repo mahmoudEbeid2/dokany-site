@@ -2,23 +2,181 @@
 .footer {
   background-color: var(--footer-bg);
   color: var(--footer-text);
-  padding: 2rem 1rem;
-  text-align: center;
-}
-.footer p,
-.footer li {
-  color: var(--footer-text);
-  font-size: 0.875rem;
-  font-weight: 400;
+  padding: 4rem 1rem 2rem;
+  border-top: 1px solid var(--footer-border);
 }
 
-.footer a {
+.footerBrand {
+  text-align: left;
+}
+
+.footerDescription {
   color: var(--footer-text);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.7;
+  margin: 1.5rem 0 0 0;
+  opacity: 0.8;
+  max-width: 320px;
+}
+
+.footerTitle {
+  color: var(--footer-text);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.footerTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 2rem;
+  height: 2px;
+  background-color: var(--footer-link);
+  border-radius: 1px;
+}
+
+.footerLinks {
+  text-align: left;
+}
+
+.linksList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.linksList li {
+  margin-bottom: 0.75rem;
+}
+
+.footerLink {
+  color: var(--footer-link);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   font-weight: 400;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  display: inline-block;
+  position: relative;
+  border-radius: 0.25rem;
 }
 
-.footer a:hover {
-  text-decoration: underline;
+.footerLink:hover {
+  color: var(--footer-link-hover);
+  text-decoration: none;
+  background-color: rgba(96, 165, 250, 0.1);
+  padding: 0.5rem 0.75rem;
+  transform: translateX(5px);
+}
+
+.footerSocial {
+  text-align: left;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.socialLink {
+  color: var(--footer-icon);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: transparent;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.socialLink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--footer-link), var(--footer-link-hover));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 50%;
+}
+
+.socialLink:hover {
+  color: #ffffff;
+  border-color: var(--footer-icon-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(96, 165, 250, 0.3);
+}
+
+.socialLink:hover::before {
+  opacity: 1;
+}
+
+.socialLink i {
+  position: relative;
+  z-index: 1;
+}
+
+.footerDivider {
+  border-color: var(--footer-border);
+  margin: 3rem 0 2rem;
+  opacity: 0.2;
+}
+
+.copyright {
+  color: var(--footer-text);
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin: 0;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 3rem 1rem 2rem;
+  }
+  
+  .footerBrand,
+  .footerLinks,
+  .footerSocial {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .footerDescription {
+    text-align: center;
+    max-width: 100%;
+    margin: 1.5rem auto 0;
+  }
+  
+  .footerTitle::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .socialLinks {
+    justify-content: center;
+  }
+  
+  .footerLink:hover {
+    transform: translateY(-2px);
+  }
 }

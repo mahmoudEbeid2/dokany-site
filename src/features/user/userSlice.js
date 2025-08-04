@@ -14,6 +14,11 @@ const userSlice = createSlice({
     setUserInfo: (state, action) => {
       state.userInfo = action.payload;
     },
+    updateUserTheme: (state, action) => {
+      if (state.userInfo) {
+        state.userInfo.theme = action.payload;
+      }
+    },
     clearUserInfo: (state) => {
       state.userInfo = null;
       state.cart = [];
@@ -93,6 +98,7 @@ const userSlice = createSlice({
 
 export const {
   setUserInfo,
+  updateUserTheme,
   clearUserInfo,
   setIntialCart,
   addToCart,

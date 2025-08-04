@@ -25,11 +25,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 4. Light mode (default) */
+/* 4. CSS Variables - سيتم تحديثها ديناميكياً */
 :root {
   --bg: #ffffff;
   --text: #121212;
   --text-gray: #6c7275;
+  --text2: #377dff;
   --hover: #434141;
   --hero-bg: #171d28;
   --hero-btn: #377dff;
@@ -41,14 +42,6 @@ body {
   --footer-bg: #222;
   --footer-text: #f5f5f5;
 }
-
-/* Dark mode  */
-/* :root {
-  --bg: #000000;
-  --text: #ffffff;
-  --text-gray: #fdfdfd;
-  --hover: #bebebe;
-} */
 
 /* Responsive font sizes are now handled in design-system.css */
 
@@ -150,3 +143,29 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+/* View More Button Styles */
+.btn-dark {
+  background-color: var(--view-more-btn-bg) !important;
+  border-color: var(--view-more-btn-border) !important;
+  color: var(--view-more-btn-text) !important;
+  box-shadow: var(--view-more-btn-shadow);
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-dark:hover {
+  background-color: var(--view-more-btn-hover-bg) !important;
+  border-color: var(--view-more-btn-hover-bg) !important;
+  color: var(--view-more-btn-hover-text) !important;
+  box-shadow: var(--view-more-btn-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.btn-dark:active {
+  transform: translateY(0);
+  box-shadow: var(--view-more-btn-shadow);
+}
