@@ -110,7 +110,6 @@
   box-shadow: var(--icon-shadow-hover);
 }
 
-/* تطبيق الألوان على الأيقونات نفسها */
 .productActionBtn svg {
   color: var(--icon-color) !important;
   fill: var(--icon-color) !important;
@@ -161,7 +160,6 @@
   box-shadow: var(--add-to-cart-shadow-hover);
 }
 
-/* تأكيد على الألوان */
 .addToCartBtn {
   background: var(--add-to-cart-bg) !important;
   color: var(--add-to-cart-text) !important;
@@ -363,7 +361,6 @@
   }
 }
 
-/* تحسينات للدارك مود */
 @media (prefers-color-scheme: dark) {
   .productCardContainer {
     background-color: var(--product-card-bg);

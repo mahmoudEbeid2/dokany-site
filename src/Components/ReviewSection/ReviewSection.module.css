@@ -1,7 +1,7 @@
 .headingReview {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #141718;
+  color: var(--review-title);
   margin-bottom: 0.5rem;
   font-family: 'Inter', sans-serif;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -14,50 +14,51 @@
 }
 
 .ratingStar {
-  color: #000000;
+  color: var(--review-star-empty);
   font-size: 1rem;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
   transition: all 0.2s ease;
 }
 
 .ratingStar.full {
-  color: #000000;
+  color: var(--review-star-filled);
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .ratingStar.half {
-  color: #000000;
+  color: var(--review-star-filled);
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .ratingStar.empty {
-  color: #e0e0e0;
+  color: var(--review-star-empty);
   filter: none;
 }
 
 .addReviewStars{
-  color: #000000;
+  color: var(--review-star-empty);
   font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .addReviewStars:hover {
+  color: var(--review-star-hover);
   transform: scale(1.1);
 }
 
 .textReview {
   font-size: 1rem;
   font-weight: 500;
-  color: #4a5568;
+  color: var(--review-text);
   font-family: 'Inter', sans-serif;
   line-height: 1.7;
   margin-top: 1rem;
 }
 
 .btnPrimary1 {
-  background: linear-gradient(135deg, #000000 0%, #333333 100%);
-  color: #ffffff;
+  background: var(--review-submit-btn);
+  color: var(--review-submit-btn-text);
   border: none;
   padding: 0.75rem 2rem;
   border-radius: 25px;
@@ -70,19 +71,19 @@
 }
 
 .btnPrimary1:hover {
-  background: linear-gradient(135deg, #333333 0%, #000000 100%);
+  background: var(--review-submit-btn-hover);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 .reviewCard {
-  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-  border: 1px solid #e8e8e8;
+  background: var(--review-card-bg);
+  border: 1px solid var(--review-card-border);
   border-radius: 20px;
   padding: 2rem;
   margin-bottom: 1.5rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--review-card-shadow);
   position: relative;
   overflow: hidden;
 }
@@ -100,9 +101,9 @@
 }
 
 .reviewCard:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--review-card-hover-shadow);
   transform: translateY(-4px) scale(1.02);
-  border-color: #d0d0d0;
+  border-color: var(--review-card-border);
 }
 
 .reviewCard:hover::before {
@@ -120,7 +121,7 @@
   height: 4rem;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #ffffff;
+  border: 3px solid var(--review-avatar-border);
   flex-shrink: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
@@ -144,12 +145,12 @@
 
 .reviewDate {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--review-date);
   font-weight: 400;
 }
 
 .deleteIcon {
-  color: #ef4444;
+  color: var(--review-delete-icon);
   font-size: 1.2rem;
   cursor: pointer;
   padding: 0.75rem;
@@ -161,18 +162,19 @@
 }
 
 .deleteIcon:hover {
+  color: var(--review-delete-icon-hover);
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%);
   transform: scale(1.15) rotate(5deg);
   box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
 }
 
 .reviewsSection {
-  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  background: var(--review-section-bg);
   border-radius: 24px;
   padding: 2.5rem;
   margin-top: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--review-card-border);
   position: relative;
   overflow: hidden;
 }
@@ -190,9 +192,9 @@
 .reviewsTitle {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #141718;
+  color: var(--review-title);
   font-family: 'Inter', sans-serif;
-  border-bottom: 3px solid #000000;
+  border-bottom: 3px solid var(--review-title);
   padding-bottom: 1rem;
   margin-bottom: 2rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -212,11 +214,11 @@
 }
 
 .addReviewForm {
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: var(--review-form-bg);
   border-radius: 24px;
   padding: 2.5rem;
   margin-bottom: 2rem;
-  border: 2px solid #e8e8e8;
+  border: 2px solid var(--review-form-border);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   position: relative;
   overflow: hidden;
@@ -235,7 +237,7 @@
 .addReviewTitle {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #141718;
+  color: var(--review-title);
   margin-bottom: 2rem;
   font-family: 'Inter', sans-serif;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -264,7 +266,7 @@
 .starLabel {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #6c7275;
+  color: var(--review-text);
   margin-right: 1rem;
   font-family: 'Inter', sans-serif;
 }
@@ -287,29 +289,30 @@
   width: 100%;
   min-height: 120px;
   padding: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--review-textarea-border);
   border-radius: 12px;
   font-size: 0.95rem;
   font-family: 'Inter', sans-serif;
   resize: vertical;
   transition: all 0.2s ease;
-  background: #ffffff;
+  background: var(--review-textarea-bg);
+  color: var(--review-text);
 }
 
 .reviewTextarea:focus {
   outline: none;
-  border-color: #000000;
+  border-color: var(--review-textarea-focus-border);
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 .reviewTextarea::placeholder {
-  color: #9ca3af;
+  color: var(--review-date);
   font-style: italic;
 }
 
 .submitButton {
-  background: linear-gradient(135deg, #000000 0%, #333333 50%, #000000 100%);
-  color: #ffffff;
+  background: var(--review-submit-btn);
+  color: var(--review-submit-btn-text);
   border: none;
   padding: 1rem 2.5rem;
   border-radius: 30px;
@@ -336,7 +339,7 @@
 }
 
 .submitButton:hover:not(:disabled) {
-  background: linear-gradient(135deg, #333333 0%, #000000 50%, #333333 100%);
+  background: var(--review-submit-btn-hover);
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
@@ -355,7 +358,7 @@
 
 .ratingDisplay {
   font-size: 0.9rem;
-  color: #6c7275;
+  color: var(--review-text);
   margin-left: 1rem;
   font-weight: 500;
 }

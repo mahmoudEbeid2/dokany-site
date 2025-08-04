@@ -47,12 +47,10 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* إلغاء تأثير Bootstrap للنص */
 .shop-hero .text-muted {
   color: var(--shop-hero-subtitle) !important;
 }
 
-/* Filters Section - محسن */
 .form-label {
   color: var(--form-label);
   font-weight: 600;

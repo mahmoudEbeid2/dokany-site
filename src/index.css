@@ -25,7 +25,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 4. CSS Variables - سيتم تحديثها ديناميكياً */
 :root {
   --bg: #ffffff;
   --text: #121212;

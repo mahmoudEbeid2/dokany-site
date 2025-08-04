@@ -44,7 +44,6 @@ function App() {
   const isAuthenticated = localStorage.getItem("token");
   const dispatch = useDispatch();
 
-  // تطبيق الثيم
   useThemeManager();
 
   // Get the current location object
