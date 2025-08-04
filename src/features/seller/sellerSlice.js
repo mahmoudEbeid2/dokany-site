@@ -12,12 +12,20 @@ const sellerSlice = createSlice({
     setSellerInfo: (state, action) => {
       state.sellerInfo = action.payload;
     },
+    updateTheme: (state, action) => {
+      if (state.sellerInfo) {
+        state.sellerInfo.theme = { name: action.payload };
+      } else {
+        state.sellerInfo = { theme: { name: action.payload } };
+      }
+    },
   },
 
 });
 
 export const {
   setSellerInfo,
+  updateTheme,
 } = sellerSlice.actions;
 
 export default sellerSlice.reducer;

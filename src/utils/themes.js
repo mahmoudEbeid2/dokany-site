@@ -1,16 +1,13 @@
-// تعريف الثيمين مع فصل كامل لكل العناصر
 export const themes = {
   light: {
     name: 'light',
     colors: {
-      // الألوان الأساسية
       '--bg': '#ffffff',
       '--text': '#121212',
       '--text-gray': '#6c7275',
       '--text2': '#377dff',
       '--hover': '#434141',
       
-      // Hero Section - Light Theme مع تدرج أبيض وأزرق وسماوي وفضي
       '--hero-bg': 'linear-gradient(135deg, #ffffff 0%, #3b82f6 25%, #0ea5e9 50%, #94a3b8 75%, #cbd5e1 100%)',
       '--hero-text': '#1e293b',
       '--hero-description': 'rgba(30, 41, 59, 0.9)',
@@ -28,7 +25,14 @@ export const themes = {
       '--navbar-active': '#377dff',
       '--navbar-toggler': '#121212',
       '--navbar-toggler-border': '#d1d5db',
-      '--navbar-link-border': 'transparent', // بوردر شفاف للينكات
+      '--navbar-toggler-bg': '#ffffff',
+      '--navbar-toggler-hover-bg': '#f3f4f6',
+      '--navbar-toggler-hover-border': '#377dff',
+      '--navbar-link-border': 'transparent',
+      '--navbar-link-hover-bg': 'rgba(55, 125, 255, 0.1)',
+      '--navbar-link-active-bg': 'rgba(55, 125, 255, 0.15)',
+      '--navbar-collapse-bg': '#ffffff',
+      '--navbar-shadow': '0 2px 8px rgba(18, 18, 18, 0.1)',
       
       // Cards & Components
       '--card-bg': '#ffffff',
@@ -80,7 +84,6 @@ export const themes = {
       '--text-primary': '#121212',
       '--text-secondary': '#6c7275',
       
-      // Product Cards - Light Theme كاملة
       '--product-card-bg': '#ffffff',
       '--product-card-border': '#e2e8f0',
       '--product-card-shadow': '0 2px 8px rgba(0, 0, 0, 0.1)',
@@ -91,13 +94,11 @@ export const themes = {
       '--product-description': '#6c7275',
       '--product-image-bg': '#f8fafc',
       
-      // Stars - Light Theme (سوداء للمليان، رمادية للفارغة)
       '--star-filled': '#000000',
-      '--star-empty': '#e5e7eb', // رمادي فاتح بدلاً من أبيض
-      '--star-empty-border': '#d1d5db', // border رمادي أغمق
+      '--star-empty': '#e5e7eb',
+      '--star-empty-border': '#d1d5db',
       '--star-size': '16px',
       
-      // Icons - Light Theme محسنة
       '--icon-color': '#6c7275',
       '--icon-bg': '#ffffff',
       '--icon-hover-bg': '#377dff',
@@ -105,7 +106,6 @@ export const themes = {
       '--icon-shadow': '0 2px 4px rgba(0, 0, 0, 0.1)',
       '--icon-shadow-hover': '0 4px 8px rgba(0, 0, 0, 0.15)',
       
-      // Badges - Light Theme محسنة
       '--badge-new-bg': '#38cb89',
       '--badge-discount-bg': '#ff6b6b',
       '--badge-text': '#ffffff',
@@ -133,7 +133,6 @@ export const themes = {
       '--modal-close-text': '#ffffff',
       '--modal-close-hover-bg': '#dc2626',
 
-      // Carousel Indicators - Light Theme واضحة
       '--indicator-bg': '#e5e7eb',
       '--indicator-active': '#377dff',
       '--indicator-hover': '#d1d5db',
@@ -303,19 +302,53 @@ export const themes = {
       '--reset-link-hover': '#059669',
       '--reset-text': '#6c7275',
       '--reset-error': '#ef4444',
+      
+      // Review Section - Light Theme
+      '--review-section-bg': '#ffffff',
+      '--review-card-bg': '#ffffff',
+      '--review-card-border': '#e2e8f0',
+      '--review-card-shadow': '0 4px 20px rgba(0, 0, 0, 0.06)',
+      '--review-card-hover-shadow': '0 12px 40px rgba(0, 0, 0, 0.12)',
+      '--review-title': '#121212',
+      '--review-text': '#6c7275',
+      '--review-date': '#9ca3af',
+      '--review-avatar-border': '#e2e8f0',
+      '--review-star-filled': '#fbbf24',
+      '--review-star-empty': '#e5e7eb',
+      '--review-star-hover': '#f59e0b',
+      '--review-form-bg': '#ffffff',
+      '--review-form-border': '#e2e8f0',
+      '--review-textarea-bg': '#ffffff',
+      '--review-textarea-border': '#d1d5db',
+      '--review-textarea-focus-border': '#377dff',
+      '--review-submit-btn': 'linear-gradient(135deg, #377dff 0%, #2563eb 100%)',
+      '--review-submit-btn-text': '#ffffff',
+      '--review-submit-btn-hover': 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+      '--review-delete-icon': '#ef4444',
+      '--review-delete-icon-hover': '#dc2626',
+      
+      // Product Details Counter - Light Theme
+      '--counter-bg': '#f8fafc',
+      '--counter-border': '#e2e8f0',
+      '--counter-button-bg': '#377dff',
+      '--counter-button-text': '#ffffff',
+      '--counter-button-hover-bg': '#2563eb',
+      '--counter-button-hover-text': '#ffffff',
+      '--counter-button-disabled-bg': '#e5e7eb',
+      '--counter-button-disabled-text': '#9ca3af',
+      '--counter-value-bg': '#f8fafc',
+      '--counter-value-text': '#121212',
     }
   },
   dark: {
     name: 'dark',
     colors: {
-      // الألوان الأساسية - محسنة للقراءة
       '--bg': '#0f172a',
       '--text': '#f8fafc',
       '--text-gray': '#cbd5e1',
       '--text2': '#60a5fa',
       '--hover': '#e2e8f0',
       
-      // Hero Section - Dark Theme محسن
       '--hero-bg': 'linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #334155 100%)',
       '--hero-text': '#ffffff',
       '--hero-description': 'rgba(255, 255, 255, 0.85)',
@@ -326,7 +359,6 @@ export const themes = {
       '--hero-btn-border': 'rgba(96, 165, 250, 0.3)',
       '--hero-overlay': 'rgba(0, 0, 0, 0.2)',
       
-      // NavBar - محسنة
       '--navbar-bg': '#1e293b',
       '--navbar-border': '#334155',
       '--navbar-text': '#f1f5f9',
@@ -334,7 +366,14 @@ export const themes = {
       '--navbar-active': '#60a5fa',
       '--navbar-toggler': '#f1f5f9',
       '--navbar-toggler-border': '#475569',
-      '--navbar-link-border': 'transparent', // بوردر شفاف للينكات
+      '--navbar-toggler-bg': '#1e293b',
+      '--navbar-toggler-hover-bg': '#334155',
+      '--navbar-toggler-hover-border': '#60a5fa',
+      '--navbar-link-hover-bg': 'rgba(96, 165, 250, 0.1)',
+      '--navbar-link-active-bg': 'rgba(96, 165, 250, 0.15)',
+      '--navbar-collapse-bg': '#1e293b',
+      '--navbar-shadow': '0 2px 8px rgba(241, 245, 249, 0.1)',
+      '--navbar-link-border': 'transparent',
       
       // Cards & Components
       '--card-bg': '#1e293b',
@@ -355,7 +394,6 @@ export const themes = {
       '--add-to-cart-shadow': '0 2px 4px rgba(59, 130, 246, 0.3)',
       '--add-to-cart-shadow-hover': '0 4px 8px rgba(59, 130, 246, 0.4)',
       
-      // Forms & Inputs - محسنة
       '--input-bg': '#1e293b',
       '--input-border': '#475569',
       '--input-focus': '#3b82f6',
@@ -378,7 +416,6 @@ export const themes = {
       '--footer-icon': '#94a3b8',
       '--footer-icon-hover': '#60a5fa',
       
-      // Cart & Account Pages - محسنة للقراءة
       '--page-bg': '#0f172a',
       '--section-bg': '#1e293b',
       '--border-color': '#334155',
@@ -386,23 +423,20 @@ export const themes = {
       '--text-primary': '#f8fafc',
       '--text-secondary': '#cbd5e1',
       
-      // Product Cards - Dark Theme كاملة
       '--product-card-bg': '#1e293b',
       '--product-card-border': '#334155',
       '--product-card-shadow': '0 2px 8px rgba(0, 0, 0, 0.3)',
       '--product-card-shadow-hover': '0 8px 25px rgba(0, 0, 0, 0.4)',
-      '--product-price': '#fbbf24', // لون ذهبي للسعر في الدارك
+      '--product-price': '#fbbf24',
       '--product-price-old': '#94a3b8',
       '--product-title': '#f1f5f9',
       '--product-description': '#cbd5e1',
       '--product-image-bg': '#0f172a',
       
-      // Stars - Dark Theme (بيضاء للمليان، سوداء للفارغة)
       '--star-filled': '#ffffff',
       '--star-empty': '#000000',
       '--star-size': '16px',
       
-      // Icons - Dark Theme محسنة
       '--icon-color': '#cbd5e1',
       '--icon-bg': '#1e293b',
       '--icon-hover-bg': '#60a5fa',
@@ -410,25 +444,21 @@ export const themes = {
       '--icon-shadow': '0 2px 4px rgba(0, 0, 0, 0.3)',
       '--icon-shadow-hover': '0 4px 8px rgba(0, 0, 0, 0.4)',
       
-      // Badges - Dark Theme محسنة
       '--badge-new-bg': '#059669',
       '--badge-discount-bg': '#dc2626',
       '--badge-text': '#ffffff',
       
-      // Category Cards - محسنة للقراءة
       '--category-card-bg': '#1e293b',
       '--category-card-border': '#334155',
       '--category-title': '#f8fafc',
       '--category-text': '#cbd5e1',
       '--category-count': '#60a5fa',
       
-      // Tables - محسنة
       '--table-bg': '#1e293b',
       '--table-border': '#334155',
       '--table-header-bg': '#0f172a',
       '--table-row-hover': '#334155',
       
-      // Design System Colors - محسنة للدارك
       '--bg-primary': '#1e293b',
       '--primary-600': '#60a5fa',
       
@@ -438,7 +468,6 @@ export const themes = {
       '--modal-close-text': '#ffffff',
       '--modal-close-hover-bg': '#dc2626',
 
-      // Carousel Indicators - Dark Theme واضحة
       '--indicator-bg': '#374151',
       '--indicator-active': '#60a5fa',
       '--indicator-hover': '#4b5563',
@@ -533,6 +562,42 @@ export const themes = {
       '--cart-error-text': '#94a3b8',
       '--cart-retry-btn': 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
       '--cart-retry-btn-text': '#ffffff',
+      
+      // Review Section - Dark Theme
+      '--review-section-bg': '#1e293b',
+      '--review-card-bg': '#334155',
+      '--review-card-border': '#475569',
+      '--review-card-shadow': '0 4px 20px rgba(0, 0, 0, 0.3)',
+      '--review-card-hover-shadow': '0 12px 40px rgba(0, 0, 0, 0.4)',
+      '--review-title': '#f1f5f9',
+      '--review-text': '#cbd5e1',
+      '--review-date': '#94a3b8',
+      '--review-avatar-border': '#475569',
+      '--review-star-filled': '#fbbf24',
+      '--review-star-empty': '#475569',
+      '--review-star-hover': '#f59e0b',
+      '--review-form-bg': '#334155',
+      '--review-form-border': '#475569',
+      '--review-textarea-bg': '#1e293b',
+      '--review-textarea-border': '#475569',
+      '--review-textarea-focus-border': '#60a5fa',
+      '--review-submit-btn': 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)',
+      '--review-submit-btn-text': '#ffffff',
+      '--review-submit-btn-hover': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      '--review-delete-icon': '#ef4444',
+      '--review-delete-icon-hover': '#dc2626',
+      
+      // Product Details Counter - Dark Theme
+      '--counter-bg': '#334155',
+      '--counter-border': '#475569',
+      '--counter-button-bg': '#60a5fa',
+      '--counter-button-text': '#ffffff',
+      '--counter-button-hover-bg': '#3b82f6',
+      '--counter-button-hover-text': '#ffffff',
+      '--counter-button-disabled-bg': '#475569',
+      '--counter-button-disabled-text': '#94a3b8',
+      '--counter-value-bg': '#334155',
+      '--counter-value-text': '#f1f5f9',
       
       // Sign In & Sign Up Pages - Dark Theme
       '--signin-bg': '#0f172a',
@@ -629,15 +694,373 @@ export const themes = {
       '--reset-text': '#94a3b8',
       '--reset-error': '#f87171',
     }
+  },
+  beige: {
+    name: 'beige',
+    colors: {
+      '--bg': '#F9F5F3',
+      '--text': '#B2856E',
+      '--text-gray': '#6B6765',
+      '--text2': '#CD41C4',
+      '--hover': '#6B6765',
+      
+      '--hero-bg': 'linear-gradient(135deg, #6B6765 0%, #DAD1CC 25%, #B2856E 50%, #F9F5F3 75%, #CD41C4 100%)',
+      '--hero-text': '#FFFFFF',
+      '--hero-description': '#FFFFFF',
+      '--hero-btn-bg': 'linear-gradient(135deg, #CD41C4 0%, #B91C8B 100%)',
+      '--hero-btn-text': '#F9F5F3',
+      '--hero-btn-hover-bg': 'linear-gradient(135deg, #B91C8B 0%, #A61E7A 100%)',
+      '--hero-btn-hover-text': '#F9F5F3',
+      '--hero-overlay': 'rgba(205, 65, 196, 0.1)',
+      
+      // NavBar - Beige Theme
+      '--navbar-bg': '#F9F5F3',
+      '--navbar-border': '#DAD1CC',
+      '--navbar-text': '#B2856E',
+      '--navbar-text-hover': '#CD41C4',
+      '--navbar-active': '#CD41C4',
+      '--navbar-toggler': '#CD41C4',
+      '--navbar-toggler-border': '#CD41C4',
+      '--navbar-toggler-bg': '#F9F5F3',
+      '--navbar-toggler-hover-bg': '#CD41C4',
+      '--navbar-toggler-hover-border': '#B91C8B',
+      '--navbar-link-hover-bg': 'rgba(205, 65, 196, 0.1)',
+      '--navbar-link-active-bg': 'rgba(205, 65, 196, 0.15)',
+      '--navbar-collapse-bg': '#F9F5F3',
+      '--navbar-shadow': '0 2px 8px rgba(139, 69, 19, 0.1)',
+      '--navbar-link-border': 'transparent',
+      
+      // Cards & Components
+      '--card-bg': '#F9F5F3',
+      '--card-border': '#DAD1CC',
+      '--card-shadow': '0 0.1rem 0.2rem rgba(205, 65, 196, 0.1)',
+      
+      // Buttons
+      '--btn-primary': '#CD41C4',
+      '--btn-primary-hover': '#B91C8B',
+      '--btn-secondary': '#DAD1CC',
+      '--btn-secondary-hover': '#C5B8B0',
+      '--btn-text': '#F9F5F3',
+      
+      // Add to Cart Button - Beige Theme
+      '--add-to-cart-bg': '#CD41C4',
+      '--add-to-cart-hover-bg': '#B91C8B',
+      '--add-to-cart-text': '#F9F5F3',
+      '--add-to-cart-shadow': '0 2px 4px rgba(205, 65, 196, 0.2)',
+      '--add-to-cart-shadow-hover': '0 4px 8px rgba(205, 65, 196, 0.3)',
+      
+      // Forms & Inputs
+      '--input-bg': '#F9F5F3',
+      '--input-border': '#DAD1CC',
+      '--input-focus': '#CD41C4',
+      '--input-text': '#6B6765',
+      
+      // Counter & Badges
+      '--counter-bg': '#CD41C4',
+      '--counter-text': '#F9F5F3',
+      
+      // Secondary Colors
+      '--secondary-color': '#B2856E',
+      '--secondary-bg': '#F9F5F3',
+      
+      // Footer - Beige Theme
+      '--footer-bg': '#F9F5F3',
+      '--footer-text': '#6B6765',
+      '--footer-link': '#CD41C4',
+      '--footer-link-hover': '#B91C8B',
+      '--footer-border': '#DAD1CC',
+      '--footer-icon': '#6B6765',
+      '--footer-icon-hover': '#CD41C4',
+      
+      // Cart & Account Pages
+      '--page-bg': '#F9F5F3',
+      '--section-bg': '#F9F5F3',
+      '--border-color': '#DAD1CC',
+      '--text-muted': '#6B6765',
+      '--text-primary': '#B2856E',
+      '--text-secondary': '#6B6765',
+      
+      '--product-card-bg': '#F9F5F3',
+      '--product-card-border': '#DAD1CC',
+      '--product-card-shadow': '0 2px 8px rgba(205, 65, 196, 0.1)',
+      '--product-card-shadow-hover': '0 8px 25px rgba(205, 65, 196, 0.15)',
+      '--product-price': '#CD41C4',
+      '--product-price-old': '#6B6765',
+      '--product-title': '#B2856E',
+      '--product-description': '#6B6765',
+      '--product-image-bg': '#F9F5F3',
+      
+      '--star-filled': '#CD41C4',
+      '--star-empty': '#DAD1CC',
+      '--star-empty-border': '#C5B8B0',
+      '--star-size': '16px',
+      
+      '--icon-color': '#6B6765',
+      '--icon-bg': '#F9F5F3',
+      '--icon-hover-bg': '#CD41C4',
+      '--icon-hover-color': '#F9F5F3',
+      '--icon-shadow': '0 2px 4px rgba(205, 65, 196, 0.1)',
+      '--icon-shadow-hover': '0 4px 8px rgba(205, 65, 196, 0.15)',
+      
+      '--badge-new-bg': '#CD41C4',
+      '--badge-discount-bg': '#B2856E',
+      '--badge-text': '#F9F5F3',
+      
+      // Category Cards
+      '--category-card-bg': '#F9F5F3',
+      '--category-card-border': '#DAD1CC',
+      '--category-title': '#B2856E',
+      '--category-text': '#6B6765',
+      '--category-count': '#CD41C4',
+      
+      // Category Products Page - Beige Theme
+      '--category-page-bg': '#F9F5F3',
+      '--category-empty-bg': '#DAD1CC',
+      '--category-empty-text': '#6B6765',
+      '--category-load-btn-bg': '#CD41C4',
+      '--category-load-btn-text': '#F9F5F3',
+      '--category-load-btn-hover-bg': '#B91C8B',
+      '--category-load-btn-hover-text': '#F9F5F3',
+      
+      // Tables
+      '--table-bg': '#F9F5F3',
+      '--table-border': '#DAD1CC',
+      '--table-header-bg': '#F9F5F3',
+      '--table-row-hover': '#DAD1CC',
+      
+      // Design System Colors
+      '--bg-primary': '#F9F5F3',
+      '--primary-600': '#CD41C4',
+      
+      // Modal
+      '--modal-bg': '#F9F5F3',
+      '--modal-close-bg': '#CD41C4',
+      '--modal-close-text': '#F9F5F3',
+      '--modal-close-hover-bg': '#B91C8B',
+
+      '--indicator-bg': '#DAD1CC',
+      '--indicator-active': '#CD41C4',
+      '--indicator-hover': '#C5B8B0',
+
+      // View More Button - Beige Theme
+      '--view-more-btn-bg': '#CD41C4',
+      '--view-more-btn-text': '#F9F5F3',
+      '--view-more-btn-hover-bg': '#B91C8B',
+      '--view-more-btn-hover-text': '#F9F5F3',
+      '--view-more-btn-border': '#CD41C4',
+      '--view-more-btn-shadow': '0 4px 12px rgba(205, 65, 196, 0.3)',
+      '--view-more-btn-shadow-hover': '0 6px 16px rgba(205, 65, 196, 0.4)',
+
+      // Shop Page Hero - Beige Theme
+      '--shop-hero-bg': 'linear-gradient(135deg, #6B6765 0%, #DAD1CC 33%, #B2856E 66%, #CD41C4 100%)',
+      '--shop-hero-text': '#FFFFFF',
+      '--shop-hero-subtitle': '#FFFFFF',
+      
+      // Shop Form Elements - Beige Theme
+      '--form-label': '#B2856E',
+      '--form-input-bg': '#F9F5F3',
+      '--form-input-border': '#DAD1CC',
+      '--form-input-text': '#6B6765',
+      '--form-input-placeholder': '#6B6765',
+      '--form-input-focus-border': '#CD41C4',
+      '--form-input-focus-shadow': '0 0 0 3px rgba(205, 65, 196, 0.1)',
+
+      // Contact Page - Beige Theme
+      '--contact-info-bg': '#F9F5F3',
+      '--contact-info-border': '#DAD1CC',
+      '--contact-info-hover-bg': '#DAD1CC',
+      '--contact-info-hover-border': '#CD41C4',
+      '--contact-title': '#6B6765',
+      '--contact-method': '#B2856E',
+      '--contact-icon-bg': '#CD41C4',
+      '--contact-icon-color': '#F9F5F3',
+
+      // Orders History - Beige Theme
+      '--orders-bg': '#F9F5F3',
+      '--orders-title': '#B2856E',
+      '--orders-table-header': '#6B6765',
+      '--orders-table-border': '#DAD1CC',
+      '--orders-row-text': '#B2856E',
+      '--orders-row-border': '#DAD1CC',
+      '--orders-status-pending': '#B2856E',
+      '--orders-status-completed': '#CD41C4',
+      '--orders-status-cancelled': '#6B6765',
+      
+      // Cart Page - Beige Theme
+      '--cart-bg': '#F9F5F3',
+      '--cart-container-bg': 'linear-gradient(135deg, #F9F5F3 0%, #F9F5F3 100%)',
+      '--cart-title': '#B2856E',
+      '--cart-title-underline': '#B2856E',
+      '--cart-table-bg': '#F9F5F3',
+      '--cart-table-header-bg': 'linear-gradient(135deg, #F9F5F3 0%, #F9F5F3 100%)',
+      '--cart-table-header-text': '#6B6765',
+      '--cart-table-border': '#DAD1CC',
+      '--cart-row-bg': '#F9F5F3',
+      '--cart-row-hover': '#DAD1CC',
+      '--cart-row-text': '#B2856E',
+      '--cart-product-title': '#B2856E',
+      '--cart-remove-btn': '#CD41C4',
+      '--cart-remove-btn-hover': '#B91C8B',
+      '--cart-remove-btn-bg-hover': '#F9F5F3',
+      '--cart-quantity-btn': '#CD41C4',
+      '--cart-quantity-btn-bg': '#F9F5F3',
+      '--cart-quantity-btn-hover': '#F9F5F3',
+      '--cart-quantity-btn-hover-text': '#CD41C4',
+      '--cart-quantity-number': '#B2856E',
+      '--cart-price': '#6B6765',
+      '--cart-subtotal': '#B2856E',
+      '--cart-total-container-bg': '#F9F5F3',
+      '--cart-total-title': '#B2856E',
+      '--cart-total-price': '#B2856E',
+      '--cart-checkout-btn': '#CD41C4',
+      '--cart-checkout-btn-text': '#F9F5F3',
+      '--cart-empty-bg': '#F9F5F3',
+      '--cart-empty-title': '#B2856E',
+      '--cart-empty-text': '#6B6765',
+      '--cart-error-bg': '#F9F5F3',
+      '--cart-error-title': '#B2856E',
+      '--cart-error-text': '#6B6765',
+      '--cart-retry-btn': 'linear-gradient(135deg, #CD41C4 0%, #B91C8B 100%)',
+      '--cart-retry-btn-text': '#F9F5F3',
+      
+      // Review Section - Beige Theme
+      '--review-section-bg': '#F9F5F3',
+      '--review-card-bg': '#F9F5F3',
+      '--review-card-border': '#DAD1CC',
+      '--review-card-shadow': '0 4px 20px rgba(205, 65, 196, 0.1)',
+      '--review-card-hover-shadow': '0 12px 40px rgba(205, 65, 196, 0.15)',
+      '--review-title': '#8B4513',
+      '--review-text': '#6B6765',
+      '--review-date': '#A0522D',
+      '--review-avatar-border': '#DAD1CC',
+      '--review-star-filled': '#CD41C4',
+      '--review-star-empty': '#DAD1CC',
+      '--review-star-hover': '#B91C8B',
+      '--review-form-bg': '#F9F5F3',
+      '--review-form-border': '#DAD1CC',
+      '--review-textarea-bg': '#F9F5F3',
+      '--review-textarea-border': '#DAD1CC',
+      '--review-textarea-focus-border': '#CD41C4',
+      '--review-submit-btn': 'linear-gradient(135deg, #CD41C4 0%, #B91C8B 100%)',
+      '--review-submit-btn-text': '#F9F5F3',
+      '--review-submit-btn-hover': 'linear-gradient(135deg, #B91C8B 0%, #A61E7A 100%)',
+      '--review-delete-icon': '#CD41C4',
+      '--review-delete-icon-hover': '#B91C8B',
+      
+      // Product Details Counter - Beige Theme
+      '--counter-bg': '#F9F5F3',
+      '--counter-border': '#DAD1CC',
+      '--counter-button-bg': '#CD41C4',
+      '--counter-button-text': '#F9F5F3',
+      '--counter-button-hover-bg': '#B91C8B',
+      '--counter-button-hover-text': '#F9F5F3',
+      '--counter-button-disabled-bg': '#DAD1CC',
+      '--counter-button-disabled-text': '#6B6765',
+      '--counter-value-bg': '#F9F5F3',
+      '--counter-value-text': '#8B4513',
+      
+      // Sign In & Sign Up Pages - Beige Theme
+      '--signin-bg': '#F9F5F3',
+      '--signin-container-bg': '#F9F5F3',
+      '--signin-form-bg': '#F9F5F3',
+      '--signin-title': '#B2856E',
+      '--signin-label': '#6B6765',
+      '--signin-input-bg': '#F9F5F3',
+      '--signin-input-border': '#DAD1CC',
+      '--signin-input-focus-border': '#CD41C4',
+      '--signin-input-text': '#6B6765',
+      '--signin-input-placeholder': '#6B6765',
+      '--signin-btn-bg': 'linear-gradient(135deg, #CD41C4 0%, #B91C8B 100%)',
+      '--signin-btn-text': '#F9F5F3',
+      '--signin-btn-hover': 'linear-gradient(135deg, #B91C8B 0%, #A61E7A 100%)',
+      '--signin-btn-shadow': '0 4px 12px rgba(205, 65, 196, 0.3)',
+      '--signin-link': '#CD41C4',
+      '--signin-link-hover': '#B91C8B',
+      '--signin-error': '#CD41C4',
+      '--signin-text': '#6B6765',
+      '--signin-checkbox': '#CD41C4',
+      '--signin-remember-text': '#6B6765',
+      '--signin-forgot-link': '#CD41C4',
+      '--signin-forgot-hover': '#B91C8B',
+      '--signin-terms-text': '#6B6765',
+      '--signin-terms-link': '#CD41C4',
+      '--signin-terms-hover': '#B91C8B',
+      
+      // Sign Up specific colors
+      '--signup-profile-border': '#DAD1CC',
+      '--signup-profile-hover': '#CD41C4',
+      '--signup-profile-text': '#6B6765',
+      '--signup-bg': '#F9F5F3',
+      '--signup-container-bg': '#F9F5F3',
+      '--signup-form-bg': '#F9F5F3',
+      '--signup-title': '#B2856E',
+      '--signup-label': '#6B6765',
+      '--signup-input-bg': '#F9F5F3',
+      '--signup-input-border': '#DAD1CC',
+      '--signup-input-focus-border': '#CD41C4',
+      '--signup-input-text': '#6B6765',
+      '--signup-input-placeholder': '#6B6765',
+      '--signup-btn-bg': 'linear-gradient(135deg, #CD41C4 0%, #B91C8B 100%)',
+      '--signup-btn-text': '#F9F5F3',
+      '--signup-btn-hover': 'linear-gradient(135deg, #B91C8B 0%, #A61E7A 100%)',
+      '--signup-btn-shadow': '0 4px 12px rgba(205, 65, 196, 0.3)',
+      '--signup-link': '#CD41C4',
+      '--signup-link-hover': '#B91C8B',
+      '--signup-error': '#CD41C4',
+      '--signup-text': '#6B6765',
+      '--signup-checkbox': '#CD41C4',
+      
+      // Privacy Policy Page - Beige Theme
+      '--privacy-bg': 'linear-gradient(135deg, #F9F5F3 0%, #F9F5F3 100%)',
+      '--privacy-container-bg': '#F9F5F3',
+      '--privacy-header-border': '#DAD1CC',
+      '--privacy-title': '#B2856E',
+      '--privacy-subtitle': '#6B6765',
+      '--privacy-intro': '#6B6765',
+      '--privacy-section-title': '#B2856E',
+      '--privacy-section-border': '#CD41C4',
+      '--privacy-section-border-accent': 'linear-gradient(90deg, #CD41C4, #B91C8B)',
+      '--privacy-text': '#6B6765',
+      '--privacy-bullet': '#CD41C4',
+      '--privacy-strong': '#B2856E',
+      '--privacy-contact-bg': 'linear-gradient(135deg, #F9F5F3 0%, #F9F5F3 100%)',
+      '--privacy-contact-border': '#CD41C4',
+      '--privacy-btn-bg': 'linear-gradient(135deg, #CD41C4 0%, #B91C8B 100%)',
+      '--privacy-btn-text': '#F9F5F3',
+      '--privacy-btn-hover-bg': 'linear-gradient(135deg, #B91C8B 0%, #A61E7A 100%)',
+      '--privacy-btn-shadow': '0 4px 12px rgba(205, 65, 196, 0.15)',
+      '--privacy-btn-shadow-hover': '0 6px 20px rgba(205, 65, 196, 0.25)',
+      '--privacy-footer-note': '#6B6765',
+      
+      // Reset Password Page - Beige Theme
+      '--reset-bg': '#F9F5F3',
+      '--reset-container-bg': '#F9F5F3',
+      '--reset-form-bg': '#F9F5F3',
+      '--reset-title': '#B2856E',
+      '--reset-instructions': '#6B6765',
+      '--reset-label': '#6B6765',
+      '--reset-input-bg': '#F9F5F3',
+      '--reset-input-border': '#DAD1CC',
+      '--reset-input-focus-border': '#CD41C4',
+      '--reset-input-text': '#6B6765',
+      '--reset-input-placeholder': '#6B6765',
+      '--reset-btn-bg': 'linear-gradient(135deg, #CD41C4 0%, #B91C8B 100%)',
+      '--reset-btn-text': '#F9F5F3',
+      '--reset-btn-hover-bg': 'linear-gradient(135deg, #B91C8B 0%, #A61E7A 100%)',
+      '--reset-btn-shadow': '0 4px 12px rgba(205, 65, 196, 0.3)',
+      '--reset-btn-shadow-hover': '0 6px 20px rgba(205, 65, 196, 0.4)',
+      '--reset-link': '#CD41C4',
+      '--reset-link-hover': '#B91C8B',
+      '--reset-text': '#6B6765',
+      '--reset-error': '#CD41C4',
+    }
   }
 };
 
-// دالة تطبيق الثيم
 export const applyTheme = (themeName) => {
   const theme = themes[themeName] || themes.light;
   const root = document.documentElement;
   
-  // تطبيق الألوان
   Object.entries(theme.colors).forEach(([property, value]) => {
     root.style.setProperty(property, value);
   });

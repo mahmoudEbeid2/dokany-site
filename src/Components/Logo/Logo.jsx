@@ -12,7 +12,6 @@ const Logo = ({
   const { sellerInfo } = useSelector((state) => state.seller);
   const [imageError, setImageError] = useState(false);
 
-  // تحديد الأحجام بناءً على النوع
   const getLogoStyles = () => {
     const baseStyles = {
       display: 'flex',
@@ -34,7 +33,7 @@ const Logo = ({
         minHeight: '40px',
         width: 'auto',
         height: 'auto',
-        transform: 'scale(1.4)', // تكبير اللوجو في النافبار
+        transform: 'scale(1.4)',
         transformOrigin: 'center'
       };
     } else if (variant === 'footer') {
@@ -46,7 +45,7 @@ const Logo = ({
         minHeight: '50px',
         width: 'auto',
         height: 'auto',
-        transform: 'scale(1.5)', // تكبير اللوجو في الفوتر
+        transform: 'scale(1.5)',
         transformOrigin: 'center'
       };
     }

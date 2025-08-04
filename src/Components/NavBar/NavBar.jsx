@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Logo from "../Logo/Logo";
+import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import "./NavBar.css";
 
 function NavBar() {
@@ -62,6 +63,9 @@ function NavBar() {
               </li>
             </ul>
             <ul className="d-flex navbar-nav">
+              <li className="nav-item">
+                <ThemeSwitcher />
+              </li>
               {
                 token ? (
                   <>
