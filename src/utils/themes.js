@@ -281,6 +281,28 @@ export const themes = {
       '--privacy-btn-shadow': '0 4px 12px rgba(0, 0, 0, 0.15)',
       '--privacy-btn-shadow-hover': '0 6px 20px rgba(0, 0, 0, 0.25)',
       '--privacy-footer-note': '#6c7275',
+      
+      // Reset Password Page - Light Theme
+      '--reset-bg': '#ffffff',
+      '--reset-container-bg': '#ffffff',
+      '--reset-form-bg': '#ffffff',
+      '--reset-title': '#141718',
+      '--reset-instructions': '#6c7275',
+      '--reset-label': '#202525',
+      '--reset-input-bg': '#ffffff',
+      '--reset-input-border': '#ccc',
+      '--reset-input-focus-border': '#141718',
+      '--reset-input-text': '#141718',
+      '--reset-input-placeholder': '#9ca3af',
+      '--reset-btn-bg': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      '--reset-btn-text': '#ffffff',
+      '--reset-btn-hover-bg': 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+      '--reset-btn-shadow': '0 4px 12px rgba(59, 130, 246, 0.3)',
+      '--reset-btn-shadow-hover': '0 6px 20px rgba(59, 130, 246, 0.4)',
+      '--reset-link': '#38cb89',
+      '--reset-link-hover': '#059669',
+      '--reset-text': '#6c7275',
+      '--reset-error': '#ef4444',
     }
   },
   dark: {
@@ -584,6 +606,28 @@ export const themes = {
       '--privacy-btn-shadow': '0 4px 12px rgba(14, 165, 233, 0.3)',
       '--privacy-btn-shadow-hover': '0 6px 20px rgba(14, 165, 233, 0.4)',
       '--privacy-footer-note': '#94a3b8',
+      
+      // Reset Password Page - Dark Theme
+      '--reset-bg': '#0f172a',
+      '--reset-container-bg': '#1e293b',
+      '--reset-form-bg': '#1e293b',
+      '--reset-title': '#f1f5f9',
+      '--reset-instructions': '#94a3b8',
+      '--reset-label': '#cbd5e1',
+      '--reset-input-bg': '#334155',
+      '--reset-input-border': '#475569',
+      '--reset-input-focus-border': '#60a5fa',
+      '--reset-input-text': '#f1f5f9',
+      '--reset-input-placeholder': '#94a3b8',
+      '--reset-btn-bg': 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+      '--reset-btn-text': '#ffffff',
+      '--reset-btn-hover-bg': 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+      '--reset-btn-shadow': '0 4px 12px rgba(14, 165, 233, 0.3)',
+      '--reset-btn-shadow-hover': '0 6px 20px rgba(14, 165, 233, 0.4)',
+      '--reset-link': '#10b981',
+      '--reset-link-hover': '#059669',
+      '--reset-text': '#94a3b8',
+      '--reset-error': '#f87171',
     }
   }
 };

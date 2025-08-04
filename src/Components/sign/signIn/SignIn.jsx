@@ -178,7 +178,7 @@ const SignIn = ({ onLoginSuccess }) => {
                 <p>Remember me</p>
               </div>
               <div className={styles.forgotPassword}>
-                <a href="/forgot-password">Forgot password?</a>
+                <a href="/reset-password">Forgot password?</a>
               </div>
             </div>
 
