@@ -60,7 +60,8 @@
 /* Navbar Toggler */
 .navbar-toggler {
   border: 2px solid var(--navbar-toggler-border);
-  background-color: var(--navbar-toggler-bg);
+  background-color: var(--navbar-toggler-bg) !important;
+  /* background-color: red !important; */
   color: var(--navbar-toggler);
   transition: all 0.3s ease;
   padding: 0.5rem;

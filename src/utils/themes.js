@@ -366,7 +366,7 @@ export const themes = {
       '--navbar-active': '#60a5fa',
       '--navbar-toggler': '#f1f5f9',
       '--navbar-toggler-border': '#475569',
-      '--navbar-toggler-bg': '#1e293b',
+      '--navbar-toggler-bg': '#60a5fa',
       '--navbar-toggler-hover-bg': '#334155',
       '--navbar-toggler-hover-border': '#60a5fa',
       '--navbar-link-hover-bg': 'rgba(96, 165, 250, 0.1)',
