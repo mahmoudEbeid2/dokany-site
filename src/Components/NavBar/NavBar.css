@@ -25,10 +25,10 @@
 }
 
 .navbar .nav-item .nav-link,
-.navbar .nav-item .nav-link:hover,
+/* .navbar .nav-item .nav-link:hover,
 .navbar .nav-item .nav-link:focus,
 .navbar .nav-item .nav-link:active,
-.navbar .nav-item .nav-link.active,
+.navbar .nav-item .nav-link.active, */
 .navbar .nav-item .nav-link:visited {
   color: var(--navbar-text);
   font-weight: 600;
