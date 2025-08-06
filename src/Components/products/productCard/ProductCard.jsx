@@ -202,11 +202,13 @@ const ProductCard = ({ product, isNew = false }) => {
             <button
               className={styles.productActionBtn}
               onClick={handleFavoriteClick}
+              data-favorited={isFavorited}
             >
               <Heart
                 size={20}
-                fill={isFavorited ? "#000" : "none"}
-                stroke={"#000"}
+                fill={isFavorited ? "currentColor" : "none"}
+                stroke={"currentColor"}
+                data-favorited={isFavorited}
               />
             </button>
             <button

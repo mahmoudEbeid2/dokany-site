@@ -69,25 +69,65 @@
 }
 
 .sidebar-menu li {
-  gap: 0.625rem;
-  font-size: 1.5rem;
-  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  font-family: Poppins;
+  transition: all 0.3s ease;
+}
+
+.sidebar-menu li a {
+  display: block;
+  padding: 0.75rem 1rem;
   color: var(--text-secondary);
   font-size: 0.9rem;
-  cursor: pointer;
-  padding-left: 1rem;
-  font-family: Poppins;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
-.sidebar-menu li:hover {
+.sidebar-menu li a:hover {
   color: var(--text);
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  transform: translateX(5px);
 }
 
-.sidebar-menu li.active {
-  font-weight: bold;
+.sidebar-menu li a.active {
   color: var(--text2);
-  border-bottom: 1px solid var(--text2);
+  background-color: var(--text2);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-menu li:last-child {
+  margin-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+}
+
+.logout-btn {
+  width: 100%;
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #ef4444;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: Poppins;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+  border: 1px solid #ef4444;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #ef4444;
+  color: white;
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 .account-details {

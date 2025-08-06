@@ -15,6 +15,8 @@ import Products from "./Components/products/products/Products";
 import ShopPage from "./Pages/ShopPage/ShopPage.jsx";
 import ProtectedRoute from "./Components/sign/ProtectedRoute";
 import MyAccount from "./pages/MyAccount/MyAccount";
+import AccountForm from "./Components/MyAccount/AccountForm";
+import Orders from "./Components/Orders/Orders";
 import FavList from "./pages/FavList/Favlist";
 import Contact from "./pages/contact/contact.jsx";
 import Cart from "./pages/cart/Cart";
@@ -24,6 +26,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import Footer from "./Components/Footer/Footer";
 import ResetPassword from "./Components/sign/resetPassword/ResetPassword";
+import PaymentSuccess from "./pages/PaymentSuccess.jsx";
+import PaymentFailure from "./pages/PaymentFailure.jsx";
 // Redux actions
 import {
   setUserInfo,
@@ -203,6 +207,22 @@ function App() {
         <Route path="/category/:id" element={<CategoryProducts />} />
         <Route path="/shoppage" element={<ShopPage />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route
+          path="/payment/success"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <PaymentSuccess />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/payment/failure"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <PaymentFailure />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/products"
@@ -227,7 +247,10 @@ function App() {
               <MyAccount />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<AccountForm />} />
+          <Route path="orders" element={<Orders />} />
+        </Route>
         <Route
           path="/favorites"
           element={

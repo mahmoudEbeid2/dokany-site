@@ -7,6 +7,10 @@
   --font-size-body: 1rem;
   --font-size-small: 0.875rem;
   --border-radius-main: 0.5rem;
+  
+  /* Default favorite colors - will be overridden by theme variables */
+  --favorite-filled-color: #ff4757;
+  --favorite-hover-color: #ff3742;
 }
 
 .productCardContainer {
@@ -114,12 +118,97 @@
   color: var(--icon-color) !important;
   fill: var(--icon-color) !important;
   stroke: var(--icon-color) !important;
+  transition: all 0.3s ease;
 }
 
 .productActionBtn:hover svg {
   color: var(--icon-hover-color) !important;
   fill: var(--icon-hover-color) !important;
   stroke: var(--icon-hover-color) !important;
+}
+
+/* Ensure favorited state overrides normal state */
+.productActionBtn[data-favorited="true"] svg,
+.productActionBtn svg[data-favorited="true"] {
+  color: var(--favorite-filled-color) !important;
+  fill: var(--favorite-filled-color) !important;
+  stroke: var(--favorite-filled-color) !important;
+}
+
+.productActionBtn[data-favorited="true"]:hover svg,
+.productActionBtn:hover svg[data-favorited="true"] {
+  color: var(--favorite-hover-color) !important;
+  fill: var(--favorite-hover-color) !important;
+  stroke: var(--favorite-hover-color) !important;
+}
+
+/* Force override for all favorited states */
+.productActionBtn[data-favorited="true"] svg *,
+.productActionBtn svg[data-favorited="true"] * {
+  color: var(--favorite-filled-color) !important;
+  fill: var(--favorite-filled-color) !important;
+  stroke: var(--favorite-filled-color) !important;
+}
+
+.productActionBtn[data-favorited="true"]:hover svg *,
+.productActionBtn:hover svg[data-favorited="true"] * {
+  color: var(--favorite-hover-color) !important;
+  fill: var(--favorite-hover-color) !important;
+  stroke: var(--favorite-hover-color) !important;
+}
+
+/* Special styling for favorited heart icon */
+.productActionBtn svg[data-favorited="true"] {
+  fill: var(--favorite-filled-color) !important;
+  color: var(--favorite-filled-color) !important;
+  stroke: var(--favorite-filled-color) !important;
+}
+
+.productActionBtn:hover svg[data-favorited="true"] {
+  fill: var(--favorite-hover-color) !important;
+  color: var(--favorite-hover-color) !important;
+  stroke: var(--favorite-hover-color) !important;
+}
+
+/* Override any conflicting styles for favorited heart */
+.productActionBtn[data-favorited="true"] svg {
+  fill: var(--favorite-filled-color) !important;
+  color: var(--favorite-filled-color) !important;
+  stroke: var(--favorite-filled-color) !important;
+}
+
+.productActionBtn[data-favorited="true"]:hover svg {
+  fill: var(--favorite-hover-color) !important;
+  color: var(--favorite-hover-color) !important;
+  stroke: var(--favorite-hover-color) !important;
+}
+
+/* Additional specificity for favorited heart */
+.productActionBtn[data-favorited="true"] svg[data-favorited="true"] {
+  fill: var(--favorite-filled-color) !important;
+  color: var(--favorite-filled-color) !important;
+  stroke: var(--favorite-filled-color) !important;
+}
+
+.productActionBtn[data-favorited="true"]:hover svg[data-favorited="true"] {
+  fill: var(--favorite-hover-color) !important;
+  color: var(--favorite-hover-color) !important;
+  stroke: var(--favorite-hover-color) !important;
+}
+
+
+
+/* Force theme-specific colors */
+.productActionBtn[data-favorited="true"] svg {
+  fill: var(--favorite-filled-color) !important;
+  color: var(--favorite-filled-color) !important;
+  stroke: var(--favorite-filled-color) !important;
+}
+
+.productActionBtn[data-favorited="true"]:hover svg {
+  fill: var(--favorite-hover-color) !important;
+  color: var(--favorite-hover-color) !important;
+  stroke: var(--favorite-hover-color) !important;
 }
 
 .addToCartBtn {

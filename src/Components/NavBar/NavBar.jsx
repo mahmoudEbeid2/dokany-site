@@ -2,11 +2,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Logo from "../Logo/Logo";
-import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import "./NavBar.css";
 
 function NavBar() {
-  const { cart, watchlist, } = useSelector((state) => state.user);
+  const { cart, watchlist, userInfo } = useSelector((state) => state.user);
   // const { sellerInfo } = useSelector((state) => state.seller);
 
   // console.log("userInfo", userInfo);
@@ -17,6 +16,15 @@ function NavBar() {
 
   // Calculate total unique products in watchlist
   const watchlistItemsCount = watchlist.length;
+
+  // Get user profile image or default avatar
+  const getUserProfileImage = () => {
+    if (userInfo?.profile_imge) {
+      return userInfo.profile_imge;
+    }
+    // Default avatar placeholder
+    return "https://picsum.photos/32/32";
+  };
 
   // if(!sellerInfo){
   //   return null;
@@ -63,17 +71,9 @@ function NavBar() {
               </li>
             </ul>
             <ul className="d-flex navbar-nav">
-              <li className="nav-item">
-                <ThemeSwitcher />
-              </li>
               {
                 token ? (
                   <>
-                    <li className="nav-item">
-                      <NavLink to="/myaccount" className="nav-link">
-                        <i className="bi bi-person-circle"></i>
-                      </NavLink>
-                    </li>
                     <li className="nav-item icons">
                       <NavLink to="/favorites" className="nav-link d-flex align-items-center">
                         <i className="bi bi-heart"></i>
@@ -91,6 +91,18 @@ function NavBar() {
                         {cartItemsCount > 0 && (
                           <span className="cart-count">{cartItemsCount}</span>
                         )}
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink to="/myaccount" className="nav-link">
+                        <img
+                          src={getUserProfileImage()}
+                          alt="Profile"
+                          className="user-profile-image"
+                          onError={(e) => {
+                            e.target.src = "https://picsum.photos/32/32";
+                          }}
+                        />
                       </NavLink>
                     </li>
                   </>

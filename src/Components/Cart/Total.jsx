@@ -3,16 +3,24 @@ import { ShoppingBag, CreditCard } from "lucide-react";
 import styles from "../../pages/cart/cart.module.css";
 
 export default function Total({ cartItems = [], onPay }) {
-  // Calculate total from cart items
+  // Calculate totals
   const calculatedTotal = Array.isArray(cartItems)
     ? cartItems.reduce((sum, item) => {
-      const itemTotal =
-        item?.final_price * (1 - (item?.product?.discount) / 100) ||
-        (item?.quantity || 1) *
-        (item?.unit_price || item?.product?.price || 0);
-      return sum + itemTotal;
-    }, 0)
+        return sum + (item?.final_price || 0);
+      }, 0)
     : 0;
+
+  // Calculate original total (without discounts)
+  const originalTotal = Array.isArray(cartItems)
+    ? cartItems.reduce((sum, item) => {
+        const originalPrice = item?.product?.price || 0;
+        return sum + (originalPrice * (item?.quantity || 1));
+      }, 0)
+    : 0;
+
+  // Calculate total savings
+  const totalSavings = originalTotal - calculatedTotal;
+  const hasSavings = totalSavings > 0;
 
   // Calculate item count
   const itemCount = Array.isArray(cartItems)
@@ -39,6 +47,21 @@ export default function Total({ cartItems = [], onPay }) {
         <span>Items ({itemCount})</span>
         <span>${calculatedTotal.toFixed(2)}</span>
       </div>
+
+      {hasSavings && (
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          width: '100%',
+          padding: '0.5rem 0',
+          fontSize: '0.9rem',
+          color: '#e74c3c'
+        }}>
+          <span>Total Savings</span>
+          <span>-${totalSavings.toFixed(2)}</span>
+        </div>
+      )}
       
       <div className={styles.totalPrice}>
         <p>Total Amount</p>

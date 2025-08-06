@@ -43,13 +43,19 @@ function Cart() {
 
   const handleCheckout = async () => {
     try {
+      const subdomain = window.location.hostname.split(".")[0];
+      
       const response = await fetch(
         `${import.meta.env.VITE_API}/api/stripe/checkout`,
         {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            subdomain: subdomain,
+          }),
         }
       );
 
@@ -89,7 +95,12 @@ function Cart() {
           dispatch(deleteFromCart(data.id));
         } else {
           console.log(data);
-          dispatch(updateCart({ product_id: data.product_id, quantity: data.quantity,final_price: data.final_price }));
+          dispatch(updateCart({ 
+            product_id: data.product_id, 
+            quantity: data.quantity,
+            final_price: data.final_price,
+            unit_price: data.unit_price
+          }));
         }
         toast.success("Quantity updated successfully!");
       } else {

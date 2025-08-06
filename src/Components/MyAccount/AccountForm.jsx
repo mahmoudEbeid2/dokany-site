@@ -1,6 +1,8 @@
 import React from "react";
+import { useOutletContext } from "react-router-dom";
 
-const AccountForm = ({ formData, handleChange, handleSubmit }) => {
+const AccountForm = () => {
+  const { formData, handleChange, handleSubmit } = useOutletContext();
   return (
     <form
       className="account-form"

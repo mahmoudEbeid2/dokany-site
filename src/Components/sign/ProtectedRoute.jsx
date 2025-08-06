@@ -4,7 +4,7 @@ const ProtectedRoute = ({ children }) => {
   const isAuthenticated = !!localStorage.getItem("token");
 
   if (!isAuthenticated) {
-    return <Navigate to="/signup" replace />;
+    return <Navigate to="/signin" replace />;
   }
   return children;
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Store, 
@@ -14,6 +14,54 @@ import {
   MapPin
 } from 'lucide-react';
 import './LandingPage.css';
+
+// Counter Animation Component
+const Counter = ({ end, duration = 2000, suffix = '', className = '' }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const counterRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime = null;
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * end));
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [isVisible, end, duration]);
+
+  return (
+    <span ref={counterRef} className={className}>
+      {count}{suffix}
+    </span>
+  );
+};
 
 const LandingPage = () => {
   const [currentFeature, setCurrentFeature] = useState(0);
@@ -75,10 +123,10 @@ const LandingPage = () => {
   ];
 
   const stats = [
-    { number: "1000+", label: "Active Sellers" },
-    { number: "50K+", label: "Products Sold" },
-    { number: "100K+", label: "Happy Customers" },
-    { number: "99%", label: "Satisfaction Rate" }
+    { number: "1000", label: "Active Sellers", suffix: "+" },
+    { number: "50000", label: "Products Sold", suffix: "+" },
+    { number: "100000", label: "Happy Customers", suffix: "+" },
+    { number: "99", label: "Satisfaction Rate", suffix: "%" }
   ];
 
   const benefits = [
@@ -136,9 +184,9 @@ const LandingPage = () => {
             </ul>
             
             <div className="d-flex">
-              <Link to="/signup" className="btn btn-primary px-4 py-2 fw-semibold">
+              <a href="#get-started" className="btn btn-primary px-4 py-2 fw-semibold">
                 Get Started
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -162,11 +210,11 @@ const LandingPage = () => {
                 through our mobile app with custom subdomains and ready-made themes.
               </p>
                              <div className="hero-buttons">
-                 <Link to="/signup" className="btn-primary">
+                 <a href="#get-started" className="btn-primary">
                    <Store className="btn-icon" />
-                   Start Your Store
+                   Get Started
                    <ArrowRight className="btn-arrow" />
-                 </Link>
+                 </a>
                </div>
               
             </div>
@@ -303,7 +351,12 @@ const LandingPage = () => {
           <div className="stats-grid">
             {stats.map((stat, index) => (
               <div key={index} className="stat-card">
-                <div className="stat-number">{stat.number}</div>
+                <Counter 
+                  end={parseInt(stat.number)} 
+                  suffix={stat.suffix}
+                  duration={2000 + (index * 200)}
+                  className="stat-number"
+                />
                 <div className="stat-label">{stat.label}</div>
               </div>
             ))}
@@ -326,12 +379,10 @@ const LandingPage = () => {
                   </li>
                 ))}
               </ul>
-              <div className="commission-notice">
-                <h4>💰 Commission Structure</h4>
-                <p>Only <strong>10%</strong> commission on sales for platform usage, technical support, and maintenance.</p>
-              </div>
             </div>
+            
             <div className="benefits-visual">
+              {/* Payment Dashboard */}
               <div className="benefits-mockup">
                 <div className="mockup-header">
                   <div className="mockup-logo">💳</div>
@@ -340,15 +391,15 @@ const LandingPage = () => {
                 <div className="mockup-content">
                   <div className="payment-item">
                     <span>Total Sales</span>
-                    <span className="amount">$15,420</span>
+                    <span className="amount">$10.00</span>
                   </div>
                   <div className="payment-item">
                     <span>Platform Fee (10%)</span>
-                    <span className="fee">-$1,542</span>
+                    <span className="fee">-$1.00</span>
                   </div>
                   <div className="payment-item total">
                     <span>Your Earnings</span>
-                    <span className="amount">$13,878</span>
+                    <span className="amount">$9.00</span>
                   </div>
                 </div>
               </div>
@@ -358,26 +409,61 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="cta-section">
+      <section id="get-started" className="cta-section">
         <div className="container">
           <div className="cta-content">
+            <div className="cta-header">
+              <div className="cta-icon">🚀</div>
             <h2>Ready to Start Your E-Commerce Journey?</h2>
             <p>Join thousands of successful sellers who have transformed their businesses with our platform</p>
+            </div>
+            
+            <div className="cta-stats">
+              <div className="stat-item">
+                <Counter end={10} suffix="K+" className="stat-number" />
+                <span className="stat-label">Active Stores</span>
+              </div>
+              <div className="stat-item">
+                <Counter end={2} suffix="M+" className="stat-number" />
+                <span className="stat-label">Total Sales</span>
+              </div>
+              <div className="stat-item">
+                <Counter end={98} suffix="%" className="stat-number" />
+                <span className="stat-label">Success Rate</span>
+              </div>
+            </div>
+
             <div className="cta-buttons">
-              <Link to="/signup" className="btn-primary">
-                <Store className="btn-icon" />
-                Create Your Store Now
-                <ArrowRight className="btn-arrow" />
-              </Link>
               <div className="download-buttons">
                 <button className="btn-download">
                   <Download className="btn-icon" />
-                  Google Play
+                  <div className="btn-text">
+                    <span className="btn-label">Download on</span>
+                    <span className="btn-store">Google Play</span>
+                  </div>
                 </button>
                 <button className="btn-download">
                   <Download className="btn-icon" />
-                  App Store
+                  <div className="btn-text">
+                    <span className="btn-label">Download on the</span>
+                    <span className="btn-store">App Store</span>
+                  </div>
                 </button>
+              </div>
+            </div>
+
+            <div className="cta-features">
+              <div className="feature-item">
+                <span className="feature-icon">⚡</span>
+                <span>Quick Setup</span>
+              </div>
+              <div className="feature-item">
+                <span className="feature-icon">🔒</span>
+                <span>Secure Payments</span>
+              </div>
+              <div className="feature-item">
+                <span className="feature-icon">📱</span>
+                <span>Mobile First</span>
               </div>
             </div>
           </div>
@@ -394,34 +480,41 @@ const LandingPage = () => {
                 <span className="logo-text">Dockany</span>
               </div>
               <p>Revolutionary e-commerce platform for creating mini stores through mobile apps.</p>
-                             <div className="social-links">
-                 <a href="#" className="social-link"><span>📧</span></a>
-                 <a href="#" className="social-link"><span>📱</span></a>
-                 <a href="#" className="social-link"><span>🌐</span></a>
-               </div>
-            </div>
-            <div className="footer-section">
-              <h4>Quick Links</h4>
-              <ul>
-                <li><Link to="/signup">Create Store</Link></li>
-                <li><Link to="/contact">Contact Us</Link></li>
-                <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-              </ul>
+              <div className="social-links">
+                <a href="#" className="social-link"><span>📧</span></a>
+                <a href="#" className="social-link"><span>📱</span></a>
+                <a href="#" className="social-link"><span>🌐</span></a>
+              </div>
             </div>
             <div className="footer-section">
               <h4>Contact Info</h4>
               <div className="contact-info">
                 <div className="contact-item">
-                  <Mail className="contact-icon" />
-                  <span>support@dockany.com</span>
+                  <div className="contact-icon-wrapper">
+                    <Mail className="contact-icon" />
+                  </div>
+                  <div className="contact-details">
+                    <span className="contact-label">Email</span>
+                    <span className="contact-value">support@dockany.com</span>
+                  </div>
                 </div>
                 <div className="contact-item">
-                  <Phone className="contact-icon" />
-                  <span>+20 (123) 456-7890</span>
+                  <div className="contact-icon-wrapper">
+                    <Phone className="contact-icon" />
+                  </div>
+                  <div className="contact-details">
+                    <span className="contact-label">Phone</span>
+                    <span className="contact-value">+20 (123) 456-7890</span>
+                  </div>
                 </div>
                 <div className="contact-item">
-                  <MapPin className="contact-icon" />
-                  <span>Cairo, Egypt</span>
+                  <div className="contact-icon-wrapper">
+                    <MapPin className="contact-icon" />
+                  </div>
+                  <div className="contact-details">
+                    <span className="contact-label">Location</span>
+                    <span className="contact-value">Cairo, Egypt</span>
+                  </div>
                 </div>
               </div>
             </div>

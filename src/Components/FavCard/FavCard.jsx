@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import './FavCard.css';
-import notFoundImage from '../../assets/produtNotFound.jpg';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../features/user/userSlice';
@@ -12,6 +11,9 @@ const FavCard = ({ product, onRemove }) => {
 
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
+
+  // Default placeholder image
+  const defaultImage = "https://picsum.photos/150/150";
 
   const handleAddToCart = async () => {
     try {
@@ -55,11 +57,11 @@ const FavCard = ({ product, onRemove }) => {
   const originalImage = getImageSource();
 
   const finalImage = useMemo(() => {
-    return imageError || !originalImage ? notFoundImage : originalImage;
+    return imageError || !originalImage ? defaultImage : originalImage;
   }, [imageError, originalImage]);
 
   const handleImageError = (e) => {
-    if (e.target.src !== window.location.origin + notFoundImage) {
+    if (e.target.src !== defaultImage) {
       setImageError(true);
     }
   };

@@ -105,6 +105,8 @@ export const themes = {
       '--icon-hover-color': '#ffffff',
       '--icon-shadow': '0 2px 4px rgba(0, 0, 0, 0.1)',
       '--icon-shadow-hover': '0 4px 8px rgba(0, 0, 0, 0.15)',
+      '--favorite-filled-color': '#e74c3c',
+      '--favorite-hover-color': '#c0392b',
       
       '--badge-new-bg': '#38cb89',
       '--badge-discount-bg': '#ff6b6b',
@@ -159,6 +161,16 @@ export const themes = {
       '--form-input-placeholder': '#6b7280',
       '--form-input-focus-border': '#377dff',
       '--form-input-focus-shadow': '0 0 0 3px rgba(55, 125, 255, 0.1)',
+
+      // Contact Page - Light Theme
+      '--contact-info-bg': '#f8fafc',
+      '--contact-info-border': '#e2e8f0',
+      '--contact-info-hover-bg': '#f1f5f9',
+      '--contact-info-hover-border': '#377dff',
+      '--contact-title': '#6c7275',
+      '--contact-method': '#121212',
+      '--contact-icon-bg': '#377dff',
+      '--contact-icon-color': '#ffffff',
 
       // Orders History - Light Theme
       '--orders-bg': '#ffffff',
@@ -303,6 +315,16 @@ export const themes = {
       '--reset-text': '#6c7275',
       '--reset-error': '#ef4444',
       
+      // Payment Pages - Light Theme
+      '--payment-success-icon': '#22c55e',
+      '--payment-success-bg': '#f0fdf4',
+      '--payment-success-border': '#bbf7d0',
+      '--payment-success-text': '#166534',
+      '--payment-failure-icon': '#ef4444',
+      '--payment-failure-bg': '#fef2f2',
+      '--payment-failure-border': '#fecaca',
+      '--payment-failure-text': '#b91c1c',
+      
       // Review Section - Light Theme
       '--review-section-bg': '#ffffff',
       '--review-card-bg': '#ffffff',
@@ -443,6 +465,8 @@ export const themes = {
       '--icon-hover-color': '#ffffff',
       '--icon-shadow': '0 2px 4px rgba(0, 0, 0, 0.3)',
       '--icon-shadow-hover': '0 4px 8px rgba(0, 0, 0, 0.4)',
+      '--favorite-filled-color': '#f87171',
+      '--favorite-hover-color': '#ef4444',
       
       '--badge-new-bg': '#059669',
       '--badge-discount-bg': '#dc2626',
@@ -562,6 +586,16 @@ export const themes = {
       '--cart-error-text': '#94a3b8',
       '--cart-retry-btn': 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
       '--cart-retry-btn-text': '#ffffff',
+      
+      // Payment Pages - Dark Theme
+      '--payment-success-icon': '#34d399',
+      '--payment-success-bg': '#064e3b',
+      '--payment-success-border': '#065f46',
+      '--payment-success-text': '#6ee7b7',
+      '--payment-failure-icon': '#f87171',
+      '--payment-failure-bg': '#7f1d1d',
+      '--payment-failure-border': '#991b1b',
+      '--payment-failure-text': '#fca5a5',
       
       // Review Section - Dark Theme
       '--review-section-bg': '#1e293b',
@@ -704,9 +738,9 @@ export const themes = {
       '--text2': '#CD41C4',
       '--hover': '#6B6765',
       
-      '--hero-bg': 'linear-gradient(135deg, #6B6765 0%, #DAD1CC 25%, #B2856E 50%, #F9F5F3 75%, #CD41C4 100%)',
-      '--hero-text': '#FFFFFF',
-      '--hero-description': '#FFFFFF',
+      '--hero-bg': 'linear-gradient(135deg, #F9F5F3 0%, #E8D5C4 25%, #D4B08C 50%, #C19A7B 75%, #B2856E 100%)',
+      '--hero-text': '#4A3C31',
+      '--hero-description': '#6B4E3D',
       '--hero-btn-bg': 'linear-gradient(135deg, #CD41C4 0%, #B91C8B 100%)',
       '--hero-btn-text': '#F9F5F3',
       '--hero-btn-hover-bg': 'linear-gradient(135deg, #B91C8B 0%, #A61E7A 100%)',
@@ -801,10 +835,12 @@ export const themes = {
       '--icon-hover-color': '#F9F5F3',
       '--icon-shadow': '0 2px 4px rgba(205, 65, 196, 0.1)',
       '--icon-shadow-hover': '0 4px 8px rgba(205, 65, 196, 0.15)',
+      '--favorite-filled-color': '#CD41C4',
+      '--favorite-hover-color': '#B91C8B',
       
-      '--badge-new-bg': '#CD41C4',
-      '--badge-discount-bg': '#B2856E',
-      '--badge-text': '#F9F5F3',
+      '--badge-new-bg': '#38cb89',
+      '--badge-discount-bg': '#ff6b6b',
+      '--badge-text': '#ffffff',
       
       // Category Cards
       '--category-card-bg': '#F9F5F3',
@@ -922,6 +958,16 @@ export const themes = {
       '--cart-error-text': '#6B6765',
       '--cart-retry-btn': 'linear-gradient(135deg, #CD41C4 0%, #B91C8B 100%)',
       '--cart-retry-btn-text': '#F9F5F3',
+      
+      // Payment Pages - Beige Theme
+      '--payment-success-icon': '#CD41C4',
+      '--payment-success-bg': '#F0F8F0',
+      '--payment-success-border': '#C8E6C9',
+      '--payment-success-text': '#2E7D32',
+      '--payment-failure-icon': '#CD41C4',
+      '--payment-failure-bg': '#FFEBEE',
+      '--payment-failure-border': '#FFCDD2',
+      '--payment-failure-text': '#C62828',
       
       // Review Section - Beige Theme
       '--review-section-bg': '#F9F5F3',

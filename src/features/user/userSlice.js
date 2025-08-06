@@ -65,11 +65,14 @@ const userSlice = createSlice({
       state.cart = state.cart.filter(item => item.id !== id);
     },
     updateCart: (state, action) => {
-      const { product_id, quantity, final_price } = action.payload;
+      const { product_id, quantity, final_price, unit_price } = action.payload;
       const item = state.cart.find(item => item.product_id === product_id);
       if (item) {
         item.quantity = quantity;
         item.final_price = final_price;
+        if (unit_price !== undefined) {
+          item.unit_price = unit_price;
+        }
       }
     },
 

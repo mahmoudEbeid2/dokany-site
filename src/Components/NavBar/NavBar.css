@@ -118,6 +118,24 @@
   color: var(--navbar-text-hover);
 }
 
+/* User Profile Image */
+.user-profile-image {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0.51rem;
+  border: 2px solid var(--navbar-text);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.user-profile-image:hover {
+  border-color: var(--navbar-text-hover);
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 .d-flex.navbar-nav {
   flex-direction: row;
   align-items: center !important;
@@ -333,6 +351,12 @@
   
   .d-flex.navbar-nav i {
     font-size: 1.25rem;
+    margin: 0.25rem;
+  }
+
+  .user-profile-image {
+    width: 1.75rem;
+    height: 1.75rem;
     margin: 0.25rem;
   }
   

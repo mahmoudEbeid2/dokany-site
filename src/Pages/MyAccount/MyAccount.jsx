@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./MyAccount.css";
-import avatar from "../../assets/av_blank.png";
 import { Camera } from "lucide-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
-import Orders from "../../Components/Orders/Orders";
+import { useNavigate, Outlet, NavLink } from "react-router-dom";
 
 const MyAccount = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("account");
   const token = localStorage.getItem("token");
+
+  // Default avatar image
+  const defaultAvatar = "https://picsum.photos/100/100";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -128,7 +128,7 @@ const MyAccount = () => {
         <aside className="account-sidebar">
           <div className="profile-wrapper">
             <img
-              src={formData.profile_imge || avatar}
+              src={formData.profile_imge || defaultAvatar}
               alt="User"
               className="profile-img"
             />
@@ -143,120 +143,36 @@ const MyAccount = () => {
           </h3>
 
           <ul className="sidebar-menu">
-            <li
-              className={activeTab === "account" ? "active" : ""}
-              onClick={() => setActiveTab("account")}
-            >
-              Account
+            <li>
+              <NavLink 
+                to="/myaccount" 
+                className={({ isActive }) => isActive ? "active" : ""}
+                end
+              >
+                Account
+              </NavLink>
             </li>
-            <li
-              className={activeTab === "orders" ? "active" : ""}
-              onClick={() => setActiveTab("orders")}
-            >
-              Orders
+            <li>
+              <NavLink 
+                to="/myaccount/orders" 
+                className={({ isActive }) => isActive ? "active" : ""}
+              >
+                Orders
+              </NavLink>
             </li>
-            <li onClick={handleLogout}>Log Out</li>
+            <li>
+              <button 
+                onClick={handleLogout}
+                className="logout-btn"
+              >
+                Log Out
+              </button>
+            </li>
           </ul>
         </aside>
 
         <section className="account-details">
-          {activeTab === "account" ? (
-            <form
-              className="account-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSubmit();
-              }}
-            >
-              <div className="form-group">
-                <label className="labelMyAcc">User Name *</label>
-                <input
-                  type="text"
-                  name="user_name"
-                  value={formData.user_name || ""}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="labelMyAcc">First Name *</label>
-                  <input
-                    type="text"
-                    name="f_name"
-                    value={formData.f_name || ""}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="labelMyAcc">Last Name *</label>
-                  <input
-                    type="text"
-                    name="l_name"
-                    value={formData.l_name || ""}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="labelMyAcc">Email *</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email || ""}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label className="labelMyAcc">Phone *</label>
-                <input
-                  type="text"
-                  name="phone"
-                  value={formData.phone || ""}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="labelMyAcc">City</label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city || ""}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="labelMyAcc">Governorate</label>
-                  <input
-                    type="text"
-                    name="governorate"
-                    value={formData.governorate || ""}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="labelMyAcc">Country</label>
-                  <input
-                    type="text"
-                    name="country"
-                    value={formData.country || ""}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              <button type="submit" className="save-btn">
-                Save changes
-              </button>
-            </form>
-          ) : (
-            <Orders />
-          )}
+          <Outlet context={{ formData, handleChange, handleSubmit }} />
         </section>
       </div>
     </div>
