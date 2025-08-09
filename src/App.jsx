@@ -14,20 +14,20 @@ import SignUp from "./Components/sign/signUp/SignUp";
 import Products from "./Components/products/products/Products";
 import ShopPage from "./Pages/ShopPage/ShopPage.jsx";
 import ProtectedRoute from "./Components/sign/ProtectedRoute";
-import MyAccount from "./pages/MyAccount/MyAccount";
+import MyAccount from "./Pages/MyAccount/MyAccount";
 import AccountForm from "./Components/MyAccount/AccountForm";
 import Orders from "./Components/Orders/Orders";
-import FavList from "./pages/FavList/Favlist";
-import Contact from "./pages/contact/contact.jsx";
-import Cart from "./pages/cart/Cart";
+import FavList from "./Pages/FavList/Favlist";
+import Contact from "./Pages/contact/contact.jsx";
+import Cart from "./Pages/cart/Cart";
 import ProductDetails from "./Pages/ProductDetails.jsx";
 import CategoryProducts from "./Pages/CategoryProducts.jsx";
-import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
-import LandingPage from "./pages/LandingPage.jsx";
+import PrivacyPolicy from "./Pages/PrivacyPolicy.jsx";
+import LandingPage from "./Pages/LandingPage.jsx";
 import Footer from "./Components/Footer/Footer";
 import ResetPassword from "./Components/sign/resetPassword/ResetPassword";
-import PaymentSuccess from "./pages/PaymentSuccess.jsx";
-import PaymentFailure from "./pages/PaymentFailure.jsx";
+import PaymentSuccess from "./Pages/PaymentSuccess.jsx";
+import PaymentFailure from "./Pages/PaymentFailure.jsx";
 // Redux actions
 import {
   setUserInfo,
