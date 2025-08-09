@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import FavCard from '../../components/FavCard/FavCard';
+import FavCard from '../../Components/FavCard/FavCard';
 import { removeFromWatchlist } from '../../features/user/userSlice';
 
 import './FavList.css';
