@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../pages/cart/cart.module.css";
+import styles from "../../Pages/cart/cart.module.css";
 
 import CartItem from "./CartItem";
 function CartTable({
