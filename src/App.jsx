@@ -62,7 +62,7 @@ function App() {
 
   const isLandingPage =
     location.pathname === "/" &&
-    (subdomain === "dockany" || subdomain === "localhost");
+    (subdomain === "localhost" || subdomain === "127" || subdomain === "dokaney" || subdomain === "www");
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -188,16 +188,16 @@ function App() {
       {!isSignPage && !isLandingPage && <NavBar />}
 
       <Routes>
-        <Route
-          path="/"
-          element={
-            subdomain === "dockany" || subdomain === "localhost" ? (
-              <LandingPage />
-            ) : (
-              <Home />
-            )
-          }
-        />
+                 <Route
+           path="/"
+           element={
+             subdomain === "localhost" || subdomain === "127" || subdomain === "dokaney" || subdomain === "www" ? (
+               <LandingPage />
+             ) : (
+               <Home />
+             )
+           }
+         />
         <Route path="/home" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
