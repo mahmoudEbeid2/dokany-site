@@ -1,6 +1,6 @@
 import React from "react";
 import { ShoppingBag, CreditCard } from "lucide-react";
-import styles from "../../pages/cart/cart.module.css";
+import styles from "../../Pages/cart/cart.module.css";
 
 export default function Total({ cartItems = [], onPay }) {
   // Calculate totals
