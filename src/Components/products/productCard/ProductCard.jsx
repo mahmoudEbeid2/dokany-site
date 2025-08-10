@@ -226,17 +226,17 @@ const ProductCard = ({ product, isNew = false }) => {
           </button>
         </div>
         <div className={styles.productInfo}>
-          <h5 className={`card-title fw-normal mb-2 ${styles.customTitle}`}>
+          <h5 className={`card-title fw-normal mb-2 text-center ${styles.customTitle}`}>
             {product.title.split(" ").slice(0, 5).join(" ")}
           </h5>
           <div
-            className={`d-flex align-items-center gap-2 ${styles.customPrice}`}
+            className={`d-flex align-items-center gap-2 text-center ${styles.customPrice}`}
           >
-            <p className={`fw-semibold mb-0 text-dark`}>
+            <p className={`fw-semibold mb-0 text-dark text-center`}>
               ${finalPrice.toFixed(2)}
             </p>
             {discountPercentage > 0 && (
-              <p className="text-muted text-decoration-line-through mb-0">
+              <p className="text-muted text-decoration-line-through mb-0 ">
                 ${originalPrice.toFixed(2)}
               </p>
             )}

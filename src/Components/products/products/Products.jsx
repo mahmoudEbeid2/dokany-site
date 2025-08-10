@@ -68,13 +68,13 @@ const Products = ({ subdomain }) => {
   }
 
   return (
-    <div className="container py-5">
-      <h2 className="text-4xl font-bold text-center text-uppercase py-3">
+    <div className="container py-5 ">
+      <h2 className="text-3xl mainHeaderHome categories-header font-bold text-center text-uppercase py-3">
         Discounted Products
       </h2>
-      <div className="row g-3">
+      <div className="row g-3 ">
         {allProducts.map((product) => (
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={product.id}>
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-center text-center items-center m-auto " key={product.id}>
             <ProductCard product={product} />
           </div>
         ))}

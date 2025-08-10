@@ -116,7 +116,7 @@ const Categories = ({ subdomain }) => {
   if (isLoading) {
     return (
       <div className="categories-container">
-        <h2 className="categories-header text-4xl font-bold text-center text-uppercase py-3">
+        <h2 className="categories-header text-3xl mainHeaderHome font-bold text-center text-uppercase py-3">
           Shop by Categories
         </h2>
         <div className="flex justify-center items-center py-16">
@@ -129,7 +129,7 @@ const Categories = ({ subdomain }) => {
   if (categories.length === 0) {
     return (
       <div className="categories-container">
-        <h2 className="categories-header text-4xl font-bold text-center text-uppercase py-3">
+        <h2 className="categories-header text-3xl mainHeaderHome font-bold text-center text-uppercase py-3">
           Shop by Categories
         </h2>
         <div className="text-center py-16 text-gray-500">

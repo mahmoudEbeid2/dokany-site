@@ -73,12 +73,12 @@ const BestSellers = ({ subdomain }) => {
 
   return (
     <div className="container py-5">
-      <h2 className="text-4xl font-bold text-center text-uppercase py-3">
+      <h2 className="text-3xl mainHeaderHome categories-header font-bold text-center text-uppercase py-3">
         Best Sellers
       </h2>
       <div className="row g-3">
         {bestSellers.slice(0, visibleProducts).map((product) => (
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={product.id}>
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-center text-center items-center m-auto" key={product.id}>
             <ProductCard product={product} />
           </div>
         ))}

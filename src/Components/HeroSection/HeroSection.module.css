@@ -1,7 +1,6 @@
 .heroSection {
   min-height: 100vh;
   width: 100%;
-  height: auto;
   overflow: hidden;
   background: var(--hero-bg);
   position: relative;
@@ -187,10 +186,19 @@
   transform: translateY(-1px);
   box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
 }
-
+@media (max-width: 1280px) {
+  .heroSection {
+  min-height: 65vh;
+  
+}
+}
 @media screen and (max-width: 768px) {
   .heroBtn {
     padding: 0.875rem 2rem;
     font-size: 0.95rem;
   }
+.heroSection {
+  min-height: 65vh;
+  
+}
 }

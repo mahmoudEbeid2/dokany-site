@@ -7,6 +7,8 @@
 .categories-header {
   color: var(--text-primary);
   margin-bottom: var(--space-8);
+  margin-top: var(--space-8);
+
 }
 
 /* Slider Container */
@@ -185,6 +187,11 @@
     width: 1.6rem;
     height: 1.6rem;
   }
+  .categories-header{
+      font-size: 2.8rem !important;
+     width: 100%;
+  }
+
 }
 
 /* Loading State */

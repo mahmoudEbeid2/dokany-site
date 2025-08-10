@@ -78,8 +78,8 @@ const JustIn = ({ subdomain }) => {
 
   return (
     <div className={`container ${styles.justInSection} my-5`}>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="text-4xl font-bold text-center text-uppercase py-3">
+      <div className="d-flex justify-content-between align-items-center mb-4 ">
+        <h2 className="text-3xl mainHeaderHome font-bold  text-left  text-uppercase py-3">
           Just In
         </h2>
         {renderIndicators()}
@@ -98,7 +98,7 @@ const JustIn = ({ subdomain }) => {
               {chunk.map((product) => (
                 <div
                   key={product.id}
-                  className="col-12 col-sm-6 col-md-4 col-lg-3"
+                  className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-center text-center items-center m-auto "
                 >
                   <ProductCard product={product} isNew={true} />
                 </div>

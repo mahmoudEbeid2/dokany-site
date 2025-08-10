@@ -84,6 +84,18 @@
 }
 
 /* Show toggler on mobile */
+@media (max-width: 1280px) {
+  .navbar-expand-lg .navbar-nav .nav-link {
+    font-size: 1.5rem;
+  }
+
+}
+@media (max-width: 576px) {
+     .navbar .nav-item .nav-link {
+      font-size: 1.5rem !important;
+     }
+
+}
 @media (max-width: 991px) {
   .navbar-toggler {
     display: block !important;
