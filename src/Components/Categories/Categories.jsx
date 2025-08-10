@@ -10,9 +10,24 @@ const Categories = ({ subdomain }) => {
   const [touchEnd, setTouchEnd] = useState(null);
   const sliderRef = useRef(null);
 
+  // ✅ itemsPerView is now dynamic based on screen size
+  const [itemsPerView, setItemsPerView] = useState(5);
 
+  useEffect(() => {
+    const updateItemsPerView = () => {
+      if (window.innerWidth <= 480) setItemsPerView(1);
+      else if (window.innerWidth <= 768) setItemsPerView(2);
+      else if (window.innerWidth <= 992) setItemsPerView(3);
+      else if (window.innerWidth <= 1200) setItemsPerView(4);
+      else setItemsPerView(5);
+    };
 
-  const itemsPerView = 5;
+    updateItemsPerView();
+    window.addEventListener("resize", updateItemsPerView);
+
+    return () => window.removeEventListener("resize", updateItemsPerView);
+  }, []);
+
   const totalSlides = Math.ceil(categories.length / itemsPerView);
 
   const nextSlide = useCallback(() => {
@@ -27,7 +42,6 @@ const Categories = ({ subdomain }) => {
     const startIndex = currentIndex * itemsPerView;
     return categories.slice(startIndex, startIndex + itemsPerView);
   };
-
 
   const onTouchStart = (e) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -54,33 +68,35 @@ const Categories = ({ subdomain }) => {
     setTouchEnd(null);
   };
 
-  const handleKeyDown = useCallback((e) => {
-    switch (e.key) {
-      case 'ArrowLeft':
-        e.preventDefault();
-        prevSlide();
-        break;
-      case 'ArrowRight':
-        e.preventDefault();
-        nextSlide();
-        break;
-      case 'Home':
-        e.preventDefault();
-        setCurrentIndex(0);
-        break;
-      case 'End':
-        e.preventDefault();
-        setCurrentIndex(totalSlides - 1);
-        break;
-      default:
-        break;
-    }
-  }, [prevSlide, nextSlide, setCurrentIndex, totalSlides]);
-
+  const handleKeyDown = useCallback(
+    (e) => {
+      switch (e.key) {
+        case "ArrowLeft":
+          e.preventDefault();
+          prevSlide();
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          nextSlide();
+          break;
+        case "Home":
+          e.preventDefault();
+          setCurrentIndex(0);
+          break;
+        case "End":
+          e.preventDefault();
+          setCurrentIndex(totalSlides - 1);
+          break;
+        default:
+          break;
+      }
+    },
+    [prevSlide, nextSlide, totalSlides]
+  );
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
   useEffect(() => {
@@ -111,7 +127,6 @@ const Categories = ({ subdomain }) => {
 
     return () => controller.abort();
   }, [subdomain]);
-
 
   if (isLoading) {
     return (
@@ -172,7 +187,9 @@ const Categories = ({ subdomain }) => {
           {Array.from({ length: totalSlides }, (_, index) => (
             <button
               key={index}
-              className={`slider-indicator ${index === currentIndex ? 'active' : ''}`}
+              className={`slider-indicator ${
+                index === currentIndex ? "active" : ""
+              }`}
               onClick={() => {
                 setCurrentIndex(index);
               }}
@@ -184,8 +201,13 @@ const Categories = ({ subdomain }) => {
 
       {totalSlides > 1 && (
         <div className="sr-only">
-          <p>Use arrow keys to navigate between categories. Press Home to go to first slide, End to go to last slide.</p>
-          <p>Slide {currentIndex + 1} of {totalSlides}</p>
+          <p>
+            Use arrow keys to navigate between categories. Press Home to go to
+            first slide, End to go to last slide.
+          </p>
+          <p>
+            Slide {currentIndex + 1} of {totalSlides}
+          </p>
         </div>
       )}
     </div>
