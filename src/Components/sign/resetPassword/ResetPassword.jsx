@@ -17,6 +17,8 @@ const ResetPassword = () => {
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const subdomain = window.location.hostname.split(".")[0];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -47,7 +49,10 @@ const ResetPassword = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API}/auth/customer/reset-password`,
-        result.data
+        {
+          email: result.data.email,
+          subdomain
+        }
       );
 
       toast.success(response.data.message);
