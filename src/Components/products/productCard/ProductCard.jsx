@@ -9,6 +9,7 @@ import {
   removeFromWatchlist,
   addToCart,
 } from "../../../features/user/userSlice";
+import { EyeOff } from 'lucide-react';
 
 const getToken = () => localStorage.getItem("token");
 
@@ -215,7 +216,12 @@ const ProductCard = ({ product, isNew = false }) => {
               className={styles.productActionBtn}
               onClick={handleViewImage}
             >
-              <Eye size={20} stroke={"#000"} />
+<Eye 
+  size={20} 
+  stroke="#423b3bff" 
+  fill="none" // تمنع التعبئة السوداء وتخليها Outline
+/>
+
             </button>
           </div>
           <button

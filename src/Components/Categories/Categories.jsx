@@ -10,15 +10,15 @@ const Categories = ({ subdomain }) => {
   const [touchEnd, setTouchEnd] = useState(null);
   const sliderRef = useRef(null);
 
-  // ✅ itemsPerView is now dynamic based on screen size
   const [itemsPerView, setItemsPerView] = useState(5);
 
   useEffect(() => {
     const updateItemsPerView = () => {
-      if (window.innerWidth <= 480) setItemsPerView(1);
-      else if (window.innerWidth <= 768) setItemsPerView(2);
-      else if (window.innerWidth <= 992) setItemsPerView(3);
-      else if (window.innerWidth <= 1200) setItemsPerView(4);
+      if (window.innerWidth <= 380) setItemsPerView(1);
+      else if (window.innerWidth <= 480) setItemsPerView(2);
+      else if (window.innerWidth <= 768) setItemsPerView(3);
+     
+      else if (window.innerWidth <= 1290) setItemsPerView(4);
       else setItemsPerView(5);
     };
 
@@ -168,7 +168,7 @@ const Categories = ({ subdomain }) => {
         onTouchEnd={onTouchEnd}
       >
         <div className="categories-slider-content">
-          <div className="categories-slider-track">
+          <div className="categories-slider-track d-flex justify-center">
             {getCurrentCategories().map((category) => (
               <div key={category.id} className="category-slide-item">
                 <CategoryCard
