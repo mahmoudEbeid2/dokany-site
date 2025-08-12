@@ -199,6 +199,11 @@
   }
 .heroSection {
   min-height: 65vh;
-  
+  padding-top: 50px;
+}
+.heroImgWrapper {
+ 
+  width: 33rem;
+
 }
 }

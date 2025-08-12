@@ -262,8 +262,12 @@
 .passwordIcon:hover {
   color: var(--signup-link);
 }
-
+input{
+  margin-top: 7px !important;
+  margin-bottom: 10px !important;
+}
 .passwordInput {
+  position: relative;
   padding-right: 3rem !important;
 }
 
@@ -411,4 +415,8 @@
     max-width: 32rem;
     margin: 0;
   }
+}
+.createAccountBtn{
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
