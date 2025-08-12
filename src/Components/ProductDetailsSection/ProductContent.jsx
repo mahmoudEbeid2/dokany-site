@@ -1,4 +1,4 @@
-import {memo, useMemo, useState } from 'react';
+import {memo, useMemo, useState, useCallback, useEffect } from 'react';
 import styles from './ProductDetails.module.css';
 import ProductDiscountTime from './ProductDiscountTime';
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
@@ -12,10 +12,20 @@ import {
   addToWatchlist,
   removeFromWatchlist,
 } from '../../features/user/userSlice';
+import { startMeasure, endMeasure } from '../../utils/performanceMonitor';
+
 const api = import.meta.env.VITE_API;
 
+const ProductContent = memo(({ product, reviews }) => {
+  // Performance monitoring for component initialization
+  useEffect(() => {
+    startMeasure('product_content_initialization', 'component');
+    
+    return () => {
+      endMeasure('product_content_initialization', 'component');
+    };
+  }, []);
 
-const ProductContent = ({ product, reviews }) => {
   const {
     title, description, price, discount, stock,
     category, id, averageRating
@@ -36,6 +46,19 @@ const ProductContent = ({ product, reviews }) => {
   const headers = useMemo(() => ({
     Authorization: `Bearer ${token}`,
   }), [token]);
+
+  // Performance monitoring for render
+  useEffect(() => {
+    if (product) {
+      startMeasure('product_content_render', 'component');
+      endMeasure('product_content_render', 'component', { 
+        productId: product.id,
+        hasDiscount: discount > 0,
+        hasStock: stock > 0,
+        hasReviews: reviews?.length > 0
+      });
+    }
+  }, [product, discount, stock, reviews]);
 
   const renderStars = useMemo(() => {
     const stars = [];
@@ -58,16 +81,19 @@ const ProductContent = ({ product, reviews }) => {
     return (discounted * (1 - couponDiscountValue / 100)).toFixed(2);
   }, [price, discount, couponDiscountValue]);
 
-  const incrementProductCount = () => {
+  // Memoize event handlers to prevent unnecessary re-renders
+  const incrementProductCount = useCallback(() => {
     if (productCount < stock) setProductCount((c) => c + 1);
-  };
+  }, [productCount, stock]);
 
-  const decrementProductCount = () => {
+  const decrementProductCount = useCallback(() => {
     if (productCount > 0) setProductCount((c) => c - 1);
-  };
+  }, [productCount]);
 
-  const handleAddToWatchlist = async () => {
+  const handleAddToWatchlist = useCallback(async () => {
     if (!token) return toast.error('Please log in to add to watchlist.');
+    
+    startMeasure('add_to_watchlist_api', 'api');
     try {
       const { data } = await axios.post(
         `${api}/favorites`,
@@ -76,13 +102,17 @@ const ProductContent = ({ product, reviews }) => {
       );
       dispatch(addToWatchlist({ ...data, product }));
       toast.success('Added to watchlist');
+      endMeasure('add_to_watchlist_api', 'api', { success: true });
     } catch (err) {
       toast.error(err.response?.data?.error || "Error adding to watchlist");
+      endMeasure('add_to_watchlist_api', 'api', { success: false, error: err.message });
     }
-  };
+  }, [token, id, headers, dispatch, product, api]);
 
-  const handleRemoveFromWatchlist = async () => {
+  const handleRemoveFromWatchlist = useCallback(async () => {
     if (!token) return toast.error('Please log in to remove from watchlist.');
+    
+    startMeasure('remove_from_watchlist_api', 'api');
     try {
       await axios.delete(
         `${api}/favorites/${currentWatchlist.id}`,
@@ -90,16 +120,19 @@ const ProductContent = ({ product, reviews }) => {
       );
       dispatch(removeFromWatchlist(currentWatchlist.id));
       toast.success('Removed from watchlist');
+      endMeasure('remove_from_watchlist_api', 'api', { success: true });
     } catch (err) {
       toast.error(err.response?.data?.error || "Error removing from watchlist");
+      endMeasure('remove_from_watchlist_api', 'api', { success: false, error: err.message });
     }
-  };
+  }, [token, currentWatchlist, headers, dispatch, api]);
 
-  const handleApplyCoupon = async () => {
+  const handleApplyCoupon = useCallback(async () => {
     if (!couponCode) return toast.error('Enter a coupon code');
     if (!token) return toast.error('Please log in to apply a coupon');
 
     setLoadingCoupon(true);
+    startMeasure('apply_coupon_api', 'api');
     try {
       const { data } = await axios.get(
         `${api}/api/coupon/check/${couponCode}?subdomain=${subdomain}`,
@@ -107,19 +140,22 @@ const ProductContent = ({ product, reviews }) => {
       );
       setCouponDiscountValue(data.discount_value);
       toast.success('Coupon applied');
+      endMeasure('apply_coupon_api', 'api', { success: true });
     } catch (err) {
       setCouponDiscountValue(0);
       toast.error(err.response?.data?.message || "Invalid coupon");
+      endMeasure('apply_coupon_api', 'api', { success: false, error: err.message });
     } finally {
       setLoadingCoupon(false);
     }
-  };
+  }, [couponCode, token, subdomain, headers, api]);
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = useCallback(async () => {
     if (!token) return toast.error('Please log in to add to cart.');
     if (productCount === 0) return toast.error('Add product quantity first.');
 
     setAddingToCart(true);
+    startMeasure('add_to_cart_api', 'api');
     try {
       const { data } = await axios.post(
         `${api}/cart`,
@@ -132,18 +168,26 @@ const ProductContent = ({ product, reviews }) => {
       );
       dispatch(addToCart({...data.cartItem, product}));
       toast.success('Added to cart');
+      endMeasure('add_to_cart_api', 'api', { success: true });
     } catch (err) {
       toast.error(err.response?.data?.error || "Error adding to cart");
+      endMeasure('add_to_cart_api', 'api', { success: false, error: err.message });
     } finally {
       setAddingToCart(false);
     }
-  };
+  }, [token, productCount, id, couponDiscountValue, couponCode, headers, dispatch, product, api]);
+
+  // Memoize description to prevent unnecessary re-renders
+  const truncatedDescription = useMemo(() => 
+    description.split(' ').slice(0, 200).join(' '), 
+    [description]
+  );
 
   return (
     <div className={styles.productContent}>
       <h1 className={styles.productTitle}>{title}</h1>
       <p className={styles.productDescription}>
-        {description.split(' ').slice(0, 200).join(' ')}
+        {truncatedDescription}
       </p>
 
       <div className="d-flex align-items-center gap-2">
@@ -243,8 +287,10 @@ const ProductContent = ({ product, reviews }) => {
       </div>
     </div>
   );
-};
+});
 
-export default memo(ProductContent);
+ProductContent.displayName = 'ProductContent';
+
+export default ProductContent;
 
 

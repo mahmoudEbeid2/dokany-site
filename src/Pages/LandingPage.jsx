@@ -249,13 +249,13 @@ const LandingPage = () => {
                   Pricing
                 </a>
               </li>
-              {/* --- بداية الكود المضاف: رابط "اتصل بنا" في شريط التنقل --- */}
+      
               <li className="nav-item">
                 <a href="#contact-us" className="nav-link fw-semibold px-3">
                   Contact
                 </a>
               </li>
-              {/* --- نهاية الكود المضاف: رابط "اتصل بنا" في شريط التنقل --- */}
+      
             </ul>
 
             <div className="d-flex">

@@ -1,83 +1,139 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import ProductCard from "../productCard/ProductCard";
-import Loader from "../../Loader/Loader";
-import axios from "axios";
+import sectionStyles from "../../shared/SectionStyles.module.css";
+import gridStyles from "../ProductGrid.module.css";
+import { startMeasure, endMeasure } from "../../../utils/performanceMonitor";
 
+// Memoized ProductCard component for better performance
+const MemoizedProductCard = React.memo(ProductCard);
 
-const RecommendedProducts = ({ categoryId, currentProductId }) => {
+const RecommendedProducts = React.memo(({ categoryId, currentProductId }) => {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Performance monitoring for component initialization
   useEffect(() => {
+    startMeasure('recommended_products_initialization', 'component');
+    
+    return () => {
+      endMeasure('recommended_products_initialization', 'component');
+    };
+  }, []);
+
+  // Fetch recommended products
+  const fetchRecommendedProducts = useCallback(async () => {
     if (!categoryId) {
       setLoading(false);
       return;
     }
-    const fetchRecommendedProducts = async () => {
-      setLoading(true);
-      setError(null);
-      const requestUrl = `${import.meta.env.VITE_API}/categories/${categoryId}`;
 
-      try {
-        const response = await axios.get(requestUrl);
+    setLoading(true);
+    setError(null);
 
-        const products = response.data || [];
-
-        const filteredProducts = products.filter(
-          (product) => product.id !== currentProductId
-        );
-        setRecommendedProducts(filteredProducts);
-      } catch (err) {
-        console.error("AXIOS REQUEST FAILED:", err);
-        const status = err.response?.status;
-        const message =
-          err.response?.data?.error || "Server responded with an error.";
-        setError(`API Error: ${status} - ${message}.`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecommendedProducts();
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API}/categories/${categoryId}`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
+      const products = await response.json();
+      const filteredProducts = products.filter(product => product.id !== currentProductId);
+      
+      setRecommendedProducts(filteredProducts);
+    } catch (err) {
+      console.error("Failed to fetch recommended products:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }, [categoryId, currentProductId]);
 
-  if (loading) {
-    return <Loader />;
-  }
+  // Fetch data when dependencies change
+  useEffect(() => {
+    fetchRecommendedProducts();
+  }, [fetchRecommendedProducts]);
 
-  if (error) {
+  // Performance monitoring for render
+  useEffect(() => {
+    if (recommendedProducts && recommendedProducts.length > 0) {
+      startMeasure('recommended_products_render', 'component');
+      endMeasure('recommended_products_render', 'component', { 
+        productCount: recommendedProducts.length,
+        categoryId 
+      });
+    }
+  }, [recommendedProducts, categoryId]);
+
+  // Memoize the sliced products to prevent unnecessary re-renders
+  // This must be before any conditional returns
+  const displayProducts = useMemo(() => 
+    recommendedProducts.slice(0, 8), // Show 8 products like Discounted Products
+    [recommendedProducts]
+  );
+
+  // Don't render if no category ID
+  if (!categoryId) return null;
+
+  if (loading) {
     return (
-      <div className="container py-5 text-center">
-        <h3 className="text-danger">Failed to Load Recommended Products</h3>
-        <p
-          className="text-muted mt-2"
-          style={{ maxWidth: "600px", margin: "auto" }}
-        >
-          <strong>Details:</strong> {error}
-        </p>
+      <div style={{ 
+        margin: '5rem 0',
+        padding: '4rem 2rem',
+        margin: '0 auto',
+        maxWidth: '1400px'
+      }}>
+        <div className={sectionStyles.loadingContainer}>
+          <div className={sectionStyles.inlineSpinner}></div>
+        </div>
       </div>
     );
   }
 
-  if (recommendedProducts.length === 0) {
+  if (error) {
+    return (
+      <div style={{ 
+        margin: '5rem 0',
+        padding: '4rem 2rem',
+        margin: '0 auto',
+        maxWidth: '1400px'
+      }}>
+        <div className={sectionStyles.errorContainer}>
+          <h2>Error: {error}</h2>
+          <button onClick={fetchRecommendedProducts} className={sectionStyles.retryBtn}>
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!recommendedProducts || recommendedProducts.length === 0) {
     return null;
   }
 
   return (
-    <div className="container py-5">
-      <h2 className="text-4xl font-bold text-center text-uppercase py-3">
-        Recommended Products
-      </h2>
-      <div className="row g-3">
-        {recommendedProducts.slice(0, 4).map((product) => (
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={product.id}>
-            <ProductCard product={product} />
+    <div style={{ 
+      margin: '5rem 0',
+      padding: '4rem 2rem',
+      margin: '0 auto',
+      maxWidth: '1400px'
+    }}>
+      <div className={sectionStyles.sectionHeader}>
+        <h2 className={sectionStyles.sectionTitle}>
+          Recommended Products
+        </h2>
+      </div>
+      
+      <div className={gridStyles.productGrid}>
+        {displayProducts.map((product) => (
+          <div key={product.id}>
+            <MemoizedProductCard product={product} />
           </div>
         ))}
       </div>
     </div>
   );
-};
+});
+
+RecommendedProducts.displayName = 'RecommendedProducts';
 
 export default RecommendedProducts;

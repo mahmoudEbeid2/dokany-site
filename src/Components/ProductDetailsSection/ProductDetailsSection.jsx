@@ -1,9 +1,30 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import ProductImagesGallery from './ProductImagesGallery';
 import ProductContent from './ProductContent';
-
+import { startMeasure, endMeasure } from '../../utils/performanceMonitor';
 
 const ProductDetailsSection = memo(({ product, reviews }) => {
+  // Performance monitoring for component initialization
+  useEffect(() => {
+    startMeasure('product_details_section_initialization', 'component');
+    
+    return () => {
+      endMeasure('product_details_section_initialization', 'component');
+    };
+  }, []);
+
+  // Performance monitoring for render
+  useEffect(() => {
+    if (product) {
+      startMeasure('product_details_section_render', 'component');
+      endMeasure('product_details_section_render', 'component', { 
+        productId: product.id,
+        hasImages: product.images?.length > 0,
+        hasReviews: reviews?.length > 0
+      });
+    }
+  }, [product, reviews]);
+
   if (!product) {
     return (
       <div className="container my-5 text-center">
@@ -22,7 +43,6 @@ const ProductDetailsSection = memo(({ product, reviews }) => {
 
   return (
     <div className="container my-5">
-
       <div className="row justify-content-between">
         <div className="col-lg-6 mb-4 mb-lg-0">
           <ProductImagesGallery
@@ -42,6 +62,8 @@ const ProductDetailsSection = memo(({ product, reviews }) => {
     </div>
   );
 });
+
+ProductDetailsSection.displayName = 'ProductDetailsSection';
 
 export default ProductDetailsSection;
 

@@ -12,7 +12,7 @@
 
 .footerDescription {
   color: var(--footer-text);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 400;
   line-height: 1.7;
   margin: 1.5rem 0 0 0;
@@ -22,7 +22,7 @@
 
 .footerTitle {
   color: var(--footer-text);
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
   text-transform: uppercase;
@@ -58,7 +58,7 @@
 .footerLink {
   color: var(--footer-link);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 400;
   transition: all 0.3s ease;
   padding: 0.5rem 0;
@@ -87,16 +87,16 @@
 
 .socialLink {
   color: var(--footer-icon);
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   transition: all 0.3s ease;
   cursor: pointer;
-  padding: 1rem;
+  padding: 1.2rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
+  width: 3.5rem;
+  height: 3.5rem;
   background-color: transparent;
   border: 2px solid transparent;
   position: relative;
@@ -140,7 +140,7 @@
 
 .copyright {
   color: var(--footer-text);
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 400;
   margin: 0;
   opacity: 0.6;
@@ -161,10 +161,33 @@
     margin-bottom: 2rem;
   }
   
+  .footerBrand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
   .footerDescription {
     text-align: center;
     max-width: 100%;
     margin: 1.5rem auto 0;
+    font-size: 1.2rem;
+  }
+  
+  .footerTitle {
+    font-size: 1.4rem;
+  }
+  
+  .footerLink {
+    font-size: 1.2rem;
+  }
+  
+  .socialLink {
+    font-size: 2rem;
+    width: 4rem;
+    height: 4rem;
+    padding: 1.5rem;
   }
   
   .footerTitle::after {
@@ -178,5 +201,30 @@
   
   .footerLink:hover {
     transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 576px) {
+  .footerDescription {
+    font-size: 1.1rem;
+  }
+  
+  .footerTitle {
+    font-size: 1.3rem;
+  }
+  
+  .footerLink {
+    font-size: 1.1rem;
+  }
+  
+  .socialLink {
+    font-size: 1.8rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    padding: 1.2rem;
+  }
+  
+  .copyright {
+    font-size: 0.95rem;
   }
 }

@@ -32,7 +32,7 @@ const BestSellers = ({ subdomain }) => {
       })
       .filter((product) => product.averageRating > 0)
       .sort((a, b) => b.averageRating - a.averageRating)
-      .slice(0, 8); // عرض أول 8 منتجات فقط
+              .slice(0, 8);
 
     return productsWithRating;
   }, [subdomain]);

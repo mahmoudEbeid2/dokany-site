@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import ProductDetailsSection from "../Components/ProductDetailsSection/ProductDetailsSection";
 import ReviewsSection from "../Components/ReviewSection/ReviewsSection";
 import RecommendedProducts from "../Components/products/recomendedProducts/RecommendedProducts";
+import ReviewsSectionPlaceholder from "../Components/ReviewSection/ReviewsSectionPlaceholder";
+import RecommendedProductsPlaceholder from "../Components/products/recomendedProducts/RecommendedProductsPlaceholder";
 import Loader from "../Components/Loader/Loader";
+import Lazyload from "../Components/Lazyload";
+import { startMeasure, endMeasure } from "../utils/performanceMonitor";
 
 const api = import.meta.env.VITE_API;
 
@@ -16,25 +19,42 @@ function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [productReviews, setProductReviews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
-  // Fetch product and reviews together
+  // Performance monitoring for component initialization
+  useEffect(() => {
+    startMeasure('product_details_initialization', 'component');
+    
+    return () => {
+      endMeasure('product_details_initialization', 'component');
+    };
+  }, []);
+
+  // Fetch product and reviews data
   useEffect(() => {
     let isMounted = true;
 
     const fetchProductAndReviews = async () => {
       setLoading(true);
-      setError("");
+      setError(null);
 
       try {
         const [productRes, reviewsRes] = await Promise.all([
-          axios.get(`${api}/products/${id}`),
-          axios.get(`${api}/reviews/${id}`)
+          fetch(`${api}/products/${id}`),
+          fetch(`${api}/reviews/${id}`)
+        ]);
+
+        if (!productRes.ok) throw new Error(`Product fetch failed: ${productRes.status}`);
+        if (!reviewsRes.ok) throw new Error(`Reviews fetch failed: ${reviewsRes.status}`);
+
+        const [productData, reviewsData] = await Promise.all([
+          productRes.json(),
+          reviewsRes.json()
         ]);
 
         if (isMounted) {
-          setProduct(productRes.data);
-          setProductReviews(reviewsRes.data);
+          setProduct(productData);
+          setProductReviews(reviewsData);
         }
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -51,6 +71,21 @@ function ProductDetails() {
     };
   }, [id]);
 
+  // Memoize category ID to prevent unnecessary re-renders
+  const categoryId = useMemo(() => product?.category_id, [product?.category_id]);
+
+  // Performance monitoring for render
+  useEffect(() => {
+    if (product) {
+      startMeasure('product_details_render', 'component');
+      endMeasure('product_details_render', 'component', { 
+        productId: product.id,
+        hasImages: product.images?.length > 0,
+        hasReviews: productReviews.length > 0
+      });
+    }
+  }, [product, productReviews]);
+
   // Loader
   if (loading) return <Loader />;
 
@@ -58,7 +93,7 @@ function ProductDetails() {
   if (error) {
     return (
       <div style={{ padding: "2rem", textAlign: "center", color: "red" }}>
-        <h4>{error}</h4>
+        <h4>Error loading product: {error}</h4>
       </div>
     );
   }
@@ -74,25 +109,33 @@ function ProductDetails() {
 
   return (
     <div>
-
+      {/* Main product section - load immediately */}
       <ProductDetailsSection product={product} reviews={productReviews} />
 
-      <ReviewsSection
-        productId={id}
-        reviews={productReviews}
-        handeledReviews={setProductReviews}
-      />
+      {/* Reviews section - lazy load with specialized placeholder */}
+      <Lazyload placeholder={<ReviewsSectionPlaceholder />}>
+        <div className="container mt-5">
+          <ReviewsSection
+            productId={id}
+            reviews={productReviews}
+            handeledReviews={() => {}} // This will be handled by the hook
+          />
+        </div>
+      </Lazyload>
 
-      {product.category_id && (
-        <RecommendedProducts
-          categoryId={product.category_id}
-          currentProductId={product.id}
-        />
+      {/* Recommended products - lazy load only if category exists */}
+      {categoryId && (
+        <Lazyload placeholder={<RecommendedProductsPlaceholder />}>
+          <RecommendedProducts
+            categoryId={categoryId}
+            currentProductId={product.id}
+          />
+        </Lazyload>
       )}
     </div>
   );
 }
 
-export default ProductDetails;
+export default React.memo(ProductDetails);
 
 

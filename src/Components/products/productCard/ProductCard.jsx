@@ -219,7 +219,7 @@ const ProductCard = ({ product, isNew = false }) => {
 <Eye 
   size={20} 
   stroke="#423b3bff" 
-  fill="none" // تمنع التعبئة السوداء وتخليها Outline
+          fill="none"
 />
 
             </button>

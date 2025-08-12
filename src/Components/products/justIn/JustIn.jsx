@@ -31,14 +31,14 @@ const JustIn = ({ subdomain }) => {
         const currentDate = new Date();
         const diffTime = Math.abs(currentDate - productDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays <= 30; // منتجات آخر 30 يوم
+        return diffDays <= 30;
       })
       .sort((a, b) => {
         const dateA = new Date(a.createdAt || a.created_date || a.createdAt || a.date);
         const dateB = new Date(b.createdAt || b.created_date || b.createdAt || b.date);
-        return dateB - dateA; // الأحدث أولاً
+        return dateB - dateA;
       })
-      .slice(0, 4); // عرض 4 منتجات فقط
+              .slice(0, 4);
 
     return newProducts;
   }, [subdomain]);

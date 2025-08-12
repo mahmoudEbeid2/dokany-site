@@ -38,6 +38,9 @@ import {
 // Theme management
 import { useThemeManager } from "./hooks/useThemeManager";
 
+// Performance monitoring
+import { startMeasure, endMeasure } from "./utils/performanceMonitor";
+
 // Styles
 import "./App.css";
 import { setSellerInfo } from "./features/seller/sellerSlice.js";
@@ -64,11 +67,30 @@ function App() {
     location.pathname === "/" &&
     (subdomain === "localhost" || subdomain === "127" || subdomain === "dokaney" || subdomain === "www");
 
+  // Performance monitoring for app initialization
+  useEffect(() => {
+    startMeasure('app_initialization', 'app');
+    
+    return () => {
+      endMeasure('app_initialization', 'app');
+    };
+  }, []);
+
+  // Performance monitoring for route changes
+  useEffect(() => {
+    startMeasure('route_change', 'navigation', { path: location.pathname });
+    
+    return () => {
+      endMeasure('route_change', 'navigation', { path: location.pathname });
+    };
+  }, [location.pathname]);
+
   useEffect(() => {
     if (!isAuthenticated) return;
 
     const controller = new AbortController();
 
+    startMeasure('user_info_fetch', 'api');
     axios
       .get(`${api}/api/customer/me`, {
         headers: {
@@ -78,12 +100,14 @@ function App() {
       })
       .then((response) => {
         dispatch(setUserInfo(response.data));
+        endMeasure('user_info_fetch', 'api', { success: true });
       })
       .catch((error) => {
         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
           console.log("Request canceled:", error.message);
         } else {
           console.error("Fetch error:", error);
+          endMeasure('user_info_fetch', 'api', { success: false, error: error.message });
         }
       });
 
@@ -95,6 +119,7 @@ function App() {
   useEffect(() => {
     const controller = new AbortController();
 
+    startMeasure('seller_info_fetch', 'api');
     axios
       .get(`${api}/api/seller/subdomain/${subdomain}`, {
         headers: isAuthenticated
@@ -106,12 +131,14 @@ function App() {
       })
       .then((response) => {
         dispatch(setSellerInfo(response.data));
+        endMeasure('seller_info_fetch', 'api', { success: true });
       })
       .catch((error) => {
         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
           console.log("Request canceled:", error.message);
         } else {
           console.error("Fetch error:", error);
+          endMeasure('seller_info_fetch', 'api', { success: false, error: error.message });
           // Set default seller info if API fails
           dispatch(
             setSellerInfo({
@@ -132,6 +159,7 @@ function App() {
 
     const controller = new AbortController();
 
+    startMeasure('cart_fetch', 'api');
     axios
       .get(`${api}/cart`, {
         headers: {
@@ -141,12 +169,14 @@ function App() {
       })
       .then((response) => {
         dispatch(setIntialCart(response.data.cart));
+        endMeasure('cart_fetch', 'api', { success: true });
       })
       .catch((error) => {
         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
           console.log("Cart request canceled:", error.message);
         } else {
           console.error("Cart fetch error:", error);
+          endMeasure('cart_fetch', 'api', { success: false, error: error.message });
         }
       });
 
@@ -160,6 +190,7 @@ function App() {
 
     const controller = new AbortController();
 
+    startMeasure('favorites_fetch', 'api');
     axios
       .get(`${api}/favorites`, {
         headers: {
@@ -169,12 +200,14 @@ function App() {
       })
       .then((response) => {
         dispatch(setIntialWatchlist(response.data));
+        endMeasure('favorites_fetch', 'api', { success: true });
       })
       .catch((error) => {
         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
           console.log("Favorites request canceled");
         } else {
           console.error("Favorites fetch error:", error);
+          endMeasure('favorites_fetch', 'api', { success: false, error: error.message });
         }
       });
 

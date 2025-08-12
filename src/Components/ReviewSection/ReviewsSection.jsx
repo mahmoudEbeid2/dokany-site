@@ -1,9 +1,8 @@
-import { lazy, Suspense, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './ReviewSection.module.css';
-
-const ReviewCard = lazy(() => import('./ReviewCard'));
-const AddReviewForm = lazy(() => import('./AddReviewForm'));
+import ReviewCard from './ReviewCard';
+import AddReviewForm from './AddReviewForm';
 
 function ReviewsSection({ productId, reviews, handeledReviews }) {
   const { userInfo } = useSelector((state) => state.user);
@@ -31,22 +30,18 @@ function ReviewsSection({ productId, reviews, handeledReviews }) {
 
   return (
     <div className="container mt-5">
+      {/* Add Review Form */}
+      <AddReviewForm
+        handeledReviews={handeledReviews}
+        reviews={reviews}
+        productId={productId}
+      />
 
-      
-      <Suspense fallback={<div>Loading form...</div>}>
-        <AddReviewForm
-          handeledReviews={handeledReviews}
-          reviews={reviews}
-          productId={productId}
-        />
-      </Suspense>
-
+      {/* Reviews Display */}
       {totalReviews > 0 && (
         <div className={styles.reviewsSection}>
           <h4 className={styles.reviewsTitle}>{totalReviews} Reviews</h4>
-          <Suspense fallback={<div>Loading reviews...</div>}>
-            {renderedReviews}
-          </Suspense>
+          {renderedReviews}
         </div>
       )}
     </div>

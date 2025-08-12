@@ -3,7 +3,7 @@
 /* Product Grid Layout */
 .productGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 كارد في الصف الواحد */
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   padding: 0 1rem;
   max-width: 1400px;
@@ -13,7 +13,7 @@
 
 .productGridWide {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 كارد في الصف الواحد */
+  grid-template-columns: repeat(4, 1fr);
   gap: 2.5rem;
   padding: 0 1rem;
   max-width: 1400px;
