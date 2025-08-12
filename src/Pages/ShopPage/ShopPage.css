@@ -113,6 +113,19 @@
 /* Products Section */
 .products-section {
   min-height: 400px;
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .products-section {
+    padding: 0 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .products-section {
+    padding: 0 0.5rem;
+  }
 }
 
 /* Product Grid Improvements */
@@ -207,6 +220,10 @@
   
   .shop-hero h1 {
     font-size: 2rem;
+  }
+  
+  .products-section {
+    padding: 0 0.75rem;
   }
   
   .products-section .col-12 {

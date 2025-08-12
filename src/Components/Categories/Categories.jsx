@@ -149,7 +149,7 @@ const Categories = ({ subdomain }) => {
     console.log("Categories: Showing loader - isLoading:", isLoading, "subdomain:", subdomain);
     return (
       <div className="categories-container">
-        <h2 className="categories-header text-4xl font-bold text-center text-uppercase py-3">
+        <h2 className="categories-header">
           Shop by Categories
         </h2>
         <div className={sectionStyles.inlineLoader}>
@@ -162,7 +162,7 @@ const Categories = ({ subdomain }) => {
   if (categories.length === 0) {
     return (
       <div className="categories-container">
-        <h2 className="categories-header text-4xl font-bold text-center text-uppercase py-3">
+        <h2 className="categories-header">
           Shop by Categories
         </h2>
         <div className="text-center py-16 text-gray-500">
@@ -174,7 +174,7 @@ const Categories = ({ subdomain }) => {
 
   return (
     <div className="categories-container">
-      <h2 className="categories-header text-4xl font-bold text-center text-uppercase py-3">
+      <h2 className="categories-header">
         Shop by Categories
       </h2>
 

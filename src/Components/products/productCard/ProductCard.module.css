@@ -47,6 +47,7 @@
   width: 100%;
   justify-content: center;
   margin: 0 auto;
+  padding: 0;
 }
 
 .productImage {
@@ -56,6 +57,7 @@
   border-radius: 0.5rem;
   background-color: var(--product-image-bg);
   transition: transform 0.3s ease;
+  padding: 0;
 }
 
 .productCardImageWrapper:hover .productImage {
@@ -65,8 +67,8 @@
 /* New Badge Styles */
 .badgesContainer {
   position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
+  top: 0;
+  left: 0;
   display: flex;
   gap: 0.5rem;
   z-index: 2;
@@ -90,8 +92,8 @@
 
 .productActions {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -101,9 +103,9 @@
 .productActionBtn {
   background-color: var(--icon-bg) !important;
   border: none;
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,6 +127,8 @@
   fill: var(--icon-color) !important;
   stroke: var(--icon-color) !important;
   transition: all 0.3s ease;
+  width: 14px;
+  height: 14px;
 }
 
 .productActionBtn:hover svg {
@@ -459,6 +463,8 @@
   .productCardContainer {
     padding: 0.875rem;
     min-height: 340px;
+    max-width: 400px;
+    margin: 0 auto;
   }
   
   .productImage {
@@ -466,12 +472,16 @@
   }
   
   .customTitle {
-    font-size: 0.95rem;
+    font-size: 1.4rem;
     min-height: 2.4rem;
   }
   
   .customPrice p {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
+  }
+  
+  .reviewCount {
+    font-size: 1.2rem;
   }
 }
 
@@ -480,11 +490,13 @@
     padding: 0.75rem;
     min-height: 320px;
     margin-bottom: 0;
+    max-width: 350px;
+    margin: 0 auto;
   }
   
   .productImage {
     height: 150px;
-    padding: 0.5rem;
+    padding: 0;
   }
   
   .productInfo {
@@ -492,17 +504,26 @@
   }
   
   .customTitle {
-    font-size: 0.9rem;
+    font-size: 1.3rem;
     min-height: 2.2rem;
   }
   
   .customPrice p {
-    font-size: 1rem;
+    font-size: 1.4rem;
+  }
+  
+  .reviewCount {
+    font-size: 1.2rem;
   }
   
   .addToCartBtn {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     padding: 0.6rem;
+  }
+  
+  .productActionBtn svg {
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -511,11 +532,13 @@
     padding: 0.625rem;
     min-height: 300px;
     margin-bottom: 0.5rem;
+    max-width: 300px;
+    margin: 0 auto;
   }
   
   .productImage {
     height: 140px;
-    padding: 0.5rem;
+    padding: 0;
   }
   
   .productInfo {
@@ -524,28 +547,38 @@
   }
   
   .customTitle {
-    font-size: 0.85rem;
+    font-size: 1.2rem;
     min-height: 2rem;
   }
   
   .customPrice p {
-    font-size: 0.9rem;
+    font-size: 1.3rem;
+  }
+  
+  .reviewCount {
+    font-size: 1.1rem;
   }
   
   .badge {
-    font-size: 0.7rem;
+    font-size: 1rem;
     padding: 0.2rem 0.4rem;
   }
   
   .addToCartBtn {
-    font-size: 0.75rem;
+    font-size: 1.1rem;
     padding: 0.5rem;
     min-height: 2.25rem;
   }
   
   .productActionBtn {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+  }
+  
+  .productActionBtn svg {
+    width: 14px;
+    height: 14px;
   }
 }
 
