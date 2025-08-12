@@ -487,10 +487,10 @@
 
 @media (max-width: 768px) {
   .productCardContainer {
-    padding: 0.75rem;
+    padding: 1.5rem !important;
     min-height: 320px;
     margin-bottom: 0;
-    max-width: 350px;
+    max-width: 230px !important;
     margin: 0 auto;
   }
   
