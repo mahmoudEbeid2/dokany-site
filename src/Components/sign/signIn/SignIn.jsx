@@ -25,6 +25,7 @@ const SignIn = ({ onLoginSuccess }) => {
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -36,6 +37,24 @@ const SignIn = ({ onLoginSuccess }) => {
     }
     if (apiError) {
       setApiError(null);
+    }
+  };
+
+  // ✅ دالة التحقق من حقل واحد عند الـ onBlur
+  const validateField = (name, value) => {
+    const singleFieldSchema = customerLoginSchema.pick({ [name]: true });
+    const result = singleFieldSchema.safeParse({ [name]: value });
+
+    if (!result.success) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: result.error.flatten().fieldErrors[name],
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: null,
+      }));
     }
   };
 
@@ -56,9 +75,7 @@ const SignIn = ({ onLoginSuccess }) => {
       const apiUrl = `${import.meta.env.VITE_API}/auth/customer/login`;
       const response = await axios.post(apiUrl, result.data);
 
-      console.log("Login successful:", response.data);
       toast.success("Logged in successfully!");
-
       localStorage.setItem("token", response.data.token);
 
       if (onLoginSuccess) {
@@ -66,7 +83,6 @@ const SignIn = ({ onLoginSuccess }) => {
       }
       navigate("/home");
     } catch (error) {
-      console.error("Login Error:", error.response || error);
       const errorData = error.response?.data;
       const errorMsg = errorData?.error || "An unexpected error occurred.";
 
@@ -119,6 +135,7 @@ const SignIn = ({ onLoginSuccess }) => {
                 {apiError}
               </p>
             )}
+
             <div className={styles.inputGroup}>
               <label htmlFor="email">Email</label>
               <input
@@ -127,6 +144,7 @@ const SignIn = ({ onLoginSuccess }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                onBlur={(e) => validateField(e.target.name, e.target.value)}
                 placeholder="Enter your email"
               />
               {errors.email && <p style={errorStyle}>{errors.email[0]}</p>}
@@ -141,6 +159,7 @@ const SignIn = ({ onLoginSuccess }) => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
+                  onBlur={(e) => validateField(e.target.name, e.target.value)}
                   placeholder="Enter your password"
                   className={styles.passwordInput}
                 />
@@ -156,21 +175,6 @@ const SignIn = ({ onLoginSuccess }) => {
                 <p style={errorStyle}>{errors.password[0]}</p>
               )}
             </div>
-
-            {/* <div className={styles.inputGroup}>
-              <label htmlFor="subdomain">Subdomain</label>
-              <input
-                type="text"
-                id="subdomain"
-                name="subdomain"
-                value={formData.subdomain}
-                onChange={handleChange}
-                placeholder="Enter your subdomain"
-              />
-              {errors.subdomain && (
-                <p style={errorStyle}>{errors.subdomain[0]}</p>
-              )}
-            </div> */}
 
             <div className={styles.rememberForgot}>
               <div className={styles.rememberMe}>

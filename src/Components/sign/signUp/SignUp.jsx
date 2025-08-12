@@ -14,11 +14,15 @@ const signupSchema = z
     email: z.string().email("Invalid email address."),
     phone: z
       .string()
-      .regex(/^\+?[0-9]{10,15}$/, "Invalid phone number format."),
+      .trim()
+      .regex(/^(010|011|012|015)[0-9]{8}$/, "Invalid phone number format"),
     city: z.string().min(1, "City is required."),
     governorate: z.string().min(1, "Governorate is required."),
     country: z.string().min(1, "Country is required."),
-    password: z.string().min(8, "Password must be at least 8 characters long."),
+    password: z.string().min(
+      8,
+      "Password must be at least 8 characters long ,Password must contain at least one lowercase letter."
+    ),
     confirmPassword: z.string(),
     subdomain: z.string().min(1, "Subdomain is required."),
     profile_imge: z.any().optional(),
@@ -73,6 +77,23 @@ const SignUp = () => {
       subdomain: subdomain,
     }));
   }, []);
+
+  const validateField = (name, value) => {
+    const singleFieldSchema = signupSchema.pick({ [name]: true });
+    const result = singleFieldSchema.safeParse({ [name]: value });
+
+    if (!result.success) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: result.error.flatten().fieldErrors[name],
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: null,
+      }));
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -231,6 +252,7 @@ const SignUp = () => {
                   name="f_name"
                   value={formData.f_name}
                   onChange={handleChange}
+                  onBlur={(e) => validateField(e.target.name, e.target.value)}
                   placeholder="First name"
                 />
                 {errors.f_name && <p style={errorStyle}>{errors.f_name[0]}</p>}
@@ -243,6 +265,7 @@ const SignUp = () => {
                   name="l_name"
                   value={formData.l_name}
                   onChange={handleChange}
+                  onBlur={(e) => validateField(e.target.name, e.target.value)}
                   placeholder="Last name"
                 />
                 {errors.l_name && <p style={errorStyle}>{errors.l_name[0]}</p>}
@@ -256,6 +279,7 @@ const SignUp = () => {
                 name="user_name"
                 value={formData.user_name}
                 onChange={handleChange}
+                onBlur={(e) => validateField(e.target.name, e.target.value)}
                 placeholder="Enter a username"
               />
               {errors.user_name && (
@@ -270,6 +294,7 @@ const SignUp = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                onBlur={(e) => validateField(e.target.name, e.target.value)}
                 placeholder="Enter your email"
               />
               {errors.email && <p style={errorStyle}>{errors.email[0]}</p>}
@@ -282,6 +307,7 @@ const SignUp = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
+                onBlur={(e) => validateField(e.target.name, e.target.value)}
                 placeholder="Enter phone number"
               />
               {errors.phone && <p style={errorStyle}>{errors.phone[0]}</p>}
@@ -295,6 +321,7 @@ const SignUp = () => {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
+                  onBlur={(e) => validateField(e.target.name, e.target.value)}
                   placeholder="City"
                 />
                 {errors.city && <p style={errorStyle}>{errors.city[0]}</p>}
@@ -307,6 +334,7 @@ const SignUp = () => {
                   name="governorate"
                   value={formData.governorate}
                   onChange={handleChange}
+                  onBlur={(e) => validateField(e.target.name, e.target.value)}
                   placeholder="Governorate"
                 />
                 {errors.governorate && (
@@ -321,6 +349,7 @@ const SignUp = () => {
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
+                  onBlur={(e) => validateField(e.target.name, e.target.value)}
                   placeholder="Country"
                 />
                 {errors.country && (
@@ -338,6 +367,7 @@ const SignUp = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
+                    onBlur={(e) => validateField(e.target.name, e.target.value)}
                     placeholder="Enter your password"
                     className={styles.passwordInput}
                   />
@@ -362,6 +392,7 @@ const SignUp = () => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
+                    onBlur={(e) => validateField(e.target.name, e.target.value)}
                     placeholder="Confirm your password"
                     className={styles.passwordInput}
                   />
@@ -385,6 +416,7 @@ const SignUp = () => {
                 name="agreedToTerms"
                 checked={formData.agreedToTerms}
                 onChange={handleChange}
+                onBlur={(e) => validateField(e.target.name, e.target.checked)}
               />
               <label htmlFor="agreedToTerms">
                 I agree with{" "}
