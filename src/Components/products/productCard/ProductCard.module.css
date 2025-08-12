@@ -55,7 +55,6 @@
   height: 200px;
   object-fit: contain;
   border-radius: 0.5rem;
-  background-color: var(--product-image-bg);
   transition: transform 0.3s ease;
   padding: 0;
 
