@@ -1,0 +1,83 @@
+/* Home Page Core Layout & Spacing */
+.homeContainer {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Section Spacing & Layout */
+.sectionContainer {
+  padding: 4rem 0;
+  margin: 0 auto;
+  max-width: 1400px;
+  will-change: transform; /* Performance optimization */
+}
+
+/* Responsive Breakpoints for sections */
+@media (max-width: 1400px) {
+  .sectionContainer {
+    max-width: 1200px;
+    padding: 3.5rem 1rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .sectionContainer {
+    max-width: 1000px;
+    padding: 3rem 1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .sectionContainer {
+    max-width: 900px;
+    padding: 2.5rem 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionContainer {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .sectionContainer {
+    padding: 1.5rem 0.5rem;
+  }
+}
+
+/* Smooth Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sectionContainer {
+  animation: fadeInUp 0.6s ease-out;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Performance Optimizations */
+.sectionContainer {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  .sectionContainer {
+    animation: none;
+  }
+  
+  .loadingSpinner {
+    animation: none;
+  }
+}

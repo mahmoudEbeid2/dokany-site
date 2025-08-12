@@ -1,97 +1,95 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import ProductCard from "../productCard/ProductCard";
 import Loader from "../../Loader/Loader";
+import sectionStyles from "../../shared/SectionStyles.module.css";
+import gridStyles from "../ProductGrid.module.css";
+import { useDataFetching } from "../../../hooks/useDataFetching";
+
+// Memoized ProductCard component for better performance
+const MemoizedProductCard = React.memo(ProductCard);
 
 const BestSellers = ({ subdomain }) => {
-  const [allProducts, setAllProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [visibleProducts, setVisibleProducts] = useState(8);
+  // Fetch function for best sellers
+  const fetchBestSellers = useMemo(() => async (signal) => {
+    const productsResponse = await fetch(
+      `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}?page=1`,
+      { signal }
+    );
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(
-          `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}/all`,
-          { signal: controller.signal }
-        );
-        if (!res.ok) throw new Error("Failed to fetch products.");
-        const data = await res.json();
-        setAllProducts(data);
-      } catch (err) {
-        if (err.name !== "AbortError") setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (!productsResponse.ok) {
+      throw new Error("Failed to fetch products.");
+    }
 
-    fetchData();
+    const productsData = await productsResponse.json();
+    
+    // Calculate average rating and filter products with ratings
+    const productsWithRating = productsData
+      .map((product) => {
+        const reviews = product.reviews || [];
+        const totalRating = reviews.reduce((sum, review) => sum + (review.rating || 0), 0);
+        const averageRating = reviews.length > 0 ? totalRating / reviews.length : 0;
+        return { ...product, averageRating, reviewCount: reviews.length };
+      })
+      .filter((product) => product.averageRating > 0)
+      .sort((a, b) => b.averageRating - a.averageRating)
+      .slice(0, 8); // عرض أول 8 منتجات فقط
 
-    return () => controller.abort();
+    return productsWithRating;
   }, [subdomain]);
 
-
-  const bestSellers = useMemo(() => {
-    return allProducts
-      .map((product) => {
-        const ratings = product.reviews?.map((r) => r.rating) || [];
-        const averageRating = ratings.length
-          ? ratings.reduce((a, b) => a + b, 0) / ratings.length
-          : 0;
-        return { ...product, averageRating };
-      })
-      .filter((productWithRating) => {
-        const hasEnoughReviews =
-          productWithRating.reviews && productWithRating.reviews.length > 3;
-        const hasHighRating = productWithRating.averageRating > 4;
-        return hasEnoughReviews && hasHighRating;
-      })
-      .sort((a, b) => b.averageRating - a.averageRating);
-  }, [allProducts]);
-
-  const handleViewMore = () => {
-    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 8);
-  };
+  // Use optimized data fetching hook
+  const { data: bestSellers, loading, error, refetch } = useDataFetching(
+    fetchBestSellers,
+    [subdomain],
+    {
+      enableCache: true,
+      cacheTimeout: 3 * 60 * 1000, // 3 minutes cache
+      retryCount: 2,
+      retryDelay: 500
+    }
+  );
 
   if (loading) {
-    return <Loader />;
-  }
-
-  if (error) {
     return (
-      <div className="container py-5 text-center">
-        <h2 className="text-danger">Error: {error}</h2>
+      <div className={sectionStyles.loadingContainer}>
+        <div className={sectionStyles.inlineSpinner}></div>
       </div>
     );
   }
 
-  if (bestSellers.length === 0) {
+  if (error) {
+    return (
+      <div className={sectionStyles.errorContainer}>
+        <h2>Error: {error}</h2>
+        <button onClick={refetch} className={sectionStyles.retryBtn}>
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  if (!bestSellers || bestSellers.length === 0) {
     return null;
   }
 
   return (
-    <div className="container py-5">
-      <h2 className="text-3xl mainHeaderHome categories-header font-bold text-center text-uppercase py-3">
-        Best Sellers
-      </h2>
-      <div className="row g-3">
-        {bestSellers.slice(0, visibleProducts).map((product) => (
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-center text-center items-center m-auto" key={product.id}>
-            <ProductCard product={product} />
+    <>
+      <div className={sectionStyles.sectionHeader}>
+        <h2 className={sectionStyles.sectionTitle}>
+          Best Sellers
+        </h2>
+      </div>
+      
+      <div className={gridStyles.productGrid}>
+        {bestSellers.map((product) => (
+          <div key={product.id}>
+            <MemoizedProductCard product={product} />
           </div>
         ))}
       </div>
-      {visibleProducts < bestSellers.length && (
-        <div className="text-center mt-5">
-          <button className="btn btn-dark px-4 py-2" onClick={handleViewMore}>
-            View More
-          </button>
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 
-export default BestSellers;
+// Memoize the entire component to prevent unnecessary re-renders
+export default React.memo(BestSellers);

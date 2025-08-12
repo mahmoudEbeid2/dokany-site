@@ -1,0 +1,97 @@
+/* Categories Section Specific Styling for Home Page */
+
+/* Override Categories CSS to work with new layout */
+.sectionContainer .categories-container {
+  margin: 0;
+  padding: 0 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.sectionContainer .categories-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sectionContainer .categories-slider-container {
+  margin: 2rem 0;
+  padding: 0 1rem;
+}
+
+.sectionContainer .slider-indicators {
+  margin-top: 2rem;
+}
+
+/* Ensure Categories grid works properly */
+.sectionContainer .categories-slider-track {
+  display: grid;
+  gap: 2rem;
+  justify-items: center;
+  padding: 0 1rem;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns on large screens */
+  max-width: 100%;
+}
+
+/* Responsive sizing for categories - 3 columns on small screens */
+@media (max-width: 700px) {
+  .sectionContainer .categories-slider-track {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on small screens */
+    gap: 1.5rem;
+  }
+}
+
+/* Responsive sizing for categories */
+@media (max-width: 1400px) {
+  .sectionContainer .categories-slider-track {
+    gap: 1.8rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .sectionContainer .categories-slider-track {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .sectionContainer .categories-slider-track {
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionContainer .categories-slider-track {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .sectionContainer .categories-slider-track {
+    gap: 0.8rem;
+  }
+}
+
+/* Fix for category cards not being cut off */
+.sectionContainer .category-slide-item {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+/* Ensure CategoryCard fits properly */
+.sectionContainer .category-card {
+  width: 100%;
+  max-width: 15rem;
+  margin: 0;
+  box-sizing: border-box;
+}

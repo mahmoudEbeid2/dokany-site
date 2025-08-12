@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import "./ShopPage.css";
 import axios from "axios";
 import ProductCard from "../../Components/products/productCard/ProductCard";
-import Loader from "../../Components/Loader/Loader";
+import sectionStyles from "../../Components/shared/SectionStyles.module.css";
+import gridStyles from "../../Components/products/ProductGrid.module.css";
+
+// Memoized ProductCard component for better performance
+const MemoizedProductCard = React.memo(ProductCard);
 
 function ShopPage() {
   const api = import.meta.env.VITE_API;
@@ -16,97 +20,178 @@ function ShopPage() {
   const [pageSearch, setPageSearch] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [getBy, setGetBy] = useState("products");
   const [search, setSearch] = useState("");
 
   const subdomain = window.location.hostname.split(".")[0];
 
+  // Memoized fetch categories function
+  const getCategories = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${api}/categories/subdomain/${subdomain}`
+      );
+      setCategories(response.data);
+    } catch (err) {
+      console.log("Error fetching categories:", err);
+    }
+  }, [api, subdomain]);
+
   useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const response = await axios.get(
-          `${api}/categories/subdomain/${subdomain}`
-        );
-        setCategories(response.data);
-      } catch (err) {
-        console.log("Error fetching categories:", err);
-      }
-    };
     getCategories();
-  }, [subdomain]);
+  }, [getCategories]);
+
+  // Memoized fetch products function
+  const getProducts = useCallback(async (pageNum = 1) => {
+    if (pageNum === 1) {
+      setLoading(true);
+    } else {
+      setLoadingMore(true);
+    }
+    
+    try {
+      let url = `${api}/products/seller/subdomain/${subdomain}?page=${pageNum}`;
+      if (selectProducts === "low" || selectProducts === "high") {
+        url += `&sort=${selectProducts}`;
+      } else if (selectProducts === "discount") {
+        url = `${api}/products/seller/subdomain/${subdomain}/discount?page=${pageNum}`;
+      }
+      
+      const response = await axios.get(url);
+      const data = response.data;
+
+      if (pageNum === 1) {
+        setProducts(data);
+        // Scroll to top when first page loads
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setProducts((prev) => [...prev, ...data]);
+      }
+
+      if (data.length === 0) {
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.log("Error fetching products:", err);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  }, [api, subdomain, selectProducts]);
+
+  // Memoized fetch by category function
+  const fetchByCategory = useCallback(async (pageNum = 1) => {
+    if (!selectCategoryId) return;
+    
+    if (pageNum === 1) {
+      setLoading(true);
+    } else {
+      setLoadingMore(true);
+    }
+    
+    try {
+      const response = await axios.get(
+        `${api}/categories/subdomain/${subdomain}/${selectCategoryId}?page=${pageNum}`
+      );
+      const data = response.data;
+
+      if (pageNum === 1) {
+        setProducts(data);
+        // Scroll to top when first page loads
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setProducts((prev) => [...prev, ...data]);
+      }
+
+      if (data.length === 0) {
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.log("Error fetching products by category:", err);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  }, [api, subdomain, selectCategoryId]);
+
+  // Memoized search function
+  const fetchProductsBySearch = useCallback(async (pageNum = 1) => {
+    if (!search) return;
+    
+    if (pageNum === 1) {
+      setLoading(true);
+    } else {
+      setLoadingMore(true);
+    }
+    
+    try {
+      const response = await axios.get(
+        `${api}/products/search?title=${search}&subdomain=${subdomain}&page=${pageNum}`
+      );
+
+      if (pageNum === 1) {
+        setProducts(response.data.enrichedProducts);
+        // Scroll to top when first page loads
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setProducts((prev) => [...prev, ...response.data.enrichedProducts]);
+      }
+
+      if (response.data.enrichedProducts.length === 0) {
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.log("Error searching products:", err);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  }, [api, subdomain, search]);
+
+  // Memoized products to display (initially 10)
+  const displayedProducts = useMemo(() => {
+    return products;
+  }, [products]);
+
+  // Check if there are more products to load
+  const hasMoreProducts = useMemo(() => {
+    return products.length > 10;
+  }, [products]);
 
   // fetch products
   useEffect(() => {
-    const getProducts = async () => {
-      setLoading(true);
-      try {
-        let url = `${api}/products/seller/subdomain/${subdomain}?page=${pageProduct}`;
-        if (selectProducts === "low" || selectProducts === "high") {
-          url += `&sort=${selectProducts}`;
-        } else if (selectProducts === "discount") {
-          url = `${api}/products/seller/subdomain/${subdomain}/discount?page=${pageProduct}`;
-        }
-        const response = await axios.get(url);
-        const data = response.data;
-
-        if (pageProduct === 1) {
-          setProducts(data);
-        } else {
-          setProducts((prev) => [...prev, ...data]);
-        }
-
-        if (data.length === 0) {
-          setHasMore(false);
-        }
-      } catch (err) {
-        console.log("Error fetching products:", err);
-      }
-      setLoading(false);
-    };
-
-    getProducts();
-  }, [selectProducts, pageProduct, subdomain]);
+    if (getBy === "products") {
+      getProducts(1);
+    }
+  }, [selectProducts, getBy, getProducts]);
 
   // fetch products by category
   useEffect(() => {
-    const fetchByCategory = async () => {
-      setLoading(true);
-      if (!selectCategoryId) return;
-      try {
-        const response = await axios.get(
-          `${api}/categories/subdomain/${subdomain}/${selectCategoryId}?page=${pageCategory}`
-        );
-        const data = response.data;
+    if (getBy === "categories") {
+      fetchByCategory(1);
+    }
+  }, [selectCategoryId, getBy, fetchByCategory]);
 
-        if (pageCategory === 1) {
-          setProducts(data);
-        } else {
-          setProducts((prev) => [...prev, ...data]);
-        }
-
-        if (data.length === 0) {
-          setHasMore(false);
-        }
-        setLoading(false);
-      } catch (err) {
-        console.log("Error fetching products by category:", err);
-      }
-    };
-    fetchByCategory();
-  }, [selectCategoryId, pageCategory, subdomain]);
+  // fetch products by search
+  useEffect(() => {
+    if (getBy === "search") {
+      fetchProductsBySearch(1);
+    }
+  }, [search, getBy, fetchProductsBySearch]);
 
   // handle category selection
-  const handleCategorySelect = (e) => {
+  const handleCategorySelect = useCallback((e) => {
     const categoryId = e.target.value;
     setSelectCategoryId(categoryId);
     setProducts([]);
     setPageCategory(1);
     setHasMore(true);
     setGetBy("categories");
-  };
+  }, []);
 
   // handle product sorting
-  const handleProductSort = (e) => {
+  const handleProductSort = useCallback((e) => {
     const sortType = e.target.value;
     setSelectProducts(sortType);
     setSelectCategoryId("");
@@ -114,10 +199,10 @@ function ShopPage() {
     setPageProduct(1);
     setHasMore(true);
     setGetBy("products");
-  };
+  }, []);
 
   // handle search
-  const handleSearch = (e) => {
+  const handleSearch = useCallback((e) => {
     const searchTerm = e.target.value;
     setSearch(searchTerm);
     setProducts([]);
@@ -126,49 +211,24 @@ function ShopPage() {
     setPageSearch(1);
     setHasMore(true);
     setGetBy("search");
-  };
-
-  // fetch products by search
-  useEffect(() => {
-    const fetchProductsBySearch = async () => {
-      setLoading(true);
-      if (!search) return;
-      try {
-        const response = await axios.get(
-          `${api}/products/search?title=${search}&subdomain=${subdomain}&page=${pageSearch}`
-        );
-
-        if (pageSearch === 1) {
-          setProducts(response.data.enrichedProducts);
-        } else {
-          setProducts((prev) => [...prev, ...response.data.enrichedProducts]);
-        }
-
-        if (response.data.enrichedProducts.length === 0) {
-          setHasMore(false);
-        }
-      } catch (err) {
-        console.log("Error searching products:", err);
-      }
-      setLoading(false);
-    };
-    fetchProductsBySearch();
-  }, [search, pageSearch, subdomain]);
+  }, []);
 
   // load more function
-  const loadMore = () => {
+  const loadMore = useCallback(() => {
     if (getBy === "categories") {
-      setPageCategory(pageCategory + 1);
+      const nextPage = pageCategory + 1;
+      setPageCategory(nextPage);
+      fetchByCategory(nextPage);
     } else if (getBy === "products") {
-      setPageProduct(pageProduct + 1);
+      const nextPage = pageProduct + 1;
+      setPageProduct(nextPage);
+      getProducts(nextPage);
     } else if (getBy === "search") {
-      setPageSearch(pageSearch + 1);
+      const nextPage = pageSearch + 1;
+      setPageSearch(nextPage);
+      fetchProductsBySearch(nextPage);
     }
-  };
-
-  // if (loading && products.length === 0) {
-  // return <Loader />;
-  // }
+  }, [getBy, pageCategory, pageProduct, pageSearch, fetchByCategory, getProducts, fetchProductsBySearch]);
 
   return (
     <div className="container py-5">
@@ -229,51 +289,40 @@ function ShopPage() {
         </div>
       </div>
 
-      {/* Products Grid */}
+      {/* Products Section with Loading */}
       <div className="products-section">
-        {products.length > 0 ? (
+        {loading ? (
+          // Loading state only for products section
+          <div className={sectionStyles.loadingContainer}>
+            <div className={sectionStyles.inlineSpinner}></div>
+          </div>
+        ) : products.length > 0 ? (
           <>
-            <div className="row g-3">
-              {products.map((product) => (
-                <div
-                  className="col-12 col-sm-6 col-md-4 col-lg-3"
-                  key={product.id}
-                >
-                  <ProductCard product={product} />
+            <div className={gridStyles.productGrid}>
+              {displayedProducts.map((product) => (
+                <div key={product.id}>
+                  <MemoizedProductCard product={product} />
                 </div>
               ))}
             </div>
 
             {/* Load More Button */}
-            {hasMore && !loading && (
+            {hasMore && (
               <div className="text-center mt-5">
-                <button onClick={loadMore} className="btn btn-dark px-4 py-2">
-                  Load More
+                <button 
+                  onClick={loadMore} 
+                  className={sectionStyles.retryBtn}
+                  disabled={loadingMore}
+                >
+                  {loadingMore ? "Loading..." : "View More"}
                 </button>
               </div>
             )}
-
-            {/* Loading Indicator */}
-            {/* {loading && (
-              <div className="text-center mt-4">
-                <div className="spinner-border text-primary" role="status">
-                  <span className="visually-hidden ">Loading...</span>
-                </div>
-              </div>
-            )} */}
           </>
         ) : (
-          !loading && (
-            <div className="text-center py-5">
-              <h3 className="text-muted">No products found</h3>
-              <p className="text-muted">Try adjusting your search or filters</p>
-            </div>
-          )
-        )}
-        {/* Loading Indicator */}
-        {loading && (
-          <div className="loader mt-5">
-            <div className="spinner"></div>
+          <div className="text-center py-5">
+            <h3 className="text-muted">No products found</h3>
+            <p className="text-muted">Try adjusting your search or filters</p>
           </div>
         )}
       </div>
@@ -281,4 +330,5 @@ function ShopPage() {
   );
 }
 
-export default ShopPage;
+// Memoize the entire component to prevent unnecessary re-renders
+export default React.memo(ShopPage);

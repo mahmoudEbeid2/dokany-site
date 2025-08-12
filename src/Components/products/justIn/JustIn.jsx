@@ -1,114 +1,101 @@
-import React, { useState, useEffect, useMemo } from "react";
-import Carousel from "react-bootstrap/Carousel";
+import React, { useMemo } from "react";
 import ProductCard from "../productCard/ProductCard";
 import Loader from "../../Loader/Loader";
-import styles from "./JustIn.module.css";
+import sectionStyles from "../../shared/SectionStyles.module.css";
+import gridStyles from "../ProductGrid.module.css";
+import { useDataFetching } from "../../../hooks/useDataFetching";
 
-// Helper: divide products into chunks
-const chunkProducts = (products, size) => {
-  return Array.from({ length: Math.ceil(products.length / size) }, (_, i) =>
-    products.slice(i * size, i * size + size)
-  );
-};
+// Memoized ProductCard component for better performance
+const MemoizedProductCard = React.memo(ProductCard);
 
 const JustIn = ({ subdomain }) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  // Fetch function for just in products
+  const fetchJustInProducts = useMemo(() => async (signal) => {
+    const productsResponse = await fetch(
+      `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}?page=1`,
+      { signal }
+    );
 
-  // Fetch seller products by subdomain
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const res = await fetch(
-          `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}`
-        );
-        if (!res.ok) throw new Error("Failed to fetch products.");
-        const data = await res.json();
-        setProducts(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
+    if (!productsResponse.ok) {
+      throw new Error("Failed to fetch products.");
+    }
+
+    const productsData = await productsResponse.json();
+    
+    // Filter and sort new products - show only 4
+    const newProducts = productsData
+      .filter((product) => {
+        const dateField = product.createdAt || product.created_date || product.createdAt || product.date;
+        if (!dateField) return false;
+        const productDate = new Date(dateField);
+        const currentDate = new Date();
+        const diffTime = Math.abs(currentDate - productDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays <= 30; // منتجات آخر 30 يوم
+      })
+      .sort((a, b) => {
+        const dateA = new Date(a.createdAt || a.created_date || a.createdAt || a.date);
+        const dateB = new Date(b.createdAt || b.created_date || b.createdAt || b.date);
+        return dateB - dateA; // الأحدث أولاً
+      })
+      .slice(0, 4); // عرض 4 منتجات فقط
+
+    return newProducts;
   }, [subdomain]);
 
-  // Filter products created within the last 10 days
-  const newProducts = useMemo(() => {
-    const tenDaysAgo = new Date();
-    tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
-    return products.filter(
-      (product) => new Date(product.created_date) >= tenDaysAgo
-    );
-  }, [products]);
-
-  // Chunk new products into groups of 4 for carousel
-  const productChunks = useMemo(
-    () => chunkProducts(newProducts, 4),
-    [newProducts]
+  // Use optimized data fetching hook
+  const { data: newProducts, loading, error, refetch } = useDataFetching(
+    fetchJustInProducts,
+    [subdomain],
+    {
+      enableCache: true,
+      cacheTimeout: 3 * 60 * 1000, // 3 minutes cache
+      retryCount: 2,
+      retryDelay: 500
+    }
   );
 
-  // Custom carousel indicators
-  const renderIndicators = () => (
-    <div className={styles.carouselIndicators}>
-      {productChunks.map((_, i) => (
-        <button
-          key={i}
-          onClick={() => setActiveIndex(i)}
-          className={i === activeIndex ? "active" : ""}
-          aria-label={`Slide ${i + 1}`}
-        />
-      ))}
-    </div>
-  );
-
-  if (loading) return <Loader />;
-  if (error)
+  if (loading) {
     return (
-      <div className="container text-center py-5 text-danger">
-        Error: {error}
+      <div className={sectionStyles.loadingContainer}>
+        <div className={sectionStyles.inlineSpinner}></div>
       </div>
     );
-  if (newProducts.length === 0) return null;
+  }
+
+  if (error) {
+    return (
+      <div className={sectionStyles.errorContainer}>
+        <h2>Error: {error}</h2>
+        <button onClick={refetch} className={sectionStyles.retryBtn}>
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  if (!newProducts || newProducts.length === 0) {
+    return null;
+  }
 
   return (
-    <div className={`container ${styles.justInSection} my-5`}>
-      <div className="d-flex justify-content-between align-items-center mb-4 ">
-        <h2 className="text-3xl mainHeaderHome font-bold  text-left  text-uppercase py-3">
+    <>
+      <div className={sectionStyles.sectionHeader}>
+        <h2 className={sectionStyles.sectionTitle}>
           Just In
         </h2>
-        {renderIndicators()}
       </div>
-
-      <Carousel
-        activeIndex={activeIndex}
-        onSelect={(i) => setActiveIndex(i)}
-        interval={null}
-        controls={false}
-        indicators={false}
-      >
-        {productChunks.map((chunk, i) => (
-          <Carousel.Item key={i}>
-            <div className="row g-3">
-              {chunk.map((product) => (
-                <div
-                  key={product.id}
-                  className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-center text-center items-center m-auto "
-                >
-                  <ProductCard product={product} isNew={true} />
-                </div>
-              ))}
-            </div>
-          </Carousel.Item>
+      
+      <div className={gridStyles.productGrid}>
+        {newProducts.map((product) => (
+          <div key={product.id}>
+            <MemoizedProductCard product={product} isNew={true} />
+          </div>
         ))}
-      </Carousel>
-    </div>
+      </div>
+    </>
   );
 };
 
-export default JustIn;
+// Memoize the entire component to prevent unnecessary re-renders
+export default React.memo(JustIn);

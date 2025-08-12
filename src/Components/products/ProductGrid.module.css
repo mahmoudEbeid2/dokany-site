@@ -1,0 +1,119 @@
+/* Product Grid Layout - Shared by Products, BestSellers, and JustIn */
+
+/* Product Grid Layout */
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 كارد في الصف الواحد */
+  gap: 2rem;
+  padding: 0 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.productGridWide {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 كارد في الصف الواحد */
+  gap: 2.5rem;
+  padding: 0 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Ensure ProductCard components fit properly in grid */
+.productGrid > *,
+.productGridWide > * {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+}
+
+.productGrid > * > *,
+.productGridWide > * > * {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Grid auto-fit improvements (now explicit 4-column) */
+@media (max-width: 1400px) {
+  .productGrid, .productGridWide {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .productGrid, .productGridWide {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.8rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .productGrid, .productGridWide {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .productGrid, .productGridWide {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .productGrid, .productGridWide {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .productGrid, .productGridWide {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* View More Button */
+.viewMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.viewMoreBtn {
+  background: var(--primary-600);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.viewMoreBtn:hover {
+  background: var(--primary-700);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.viewMoreBtn:active {
+  transform: translateY(0);
+}
+
+/* Print Styles */
+@media print {
+  .viewMoreBtn {
+    display: none;
+  }
+}

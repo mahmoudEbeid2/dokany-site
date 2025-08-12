@@ -1,86 +1,82 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import ProductCard from "../productCard/ProductCard";
 import Loader from "../../Loader/Loader";
+import sectionStyles from "../../shared/SectionStyles.module.css";
+import gridStyles from "../ProductGrid.module.css";
+import { useDataFetching } from "../../../hooks/useDataFetching";
+
+// Memoized ProductCard component for better performance
+const MemoizedProductCard = React.memo(ProductCard);
 
 const Products = ({ subdomain }) => {
-  const [allProducts, setAllProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Fetch function for discounted products
+  const fetchDiscountedProducts = useMemo(() => async (signal) => {
+    const productsResponse = await fetch(
+      `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}/discount?page=1`,
+      { signal }
+    );
 
-  useEffect(() => {
-    if (!subdomain) {
-      setLoading(false);
-      return;
+    if (!productsResponse.ok) {
+      throw new Error("Failed to fetch products.");
     }
 
-    const controller = new AbortController();
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-
-        const productsResponse = await fetch(
-          `${
-            import.meta.env.VITE_API
-          }/products/seller/subdomain/${subdomain}/discount?page=1`,
-          { signal: controller.signal }
-        );
-
-        if (!productsResponse.ok) {
-          throw new Error("Failed to fetch products.");
-        }
-
-        const productsData = await productsResponse.json();
-        const discountedProducts = productsData.filter(
-          (product) => product.discount > 0
-        );
-
-        setAllProducts(discountedProducts.slice(0, 8));
-      } catch (err) {
-        if (err.name !== "AbortError") {
-          setError(err.message);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-
-    return () => controller.abort();
+    const productsData = await productsResponse.json();
+    return productsData.filter((product) => product.discount > 0).slice(0, 8);
   }, [subdomain]);
 
-
+  // Use optimized data fetching hook
+  const { data: allProducts, loading, error, refetch } = useDataFetching(
+    fetchDiscountedProducts,
+    [subdomain],
+    {
+      enableCache: true,
+      cacheTimeout: 3 * 60 * 1000, // 3 minutes cache
+      retryCount: 2,
+      retryDelay: 500
+    }
+  );
 
   if (loading) {
-    return <Loader />;
-  }
-
-  if (error) {
     return (
-      <div className="container py-5 text-center">
-        <h2 className="text-danger">Error: {error}</h2>
+      <div className={sectionStyles.loadingContainer}>
+        <div className={sectionStyles.inlineSpinner}></div>
       </div>
     );
   }
 
-  if (allProducts.length === 0) {
+  if (error) {
+    return (
+      <div className={sectionStyles.errorContainer}>
+        <h2>Error: {error}</h2>
+        <button onClick={refetch} className={sectionStyles.retryBtn}>
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  if (!allProducts || allProducts.length === 0) {
     return null;
   }
 
   return (
-    <div className="container py-5 ">
-      <h2 className="text-3xl mainHeaderHome categories-header font-bold text-center text-uppercase py-3">
-        Discounted Products
-      </h2>
-      <div className="row g-3 ">
+    <>
+      <div className={sectionStyles.sectionHeader}>
+        <h2 className={sectionStyles.sectionTitle}>
+          Discounted Products
+        </h2>
+      </div>
+      
+      <div className={gridStyles.productGrid}>
         {allProducts.map((product) => (
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-center text-center items-center m-auto " key={product.id}>
-            <ProductCard product={product} />
+          <div key={product.id}>
+            <MemoizedProductCard product={product} />
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
-export default Products;
+// Memoize the entire component to prevent unnecessary re-renders
+export default React.memo(Products);

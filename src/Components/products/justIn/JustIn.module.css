@@ -5,35 +5,4 @@
   font-family: "Poppins", sans-serif;
 }
 
-.carouselIndicators {
-  position: static;
-  display: flex;
-  gap: 0.5rem;
-  margin: 0;
-  padding: 0;
-}
-
-.carouselIndicators button {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background-color: var(--indicator-bg);
-  border: 2px solid var(--indicator-bg);
-  padding: 0;
-  opacity: 1;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.carouselIndicators button:hover {
-  background-color: var(--indicator-hover);
-  border-color: var(--indicator-hover);
-  transform: scale(1.1);
-}
-
-.carouselIndicators button:global(.active) {
-  background-color: var(--indicator-active);
-  border-color: var(--indicator-active);
-  transform: scale(1.2);
-  box-shadow: 0 2px 8px rgba(55, 125, 255, 0.3);
-}
+/* Note: Carousel indicators are now handled by Home.module.css */

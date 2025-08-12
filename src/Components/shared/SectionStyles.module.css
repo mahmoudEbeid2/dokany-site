@@ -1,0 +1,150 @@
+/* Shared Section Styles - Used by all home page components */
+
+/* Section Headers - All matching Categories style */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Special header layout for sections with d-flex */
+.sectionHeader .d-flex {
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .sectionHeader .d-flex {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* Responsive font sizing for section titles */
+@media (max-width: 992px) {
+  .sectionTitle {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+}
+
+@media (max-width: 576px) {
+  .sectionTitle {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+}
+
+/* Loading & Error States */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  padding: 2rem;
+}
+
+.inlineLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.inlineSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid var(--primary-500, #3b82f6);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--error-600);
+}
+
+/* Retry Button */
+.retryBtn {
+  background: var(--primary-600);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.retryBtn:hover {
+  background: var(--primary-700);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.retryBtn:active {
+  transform: translateY(0);
+}
+
+/* Hover Effects */
+.sectionContainer > * {
+  transition: transform 0.3s ease;
+}
+
+.sectionContainer > *:hover {
+  transform: translateY(-5px);
+}
+
+/* Performance Optimizations */
+.sectionHeader,
+.sectionTitle {
+  will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  .sectionContainer > * {
+    transition: none;
+  }
+  
+  .retryBtn {
+    transition: none;
+  }
+  
+  .retryBtn:hover {
+    transform: none;
+  }
+}
