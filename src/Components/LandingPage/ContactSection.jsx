@@ -22,7 +22,7 @@ const ContactSection = () => {
     });
 
     try {
-      const response = await fetch("/api/contact/general", {
+      const response = await fetch(`${import.meta.env.VITE_API}/api/contact/general`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
