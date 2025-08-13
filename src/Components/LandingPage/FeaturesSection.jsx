@@ -36,7 +36,7 @@ const FeaturesSection = () => {
     <section id="features" className="features-section">
       <div className="container">
         <div className="section-header">
-          <h2>Why Choose Our Platform?</h2>
+          <h2 className="choose">Why Choose Our Platform?</h2>
           <p>Everything you need to start and grow your online business</p>
         </div>
         <div className="features-grid">
