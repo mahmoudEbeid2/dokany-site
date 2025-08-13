@@ -72,10 +72,10 @@
 .stat-number {
   font-size: 2.5rem;
   font-weight: 900;
-  color: #667eea;
+  color: #ffffff;
   margin-bottom: 0.5rem;
   display: block;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #fbfcff, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
