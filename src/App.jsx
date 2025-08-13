@@ -23,6 +23,7 @@ import Cart from "./Pages/cart/Cart";
 import ProductDetails from "./Pages/ProductDetails.jsx";
 import CategoryProducts from "./Pages/CategoryProducts.jsx";
 import PrivacyPolicy from "./Pages/PrivacyPolicy.jsx";
+import LegalPages from "./Pages/LegalPages";
 import LandingPage from "./Pages/LandingPage.jsx";
 import Footer from "./Components/Footer/Footer";
 import ResetPassword from "./Components/sign/resetPassword/ResetPassword";
@@ -236,6 +237,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/legal" element={<LegalPages />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/category/:id" element={<CategoryProducts />} />
         <Route path="/shoppage" element={<ShopPage />} />

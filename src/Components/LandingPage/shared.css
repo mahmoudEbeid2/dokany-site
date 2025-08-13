@@ -1,0 +1,124 @@
+/* Shared Landing Page Styles */
+.landing-page {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  overflow-x: hidden;
+  background: #ffffff;
+  scroll-behavior: smooth;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .title-line {
+    font-size: 2.5rem;
+  }
+  
+  .title-highlight {
+    font-size: 3.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .section-header h2 {
+    font-size: 2.5rem;
+  }
+  
+  .section-header p {
+    font-size: 1.1rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .steps-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .benefits-content {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  .cta-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .download-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cta-features {
+    gap: 2rem;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .title-line {
+    font-size: 2rem;
+  }
+  
+  .title-highlight {
+    font-size: 3rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .feature-card {
+    padding: 2rem;
+  }
+  
+  .step {
+    padding: 1.5rem;
+  }
+  
+  .cta-content h2 {
+    font-size: 2.5rem;
+  }
+  
+  .contact-heading {
+    font-size: 1.8rem;
+  }
+}
