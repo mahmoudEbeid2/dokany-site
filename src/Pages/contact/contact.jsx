@@ -24,7 +24,7 @@ function Contact() {
 
     setIsSubmitting(true);
 
-    fetch(`${import.meta.env.VITE_API}/api/contact`, {
+    fetch(`${import.meta.env.VITE_API}/customer/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
