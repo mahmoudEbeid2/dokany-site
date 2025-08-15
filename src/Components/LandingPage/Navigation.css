@@ -32,3 +32,24 @@
 .navbar-nav .nav-link:hover::after {
   width: 100%;
 }
+.navbar-logo {
+  width: 90px;
+  height: 50px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .navbar-logo {
+    width: 90px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    width: 120px;
+    height: 60px;
+    margin-left: 0 !important;
+    margin-left: -20px !important;
+  }
+}

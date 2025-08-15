@@ -1,20 +1,19 @@
 import React from "react";
 import "./Navigation.css";
+import logo from "../../assets/logo.jpeg"; 
 
 const Navigation = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
       <div className="container">
-        {/* Improved Logo Section with Bootstrap */}
+        {/* Logo Section */}
         <div className="navbar-brand d-flex align-items-center">
           <div className="d-flex align-items-center">
-            <div
-              className="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2"
-              style={{ width: "40px", height: "40px" }}
-            >
-              <span className="text-white fw-bold fs-5">🏪</span>
-            </div>
-            <span className="fw-bold text-dark fs-4">Dockany</span>
+            <img
+              src={logo}
+              alt="Dockany Logo"
+              className="me-2 navbar-logo"
+            />
           </div>
         </div>
 

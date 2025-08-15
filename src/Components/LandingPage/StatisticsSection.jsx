@@ -68,7 +68,7 @@ const StatisticsSection = () => {
                 end={parseInt(stat.number)}
                 suffix={stat.suffix}
                 duration={2000 + index * 200}
-                className="stat-number"
+                className="stat-numb"
               />
               <div className="stat-label">{stat.label}</div>
             </div>
