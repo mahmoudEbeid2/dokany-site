@@ -61,7 +61,7 @@ const Navigation = () => {
           <div className="d-flex">
             <a
               href="#get-started"
-              className="btn btn-primary px-4 py-2 fw-semibold"
+              className="btn btn-primary getstarted px-4 py-2 fw-semibold"
             >
               Get Started
             </a>
