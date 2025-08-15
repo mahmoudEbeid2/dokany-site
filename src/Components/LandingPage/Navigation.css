@@ -55,7 +55,6 @@
   .navbar-logo {
     width: 120px;
     height: 60px;
-    margin-left: 0 !important;
     margin-left: -10px !important;
   }
 }
