@@ -38,6 +38,12 @@
   object-fit: contain;
 }
 
+@media (max-width: 1408px) {
+  .navbar-logo {
+    width: 120px;
+    height: 40px;
+  }
+}
 @media (max-width: 768px) {
   .navbar-logo {
     width: 90px;
