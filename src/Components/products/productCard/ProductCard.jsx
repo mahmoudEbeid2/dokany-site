@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactDOM from "react-dom"; // Import ReactDOM for portals
 import { Heart, Eye, Star } from "lucide-react";
 import { toast } from "react-toastify";
 import styles from "./ProductCard.module.css";
@@ -9,7 +10,7 @@ import {
   removeFromWatchlist,
   addToCart,
 } from "../../../features/user/userSlice";
-import { EyeOff } from 'lucide-react';
+import { EyeOff } from "lucide-react";
 
 const getToken = () => localStorage.getItem("token");
 
@@ -106,8 +107,8 @@ const ProductCard = ({ product, isNew = false }) => {
           addToCart({
             ...res.cartItem,
             quantity: 1,
-            final_price:res.cartItem.final_price,
-            product
+            final_price: res.cartItem.final_price,
+            product,
           })
         );
         toast.success(
@@ -135,7 +136,7 @@ const ProductCard = ({ product, isNew = false }) => {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
-    
+
     // Add full stars
     for (let i = 0; i < fullStars; i++) {
       stars.push(
@@ -148,7 +149,7 @@ const ProductCard = ({ product, isNew = false }) => {
         />
       );
     }
-    
+
     // Add half star if needed
     if (hasHalfStar) {
       stars.push(
@@ -158,11 +159,11 @@ const ProductCard = ({ product, isNew = false }) => {
           fill="#000000"
           color="#000000"
           className={styles.star}
-          style={{ clipPath: 'inset(0 50% 0 0)' }}
+          style={{ clipPath: "inset(0 50% 0 0)" }}
         />
       );
     }
-    
+
     // Add empty stars
     const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
@@ -176,7 +177,7 @@ const ProductCard = ({ product, isNew = false }) => {
         />
       );
     }
-    
+
     return stars;
   };
 
@@ -216,12 +217,7 @@ const ProductCard = ({ product, isNew = false }) => {
               className={styles.productActionBtn}
               onClick={handleViewImage}
             >
-<Eye 
-  size={20} 
-  stroke="#423b3bff" 
-          fill="none"
-/>
-
+              <Eye size={20} stroke="#423b3bff" fill="none" />
             </button>
           </div>
           <button
@@ -232,7 +228,9 @@ const ProductCard = ({ product, isNew = false }) => {
           </button>
         </div>
         <div className={styles.productInfo}>
-          <h5 className={`card-title fw-normal mb-2 text-center ${styles.customTitle}`}>
+          <h5
+            className={`card-title fw-normal mb-2 text-center ${styles.customTitle}`}
+          >
             {product.title.split(" ").slice(0, 5).join(" ")}
           </h5>
           <div
@@ -249,29 +247,30 @@ const ProductCard = ({ product, isNew = false }) => {
           </div>
           <div className={styles.starContainer}>
             {renderStars(averageRating)}
-            <span className={styles.reviewCount}>
-              ({reviewCount})
-            </span>
+            <span className={styles.reviewCount}>({reviewCount})</span>
           </div>
         </div>
       </div>
-      {isModalOpen && (
-        <div className={styles.imageModalOverlay} onClick={closeModal}>
-          <div
-            className={styles.imageModalContent}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className={styles.modalCloseBtn} onClick={closeModal}>
-              &times;
-            </button>
-            <img
-              src={product.images?.[0]?.image}
-              alt={product.title.split(" ").slice(0, 5).join(" ")}
-              className={styles.modalImage}
-            />
-          </div>
-        </div>
-      )}
+
+      {isModalOpen &&
+        ReactDOM.createPortal(
+          <div className={styles.imageModalOverlay} onClick={closeModal}>
+            <div
+              className={styles.imageModalContent}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className={styles.modalCloseBtn} onClick={closeModal}>
+                &times;
+              </button>
+              <img
+                src={product.images?.[0]?.image}
+                alt={product.title.split(" ").slice(0, 5).join(" ")}
+                className={styles.modalImage}
+              />
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   );
 };

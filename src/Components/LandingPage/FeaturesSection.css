@@ -167,3 +167,8 @@
     transform: rotate(360deg);
   }
 }
+@media (max-width: 600px) {
+  .choose{
+    margin-top: 20px;
+  }
+}

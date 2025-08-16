@@ -146,7 +146,7 @@
   display: block;
   font-size: 2.5rem;
   font-weight: 900;
-  color: white;
+  color: rgb(255, 252, 252) !important;
   margin-bottom: 0.5rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }

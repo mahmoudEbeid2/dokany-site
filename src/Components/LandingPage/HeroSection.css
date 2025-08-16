@@ -321,3 +321,13 @@
     transform: translateY(0);
   }
 }
+@media (max-width: 768px) {
+  .hero-buttons{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+  .title-line{
+    margin-top: 20px;
+  }
+}

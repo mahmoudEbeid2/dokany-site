@@ -332,6 +332,11 @@
 
   .contact-item {
     justify-content: center;
+     flex-direction: column;
+    align-items: center;
+  }
+    .company-stats {
+   
   }
 }
 
@@ -374,5 +379,18 @@
     flex-direction: column;
     text-align: center;
     gap: 0.5rem;
+  }
+  .contact-icon {
+    margin: 0 auto;
+  }
+  .contact-item{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .contact-details
+  {
+        margin: 0 auto;
+
   }
 }
