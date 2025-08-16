@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { CheckCircle, XCircle, Mail, ArrowRight, RefreshCw } from "lucide-react";
@@ -10,6 +11,8 @@ const VerifyEmail = () => {
   const navigate = useNavigate();
   const [verificationStatus, setVerificationStatus] = useState("verifying");
   const [error, setError] = useState(null);
+  const [logoError, setLogoError] = useState(false);
+  const { sellerInfo } = useSelector((state) => state.seller);
 
   const token = searchParams.get("token");
   const type = searchParams.get("type");
@@ -56,6 +59,13 @@ const VerifyEmail = () => {
 
     verifyEmail();
   }, [token, type, subdomain, navigate]);
+
+  // Reset logo error when sellerInfo changes
+  useEffect(() => {
+    if (sellerInfo?.logo) {
+      setLogoError(false);
+    }
+  }, [sellerInfo?.logo]);
 
   const handleResendVerification = async () => {
     try {
@@ -168,8 +178,19 @@ const VerifyEmail = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.logo}>
-          <div className={styles.logoIcon}>🚀</div>
-          <h1>Dokany Platform</h1>
+          {sellerInfo?.logo && !logoError ? (
+            <div className={styles.logoImageContainer}>
+              <img 
+                src={sellerInfo.logo} 
+                alt={`${sellerInfo.subdomain || 'Dokany'} Logo`}
+                className={styles.logoImage}
+                onError={() => setLogoError(true)}
+              />
+            </div>
+          ) : (
+            <div className={styles.logoIcon}>🚀</div>
+          )}
+          <h1>{sellerInfo?.subdomain || "Dokany Platform"}</h1>
         </div>
         
         {renderContent()}
