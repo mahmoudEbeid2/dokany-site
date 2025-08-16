@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+
 import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 import { useSelector } from 'react-redux';
@@ -20,7 +21,7 @@ const Footer = () => {
                             </p>
                         </div>
                     </Col>
-                    
+
                     <Col md={4}>
                         <div className={styles.footerLinks}>
                             <h5 className={styles.footerTitle}>Quick Links</h5>
@@ -32,30 +33,39 @@ const Footer = () => {
                             </ul>
                         </div>
                     </Col>
-                    
+
                     <Col md={4}>
                         <div className={styles.footerSocial}>
                             <h5 className={styles.footerTitle}>Follow Us</h5>
                             <div className={styles.socialLinks}>
-                                <a href="#" className={styles.socialLink} aria-label="Instagram">
-                                    <i className="bi bi-instagram"></i>
-                                </a>
-                                <a href="#" className={styles.socialLink} aria-label="Twitter">
-                                    <i className="bi bi-twitter"></i>
-                                </a>
-                                <a href="#" className={styles.socialLink} aria-label="Facebook">
-                                    <i className="bi bi-facebook"></i>
-                                </a>
-                                <a href="#" className={styles.socialLink} aria-label="LinkedIn">
-                                    <i className="bi bi-linkedin"></i>
-                                </a>
+                                {
+                                    sellerInfo?.instagram &&
+                                    <a href={sellerInfo.instagram} target='_blank' className={styles.socialLink} aria-label="Instagram">
+                                        <i className="bi bi-instagram"></i>
+                                    </a>
+                                }
+                                {sellerInfo?.x &&
+                                    <a href={sellerInfo.x} target='_blank' className={styles.socialLink} aria-label="Twitter">
+                                        <i className="bi bi-twitter-x"></i>
+                                    </a>
+                                }
+                                {sellerInfo?.faceBook &&
+                                    <a href={sellerInfo.faceBook} target='_blank' className={styles.socialLink} aria-label="Facebook">
+                                        <i className="bi bi-facebook"></i>
+                                    </a>
+                                }
+                                {sellerInfo?.pinterest &&
+                                    <a href={sellerInfo.pinterest} target='_blank' className={styles.socialLink} aria-label="Pinterest">
+                                        <i className="bi bi-pinterest"></i>
+                                    </a>
+                                }
                             </div>
                         </div>
                     </Col>
                 </Row>
-                
+
                 <hr className={styles.footerDivider} />
-                
+
                 <Row>
                     <Col className="text-center">
                         <p className={styles.copyright}>
