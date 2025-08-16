@@ -247,6 +247,18 @@ export const themes = {
       '--signin-terms-link': '#1e293b',
       '--signin-terms-hover': '#3b82f6',
       
+      // Verify Email Page - Light Theme
+      '--verify-email-bg': '#ffffff',
+      '--verify-email-card-bg': '#ffffff',
+      '--verify-email-border': '#e2e8f0',
+      '--verify-email-shadow': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+      '--verify-email-text-primary': '#121212',
+      '--verify-email-text-secondary': '#6c7275',
+      '--verify-email-primary': '#377dff',
+      '--verify-email-secondary': '#38cb89',
+      '--verify-email-error': '#ef4444',
+      '--verify-email-success': '#38cb89',
+      
       // Sign Up specific colors
       '--signup-profile-border': '#d1d5db',
       '--signup-profile-hover': '#3b82f6',
@@ -659,6 +671,18 @@ export const themes = {
       '--signin-terms-text': '#94a3b8',
       '--signin-terms-link': '#f1f5f9',
       '--signin-terms-hover': '#60a5fa',
+      
+      // Verify Email Page - Dark Theme
+      '--verify-email-bg': '#0f172a',
+      '--verify-email-card-bg': '#1e293b',
+      '--verify-email-border': '#334155',
+      '--verify-email-shadow': '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
+      '--verify-email-text-primary': '#f8fafc',
+      '--verify-email-text-secondary': '#cbd5e1',
+      '--verify-email-primary': '#60a5fa',
+      '--verify-email-secondary': '#10b981',
+      '--verify-email-error': '#f87171',
+      '--verify-email-success': '#10b981',
       
       // Sign Up specific colors
       '--signup-profile-border': '#475569',

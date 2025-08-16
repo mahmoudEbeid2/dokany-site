@@ -30,7 +30,7 @@ import ResetPassword from "./Components/sign/resetPassword/ResetPassword";
 import PaymentSuccess from "./Pages/PaymentSuccess.jsx";
 import PaymentFailure from "./Pages/PaymentFailure.jsx";
 import EmailVerification from "./Pages/EmailVerification.jsx";
-import VerifyEmail from "./Pages/VerifyEmail.jsx";
+import VerifyEmail from "./Components/sign/verifyEmail/VerifyEmail.jsx";
 // Redux actions
 import {
   setUserInfo,

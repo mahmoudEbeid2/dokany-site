@@ -26,7 +26,7 @@ const VerifyEmail = () => {
       try {
         console.log("Verifying email with:", { token, type, subdomain });
         
-        const apiUrl = `${import.meta.env.VITE_API}/auth/${type}/verify-email`;
+        const apiUrl = `${import.meta.env.VITE_API}/api/email-verification/verify-${type}`;
         const response = await axios.post(apiUrl, {
           token,
           subdomain
@@ -34,9 +34,9 @@ const VerifyEmail = () => {
 
         console.log("Verification response:", response.data);
         
-        if (response.data.success) {
+        if (response.data.success || response.data.message) {
           setVerificationStatus("success");
-          toast.success("Email verified successfully!");
+          toast.success(response.data.message || "Email verified successfully!");
           
           // Redirect to login after 3 seconds
           setTimeout(() => {
@@ -62,13 +62,13 @@ const VerifyEmail = () => {
       setVerificationStatus("verifying");
       setError(null);
       
-      const apiUrl = `${import.meta.env.VITE_API}/auth/${type}/resend-verification`;
+      const apiUrl = `${import.meta.env.VITE_API}/api/email-verification/resend-${type}`;
       const response = await axios.post(apiUrl, {
         subdomain
       });
 
-      if (response.data.success) {
-        toast.success("Verification email resent successfully!");
+      if (response.data.success || response.data.message) {
+        toast.success(response.data.message || "Verification email resent successfully!");
         setVerificationStatus("success");
       } else {
         setError(response.data.error || "Failed to resend verification email");
