@@ -40,6 +40,7 @@ const userSlice = createSlice({
 
       if (exists) {
         exists.quantity += quantity;
+        exists.final_price = final_price;
       } else {
         state.cart.push({ product_id, ...rest, quantity, final_price });
       }
