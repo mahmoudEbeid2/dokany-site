@@ -147,11 +147,20 @@ const SignUp = () => {
       });
 
       console.log("Form Submitted Successfully:", response.data);
-      toast.success(`Account created successfully!`);
-      navigate("/signin");
+      toast.success(`Account created successfully! Please check your email to verify your account.`);
+      
+      // Show verification message and redirect to verification page
       setFormData(initialState);
       setImagePreview(null);
       e.target.reset();
+      
+      // Navigate to verification page with email info
+      navigate("/email-verification", { 
+        state: { 
+          email: formData.email,
+          message: "Account created successfully! Please check your email to verify your account."
+        }
+      });
     } catch (error) {
       console.error("Submission Error:", error.response || error);
       const errorData = error.response?.data;

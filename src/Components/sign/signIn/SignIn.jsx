@@ -24,6 +24,7 @@ const SignIn = ({ onLoginSuccess }) => {
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [needsVerification, setNeedsVerification] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -38,9 +39,12 @@ const SignIn = ({ onLoginSuccess }) => {
     if (apiError) {
       setApiError(null);
     }
+    if (needsVerification) {
+      setNeedsVerification(false);
+    }
   };
 
-  // ✅ دالة التحقق من حقل واحد عند الـ onBlur
+  // Field validation function on blur
   const validateField = (name, value) => {
     const singleFieldSchema = customerLoginSchema.pick({ [name]: true });
     const result = singleFieldSchema.safeParse({ [name]: value });
@@ -62,6 +66,7 @@ const SignIn = ({ onLoginSuccess }) => {
     e.preventDefault();
     setApiError(null);
     setErrors({});
+    setNeedsVerification(false);
 
     const result = customerLoginSchema.safeParse(formData);
     if (!result.success) {
@@ -86,7 +91,10 @@ const SignIn = ({ onLoginSuccess }) => {
       const errorData = error.response?.data;
       const errorMsg = errorData?.error || "An unexpected error occurred.";
 
-      if (errorMsg === "Invalid credentials for this seller") {
+      if (errorMsg === "Email not verified") {
+        setNeedsVerification(true);
+        setApiError("Please verify your email address before logging in. Check your inbox for the verification link.");
+      } else if (errorMsg === "Invalid credentials for this seller") {
         setErrors({ email: ["Invalid credentials for this seller."] });
       } else if (errorMsg === "Invalid password") {
         setErrors({ password: ["The password you entered is incorrect."] });
@@ -97,6 +105,30 @@ const SignIn = ({ onLoginSuccess }) => {
       } else {
         setApiError(errorMsg);
       }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    try {
+      setLoading(true);
+      const apiUrl = `${import.meta.env.VITE_API}/api/email-verification/resend-customer`;
+      
+      // Get current subdomain
+      const subdomain = window.location.hostname.split(".")[0];
+      
+      await axios.post(apiUrl, { 
+        email: formData.email,
+        subdomain: subdomain
+      });
+
+      toast.success("Verification email sent successfully! Please check your inbox.");
+      setNeedsVerification(false);
+    } catch (error) {
+      const errorData = error.response?.data;
+      const errorMsg = errorData?.error || "Failed to resend verification email.";
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -134,6 +166,41 @@ const SignIn = ({ onLoginSuccess }) => {
               >
                 {apiError}
               </p>
+            )}
+
+            {needsVerification && (
+              <div style={{
+                backgroundColor: "#fff3cd",
+                border: "1px solid #ffeaa7",
+                color: "#856404",
+                padding: "15px",
+                borderRadius: "5px",
+                marginBottom: "1rem",
+                textAlign: "center"
+              }}>
+                <p style={{ margin: "0 0 10px 0" }}>
+                  <strong>Email Verification Required</strong>
+                </p>
+                <p style={{ margin: "0 0 15px 0", fontSize: "0.9rem" }}>
+                  Please check your email and click the verification link to activate your account.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleResendVerification}
+                  disabled={loading}
+                  style={{
+                    backgroundColor: "#007bff",
+                    color: "white",
+                    border: "none",
+                    padding: "8px 16px",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                    fontSize: "0.9rem"
+                  }}
+                >
+                  {loading ? "Sending..." : "Resend Verification Email"}
+                </button>
+              </div>
             )}
 
             <div className={styles.inputGroup}>

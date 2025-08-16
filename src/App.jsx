@@ -29,6 +29,8 @@ import Footer from "./Components/Footer/Footer";
 import ResetPassword from "./Components/sign/resetPassword/ResetPassword";
 import PaymentSuccess from "./Pages/PaymentSuccess.jsx";
 import PaymentFailure from "./Pages/PaymentFailure.jsx";
+import EmailVerification from "./Pages/EmailVerification.jsx";
+import VerifyEmail from "./Pages/VerifyEmail.jsx";
 // Redux actions
 import {
   setUserInfo,
@@ -242,6 +244,8 @@ function App() {
         <Route path="/category/:id" element={<CategoryProducts />} />
         <Route path="/shoppage" element={<ShopPage />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/email-verification" element={<EmailVerification />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
         <Route
           path="/payment/success"
           element={
