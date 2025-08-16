@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { CheckCircle, XCircle, Mail, ArrowRight, RefreshCw } from "lucide-react";
 import styles from "./VerifyEmail.module.css";
 
 const VerifyEmail = () => {
@@ -86,24 +87,34 @@ const VerifyEmail = () => {
       case "verifying":
         return (
           <div className={styles.verifying}>
-            <div className={styles.spinner}></div>
+            <div className={styles.spinnerContainer}>
+              <div className={styles.spinner}></div>
+            </div>
             <h2>Verifying Your Email...</h2>
             <p>Please wait while we verify your email address.</p>
+            <div className={styles.progressBar}>
+              <div className={styles.progressFill}></div>
+            </div>
           </div>
         );
 
       case "success":
         return (
           <div className={styles.success}>
-            <div className={styles.successIcon}>✅</div>
+            <div className={styles.iconContainer}>
+              <CheckCircle className={styles.successIcon} />
+            </div>
             <h2>Email Verified Successfully!</h2>
             <p>Your email has been verified. You can now sign in to your account.</p>
-            <p>Redirecting to sign in page...</p>
+            <div className={styles.countdown}>
+              <span>Redirecting to sign in page in 3 seconds...</span>
+            </div>
             <button 
-              className={styles.signInButton}
+              className={styles.primaryButton}
               onClick={() => navigate(`/signin`)}
             >
-              Sign In Now
+              <span>Sign In Now</span>
+              <ArrowRight className={styles.buttonIcon} />
             </button>
           </div>
         );
@@ -111,28 +122,34 @@ const VerifyEmail = () => {
       case "failed":
         return (
           <div className={styles.failed}>
-            <div className={styles.errorIcon}>❌</div>
+            <div className={styles.iconContainer}>
+              <XCircle className={styles.errorIcon} />
+            </div>
             <h2>Verification Failed</h2>
-            <p className={styles.errorMessage}>{error}</p>
+            <div className={styles.errorMessage}>
+              <Mail className={styles.errorIconSmall} />
+              <span>{error}</span>
+            </div>
             
             <div className={styles.actions}>
               <button 
-                className={styles.retryButton}
+                className={styles.secondaryButton}
                 onClick={handleResendVerification}
               >
-                Resend Verification Email
+                <RefreshCw className={styles.buttonIcon} />
+                <span>Resend Verification Email</span>
               </button>
               
               <button 
-                className={styles.backButton}
+                className={styles.outlineButton}
                 onClick={() => navigate(`/signin`)}
               >
-                Back to Sign In
+                <span>Back to Sign In</span>
               </button>
             </div>
             
             <div className={styles.help}>
-              <p>If you continue to have issues, please:</p>
+              <h4>Need Help?</h4>
               <ul>
                 <li>Check that you're using the correct verification link</li>
                 <li>Ensure the link hasn't expired (24 hours)</li>
@@ -151,7 +168,8 @@ const VerifyEmail = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.logo}>
-          <h1>🚀 Dokany Platform</h1>
+          <div className={styles.logoIcon}>🚀</div>
+          <h1>Dokany Platform</h1>
         </div>
         
         {renderContent()}

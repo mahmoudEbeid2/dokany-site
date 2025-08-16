@@ -93,7 +93,6 @@ const SignIn = ({ onLoginSuccess }) => {
 
       if (errorMsg === "Email not verified") {
         setNeedsVerification(true);
-        setApiError("Please verify your email address before logging in. Check your inbox for the verification link.");
       } else if (errorMsg === "Invalid credentials for this seller") {
         setErrors({ email: ["Invalid credentials for this seller."] });
       } else if (errorMsg === "Invalid password") {
