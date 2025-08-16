@@ -63,19 +63,45 @@ const SignUp = () => {
   const [apiError, setApiError] = useState(null);
 
   useEffect(() => {
-    const subdomain = window.location.hostname.split(".")[0];
-
-    if (subdomain === "localhost" || subdomain === "www") {
+    const hostname = window.location.hostname;
+    console.log("Current hostname:", hostname);
+    
+    let subdomain = null;
+    
+    // Handle different hostname formats
+    if (hostname.includes('localhost')) {
+      // For local development, use a default subdomain or show error
       setApiError(
-        "Cannot create an account from this URL. Please use a seller's store URL."
+        "Cannot create an account from localhost. Please use a seller's store URL."
       );
       return;
+    } else if (hostname === 'www.dokaney.store' || hostname === 'dokaney.store') {
+      // Main domain - show error
+      setApiError(
+        "Cannot create an account from the main domain. Please use a seller's store URL."
+      );
+      return;
+    } else if (hostname.includes('.dokaney.store')) {
+      // Extract subdomain from seller store URL
+      subdomain = hostname.split('.')[0];
+    } else {
+      // Other domains - extract first part
+      subdomain = hostname.split('.')[0];
     }
-
-    setFormData((prev) => ({
-      ...prev,
-      subdomain: subdomain,
-    }));
+    
+    console.log("Extracted subdomain:", subdomain);
+    
+    if (subdomain && subdomain !== 'www' && subdomain !== 'localhost') {
+      setFormData((prev) => ({
+        ...prev,
+        subdomain: subdomain,
+      }));
+      console.log("Subdomain set to:", subdomain);
+    } else {
+      setApiError(
+        "Could not determine seller store. Please use a valid store URL."
+      );
+    }
   }, []);
 
   const validateField = (name, value) => {
@@ -116,12 +142,26 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Log form data for debugging
+    console.log("Form data before submission:", formData);
+    console.log("Subdomain value:", formData.subdomain);
+    
     if (!formData.subdomain) {
       setApiError(
         "Could not verify seller information. Please refresh the page or use a valid store URL."
       );
       return;
     }
+    
+    // Additional validation for subdomain
+    if (formData.subdomain === 'www' || formData.subdomain === 'localhost' || formData.subdomain === 'null') {
+      setApiError(
+        "Invalid seller store detected. Please use a valid store URL."
+      );
+      return;
+    }
+    
     setApiError(null);
     setErrors({});
     const result = signupSchema.safeParse(formData);
@@ -136,6 +176,13 @@ const SignUp = () => {
       if (key !== "confirmPassword" && key !== "agreedToTerms") {
         dataToSubmit.append(key, result.data[key]);
       }
+    });
+
+    // Log the data being sent
+    console.log("Data being sent to API:", {
+      subdomain: result.data.subdomain,
+      email: result.data.email,
+      user_name: result.data.user_name
     });
 
     try {

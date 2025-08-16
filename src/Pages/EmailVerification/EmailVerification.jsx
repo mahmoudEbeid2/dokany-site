@@ -12,19 +12,50 @@ const EmailVerification = () => {
 
   const token = searchParams.get('token');
   const type = searchParams.get('type');
+  const subdomain = searchParams.get('subdomain');
 
   useEffect(() => {
     if (!token || !type) {
-      setError('Invalid verification link');
+      setError('Invalid verification link - missing required parameters');
+      setVerifying(false);
+      return;
+    }
+
+    // If subdomain is not in URL, try to get it from hostname
+    let currentSubdomain = subdomain;
+    if (!currentSubdomain) {
+      const hostname = window.location.hostname;
+      if (hostname.includes('.')) {
+        currentSubdomain = hostname.split('.')[0];
+      }
+    }
+
+    if (!currentSubdomain) {
+      setError('Invalid verification link - cannot determine store');
       setVerifying(false);
       return;
     }
 
     verifyEmail();
-  }, [token, type]);
+  }, [token, type, subdomain]);
 
   const verifyEmail = async () => {
     try {
+      // Get subdomain from URL or hostname
+      let currentSubdomain = subdomain;
+      if (!currentSubdomain) {
+        const hostname = window.location.hostname;
+        if (hostname.includes('.')) {
+          currentSubdomain = hostname.split('.')[0];
+        }
+      }
+
+      if (!currentSubdomain) {
+        setError('Cannot determine store from URL');
+        setVerifying(false);
+        return;
+      }
+
       const endpoint = type === 'customer' 
         ? '/api/email-verification/verify-customer'
         : '/api/email-verification/verify-user';
@@ -34,7 +65,7 @@ const EmailVerification = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ token, subdomain: currentSubdomain }),
       });
 
       const data = await response.json();
