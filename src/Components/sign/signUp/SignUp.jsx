@@ -92,10 +92,10 @@ const SignUp = () => {
     console.log("Extracted subdomain:", subdomain);
     
     if (subdomain && subdomain !== 'www' && subdomain !== 'localhost') {
-      setFormData((prev) => ({
-        ...prev,
-        subdomain: subdomain,
-      }));
+    setFormData((prev) => ({
+      ...prev,
+      subdomain: subdomain,
+    }));
       console.log("Subdomain set to:", subdomain);
     } else {
       setApiError(

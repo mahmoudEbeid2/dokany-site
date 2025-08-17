@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // Import useLocation from react-router-dom
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -53,7 +53,19 @@ const api = import.meta.env.VITE_API;
 function App() {
   const isAuthenticated = localStorage.getItem("token");
   const dispatch = useDispatch();
+  const [themeLoaded, setThemeLoaded] = useState(false);
 
+  // Show loader for fixed duration to ensure it's visible on all themes
+  useEffect(() => {
+    // Always show loader for 3 seconds to ensure visibility
+    const timer = setTimeout(() => {
+      setThemeLoaded(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Apply theme manager immediately
   useThemeManager();
 
   // Get the current location object
@@ -218,6 +230,19 @@ function App() {
       controller.abort();
     };
   }, [isAuthenticated, dispatch]);
+
+  // Show loading screen until theme is loaded and applied
+  console.log('Theme loaded state:', themeLoaded);
+  if (!themeLoaded) {
+    console.log('Showing loader...');
+    return (
+      <div className="app-theme-loader">
+        <div className="app-theme-loader-content">
+          <div className="app-theme-loader-spinner"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
