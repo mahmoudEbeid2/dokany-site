@@ -23,7 +23,7 @@ function NavBar() {
       return userInfo.profile_imge;
     }
     // Default avatar placeholder
-    return "https://picsum.photos/32/32";
+    return "/src/assets/default-avatar.svg";
   };
 
   // if(!sellerInfo){
@@ -100,7 +100,7 @@ function NavBar() {
                           alt="Profile"
                           className="user-profile-image"
                           onError={(e) => {
-                            e.target.src = "https://picsum.photos/32/32";
+                            e.target.src = "/src/assets/default-avatar.svg";
                           }}
                         />
                       </NavLink>

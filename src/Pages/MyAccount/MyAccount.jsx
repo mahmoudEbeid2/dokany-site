@@ -12,7 +12,7 @@ const MyAccount = () => {
   const token = localStorage.getItem("token");
 
   // Default avatar image
-  const defaultAvatar = "https://picsum.photos/100/100";
+  const defaultAvatar = "/src/assets/default-avatar.svg";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
