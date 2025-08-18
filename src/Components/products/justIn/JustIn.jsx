@@ -9,18 +9,27 @@ import { useDataFetching } from "../../../hooks/useDataFetching";
 const MemoizedProductCard = React.memo(ProductCard);
 
 const JustIn = ({ subdomain }) => {
+  console.log('JustIn component: subdomain =', subdomain);
+  
   // Fetch function for just in products
   const fetchJustInProducts = useMemo(() => async (signal) => {
+    console.log('JustIn: Starting fetch for subdomain:', subdomain);
+    
+    const url = `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}?page=1`;
+    console.log('JustIn: Fetching from URL:', url);
+    
     const productsResponse = await fetch(
-      `${import.meta.env.VITE_API}/products/seller/subdomain/${subdomain}?page=1`,
+      url,
       { signal }
     );
 
     if (!productsResponse.ok) {
-      throw new Error("Failed to fetch products.");
+      console.error('JustIn: Response not ok:', productsResponse.status, productsResponse.statusText);
+      throw new Error(`Failed to fetch products: ${productsResponse.status} ${productsResponse.statusText}`);
     }
 
     const productsData = await productsResponse.json();
+    console.log('JustIn: Raw data received:', productsData);
     
     // Filter and sort new products - show only 4
     const newProducts = productsData
@@ -40,6 +49,7 @@ const JustIn = ({ subdomain }) => {
       })
               .slice(0, 4);
 
+    console.log('JustIn: Filtered new products:', newProducts);
     return newProducts;
   }, [subdomain]);
 

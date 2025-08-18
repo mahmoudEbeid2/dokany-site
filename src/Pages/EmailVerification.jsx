@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Mail, CheckCircle, ArrowRight, HelpCircle, UserCheck } from "lucide-react";
 
 const EmailVerification = () => {
   const location = useLocation();
@@ -95,7 +96,7 @@ const EmailVerification = () => {
       <div className="verification-card">
         <div className="verification-header">
           <div className="verification-icon">
-            📧
+            <Mail size={48} />
           </div>
           <h1>Email Verification Required</h1>
           <p className="verification-subtitle">
@@ -106,6 +107,7 @@ const EmailVerification = () => {
         <div className="verification-content">
           {message && (
             <div className="message-box">
+              <CheckCircle size={20} className="message-icon" />
               <p>{message}</p>
             </div>
           )}
@@ -113,7 +115,7 @@ const EmailVerification = () => {
           {showEmailForm ? (
             <form onSubmit={handleEmailSubmit} className="email-form">
               <div className="form-group">
-                <label htmlFor="email">Email Address:</label>
+                <label htmlFor="email">Email Address</label>
                 <input
                   type="email"
                   id="email"
@@ -129,22 +131,51 @@ const EmailVerification = () => {
                 disabled={loading}
                 className="submit-btn"
               >
-                {loading ? "Sending..." : "Send Verification Email"}
+                {loading ? (
+                  <>
+                    <div className="spinner"></div>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Verification Email
+                    <ArrowRight size={18} />
+                  </>
+                )}
               </button>
             </form>
           ) : (
             <>
               <div className="email-info">
+                <UserCheck size={20} className="info-icon" />
                 <p><strong>Email:</strong> {email}</p>
               </div>
 
               <div className="verification-steps">
-                <h3>Next Steps:</h3>
-                <ol>
-                  <li>Check your email inbox (and spam folder)</li>
-                  <li>Click the verification link in the email</li>
-                  <li>Return here and sign in to your account</li>
-                </ol>
+                <h3>Next Steps</h3>
+                <div className="steps-list">
+                  <div className="step-item">
+                    <div className="step-number">1</div>
+                    <div className="step-content">
+                      <h4>Check your email</h4>
+                      <p>Look in your inbox and spam folder</p>
+                    </div>
+                  </div>
+                  <div className="step-item">
+                    <div className="step-number">2</div>
+                    <div className="step-content">
+                      <h4>Click the verification link</h4>
+                      <p>Open the email and click the verification button</p>
+                    </div>
+                  </div>
+                  <div className="step-item">
+                    <div className="step-number">3</div>
+                    <div className="step-content">
+                      <h4>Sign in to your account</h4>
+                      <p>Return here and access your account</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="verification-actions">
@@ -153,13 +184,24 @@ const EmailVerification = () => {
                   disabled={loading}
                   className="resend-btn"
                 >
-                  {loading ? "Sending..." : "Resend Verification Email"}
+                  {loading ? (
+                    <>
+                      <div className="spinner"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Mail size={18} />
+                      Resend Verification Email
+                    </>
+                  )}
                 </button>
 
                 <button
                   onClick={handleCheckVerification}
                   className="check-btn"
                 >
+                  <HelpCircle size={18} />
                   How to Verify
                 </button>
 
@@ -167,6 +209,7 @@ const EmailVerification = () => {
                   onClick={handleGoToSignIn}
                   className="signin-btn"
                 >
+                  <ArrowRight size={18} />
                   Go to Sign In
                 </button>
               </div>
@@ -174,10 +217,13 @@ const EmailVerification = () => {
           )}
 
           <div className="verification-help">
-            <p>
-              <strong>Need help?</strong> If you don't receive the email within a few minutes, 
-              check your spam folder or contact support.
-            </p>
+            <HelpCircle size={20} className="help-icon" />
+            <div>
+              <p>
+                <strong>Need help?</strong> If you don't receive the email within a few minutes, 
+                check your spam folder or contact support.
+              </p>
+            </div>
           </div>
         </div>
       </div>
