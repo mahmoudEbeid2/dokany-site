@@ -232,11 +232,23 @@ const SignUp = () => {
   };
 
   const placeholderIcon = (
-    <img 
-      src="/src/assets/default-avatar.svg" 
-      alt="Default Avatar" 
-      style={{ width: '48px', height: '48px' }}
-    />
+    <div style={{ 
+      width: '100%', 
+      height: '100%', 
+      borderRadius: '50%',
+      background: 'linear-gradient(135deg, #667eea, #764ba2)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'white',
+      fontSize: '24px',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+      boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
+    }}>
+      👤
+    </div>
   );
 
   const errorStyle = {
@@ -272,9 +284,14 @@ const SignUp = () => {
               <label
                 htmlFor="profile_imge"
                 className={styles.profileImagePreview}
+                title="Click to upload profile picture"
               >
                 {imagePreview ? (
-                  <img src={imagePreview} alt="Profile Preview" />
+                  <img 
+                    src={imagePreview} 
+                    alt="Profile Preview" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 ) : (
                   placeholderIcon
                 )}
@@ -287,7 +304,14 @@ const SignUp = () => {
                 style={{ display: "none" }}
                 accept="image/*"
               />
-              <p>Add a profile picture</p>
+              <p style={{ 
+                margin: '8px 0 0 0', 
+                fontSize: '0.875rem', 
+                color: 'var(--signup-profile-text)',
+                textAlign: 'center'
+              }}>
+                {imagePreview ? 'Click to change picture' : 'Add a profile picture'}
+              </p>
             </div>
             <div className={styles.formRow}>
               <div className={styles.inputGroup}>
