@@ -15,11 +15,8 @@ const EmailVerification = () => {
   const [showEmailForm, setShowEmailForm] = useState(false);
 
   useEffect(() => {
-    console.log('EmailVerification: location.state =', location.state);
-    
     // Check if email is provided in location state
     if (location.state && location.state.email) {
-      console.log('EmailVerification: Email found in location.state:', location.state.email);
       setEmail(location.state.email);
       setMessage(location.state.message || "Account created successfully! Please check your email to verify your account.");
       setShowEmailForm(false);
@@ -28,16 +25,12 @@ const EmailVerification = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const emailParam = urlParams.get('email');
       
-      console.log('EmailVerification: URL params email =', emailParam);
-      
       if (emailParam) {
-        console.log('EmailVerification: Email found in URL params:', emailParam);
         setEmail(emailParam);
         setMessage("Account created successfully! Please check your email to verify your account.");
         setShowEmailForm(false);
       } else {
         // Show email form only if no email is available
-        console.log('EmailVerification: No email found, showing form');
         setShowEmailForm(true);
         setMessage("Please enter your email address to receive a verification link.");
       }
@@ -108,10 +101,6 @@ const EmailVerification = () => {
     navigate("/signin");
   };
 
-  const handleCheckVerification = async () => {
-    toast.info("Please check your email and click the verification link. You can then sign in to your account.");
-  };
-
   return (
     <div className="email-verification-container">
       <div className="verification-card">
@@ -125,30 +114,13 @@ const EmailVerification = () => {
           </p>
         </div>
         
-        {/* Debug info - remove this later */}
-        <div style={{ 
-          background: '#f0f0f0', 
-          padding: '10px', 
-          margin: '10px 0', 
-          borderRadius: '8px',
-          fontSize: '12px',
-          color: '#666'
-        }}>
-          Debug: showEmailForm = {showEmailForm.toString()}, email = {email || 'none'}
-        </div>
+
 
         <div className="verification-content">
           {message && (
             <div className="message-box">
               <CheckCircle size={20} className="message-icon" />
               <p>{message}</p>
-            </div>
-          )}
-
-          {!showEmailForm && email && (
-            <div className="email-info">
-              <UserCheck size={20} className="info-icon" />
-              <p><strong>Email:</strong> {email}</p>
             </div>
           )}
 
@@ -235,14 +207,6 @@ const EmailVerification = () => {
                       Resend Verification Email
                     </>
                   )}
-                </button>
-
-                <button
-                  onClick={handleCheckVerification}
-                  className="check-btn"
-                >
-                  <HelpCircle size={18} />
-                  How to Verify
                 </button>
 
                 <button
