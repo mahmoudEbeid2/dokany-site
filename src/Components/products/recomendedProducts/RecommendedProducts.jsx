@@ -76,9 +76,8 @@ const RecommendedProducts = React.memo(({ categoryId, currentProductId }) => {
   if (loading) {
     return (
       <div style={{ 
-        margin: '5rem 0',
+        margin: '5rem auto',
         padding: '4rem 2rem',
-        margin: '0 auto',
         maxWidth: '1400px'
       }}>
         <div className={sectionStyles.loadingContainer}>
@@ -91,9 +90,8 @@ const RecommendedProducts = React.memo(({ categoryId, currentProductId }) => {
   if (error) {
     return (
       <div style={{ 
-        margin: '5rem 0',
+        margin: '5rem auto',
         padding: '4rem 2rem',
-        margin: '0 auto',
         maxWidth: '1400px'
       }}>
         <div className={sectionStyles.errorContainer}>
@@ -112,9 +110,8 @@ const RecommendedProducts = React.memo(({ categoryId, currentProductId }) => {
 
   return (
     <div style={{ 
-      margin: '5rem 0',
+      margin: '5rem auto',
       padding: '4rem 2rem',
-      margin: '0 auto',
       maxWidth: '1400px'
     }}>
       <div className={sectionStyles.sectionHeader}>

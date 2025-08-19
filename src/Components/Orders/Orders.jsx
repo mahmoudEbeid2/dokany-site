@@ -21,7 +21,15 @@ function Orders() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setOrders(data);
+        
+        // Sort orders by date from newest to oldest
+        const sortedOrders = data.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          return dateB - dateA; // Newest first (descending order)
+        });
+        
+        setOrders(sortedOrders);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }

@@ -5,9 +5,8 @@ import gridStyles from '../ProductGrid.module.css';
 const RecommendedProductsPlaceholder = () => {
   return (
     <div style={{ 
-      margin: '5rem 0',
+      margin: '5rem auto',
       padding: '4rem 2rem',
-      margin: '0 auto',
       maxWidth: '1400px'
     }}>
       {/* Section Header Placeholder */}
