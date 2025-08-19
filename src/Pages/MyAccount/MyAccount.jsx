@@ -12,7 +12,7 @@ const MyAccount = () => {
   const token = localStorage.getItem("token");
 
   // Default avatar image
-  const defaultAvatar = "/src/assets/default-avatar.svg";
+  const defaultAvatar = "/default-avatar.svg";
 
   useEffect(() => {
     const token = localStorage.getItem("token");

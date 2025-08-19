@@ -23,7 +23,7 @@ function NavBar() {
       return userInfo.profile_imge;
     }
     // Default avatar placeholder
-    return "/src/assets/default-avatar.svg";
+    return "/default-avatar.svg";
   };
 
   // if(!sellerInfo){
@@ -100,7 +100,8 @@ function NavBar() {
                           alt="Profile"
                           className="user-profile-image"
                           onError={(e) => {
-                            e.target.src = "/src/assets/default-avatar.svg";
+                            e.currentTarget.onerror = null;
+                            e.target.src = "/default-avatar.svg";
                           }}
                         />
                       </NavLink>
