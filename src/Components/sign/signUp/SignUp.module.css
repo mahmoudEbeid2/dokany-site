@@ -289,7 +289,11 @@ input {
   margin-top: 1px;
   margin-bottom: 1px;
 }
-
+.passwordInputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 @media (min-width: 768px) {
   .signupContainer {
     flex-direction: row;
