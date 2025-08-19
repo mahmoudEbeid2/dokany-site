@@ -68,7 +68,7 @@ function CartItem({ item, onDelete, onUpdateQuantity, isUpdating }) {
       <div className={`${styles.price} col-2`}>
         {hasDiscount ? (
           <div>
-            <div style={{ textDecoration: 'line-through', color: '#999', fontSize: '0.9rem' }}>
+            <div style={{ textDecoration: 'line-through', fontSize: '0.9rem' }}>
               ${originalPrice.toFixed(2)}
             </div>
             <div style={{ color: '#e74c3c', fontWeight: 'bold' }}>
@@ -82,7 +82,7 @@ function CartItem({ item, onDelete, onUpdateQuantity, isUpdating }) {
       <div className={`${styles.subtotal} col-2`}>
         {hasDiscount ? (
           <div>
-            <div style={{ textDecoration: 'line-through', color: '#999', fontSize: '0.9rem' }}>
+            <div style={{ textDecoration: 'line-through', fontSize: '0.9rem' }}>
               ${(originalPrice * (item?.quantity || 1)).toFixed(2)}
             </div>
             <div style={{ color: '#e74c3c', fontWeight: 'bold' }}>

@@ -85,7 +85,18 @@ const FavCard = ({ product, onRemove }) => {
         </h4>
       </div>
 
-      <div className="fav-price">${price}</div>
+      {product?.discount ?
+        <div className="fav-price">
+          <div style={{ textDecoration: 'line-through', fontSize: '0.9rem' }}>
+            ${product?.price.toFixed(2)}
+          </div>
+          <div style={{ color: '#e74c3c',}}>
+            ${(product?.price * (1 - product?.discount / 100)).toFixed(2)}
+          </div>
+        </div>
+        :
+        <div className="fav-price">${price}</div>
+      }
       <button className="add-btn" onClick={handleAddToCart}>Add to cart</button>
     </div>
   );
