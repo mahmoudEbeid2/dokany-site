@@ -91,6 +91,7 @@
   font-size: 0.75rem;
   color: var(--signin-label);
   font-weight: 500;
+  z-index: 5;
 }
 
 .inputGroup input {
