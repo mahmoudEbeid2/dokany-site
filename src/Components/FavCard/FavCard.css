@@ -43,6 +43,7 @@
   font-weight: 500;
   color: var(--text);
   margin-right: 6rem;
+  text-align: center;
 }
 
 .add-btn {
