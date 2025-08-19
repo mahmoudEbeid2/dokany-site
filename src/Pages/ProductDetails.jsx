@@ -118,7 +118,7 @@ function ProductDetails() {
           <ReviewsSection
             productId={id}
             reviews={productReviews}
-            handeledReviews={() => {}} // This will be handled by the hook
+            handeledReviews={setProductReviews} // This will be handled by the hook
           />
         </div>
       </Lazyload>

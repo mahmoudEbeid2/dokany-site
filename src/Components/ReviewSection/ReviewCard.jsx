@@ -49,7 +49,7 @@ function ReviewCard({
     <div className={styles.reviewCard}>
       <div className={styles.reviewHeader}>
         <img
-          src={image || "/src/assets/default-avatar.svg"}
+          src={image || "/default-avatar.svg"}
           alt="User"
           className={styles.reviewAvatar}
         />

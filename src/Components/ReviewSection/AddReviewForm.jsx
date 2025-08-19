@@ -34,7 +34,7 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!comment.trim()) return toast.warn("Please write a comment.");
-   
+
     if (!token) return toast.error('Please log in to add a review.');
 
     setLoading(true);
@@ -44,8 +44,8 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
       const response = await axios.post(`${api}/reviews/${productId}`, review, {
         headers: { Authorization: `Bearer ${token}` },
       });
-             const newReview = { ...response.data.review, customer: user };
-       handeledReviews([newReview, ...reviews]);
+      const newReview = { ...response.data.review, customer: user };
+      handeledReviews([newReview, ...reviews]);
       setRating(5);
       setComment('');
       toast.success('Review added successfully');
@@ -63,7 +63,7 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
 
       <div className={styles.starsContainer}>
         {[1, 2, 3, 4, 5].map((star) => {
-          const isFilled = (hoveredRating ?? rating) >= star;
+          const isFilled = star <= (hoveredRating || rating);
           return (
             <button
               key={star}
@@ -74,7 +74,7 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
               className={styles.starButton}
             >
               {isFilled ? (
-                <FaStar className={styles.addReviewStars} />
+                <FaStar className={`${styles.addReviewStars} ${styles.filled}`} />
               ) : (
                 <FaRegStar className={styles.addReviewStars} />
               )}
@@ -82,6 +82,7 @@ function AddReviewForm({ handeledReviews, reviews, productId }) {
           );
         })}
       </div>
+
 
       <div className="mb-3">
         <textarea
