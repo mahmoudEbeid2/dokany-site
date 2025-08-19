@@ -47,11 +47,11 @@ const MyAccount = () => {
   const uploadToCloudinary = async (file) => {
     const form = new FormData();
     form.append("file", file);
-    form.append("upload_preset", "ml_default");
+    form.append("upload_preset", import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "ml_default");
 
     try {
       const res = await fetch(
-        "https://api.cloudinary.com/v1_1/ddkiltr7i/image/upload",
+        `${import.meta.env.VITE_CLOUDINARY_URL || "https://api.cloudinary.com/v1_1/ddkiltr7i/image/upload"}`,
         {
           method: "POST",
           body: form,

@@ -9,7 +9,7 @@ function ReviewCard({
   name = "mohed",
   rating,
   comment,
-  image = "https://randomuser.me/api/portraits/women/12.jpg",
+  image = import.meta.env.VITE_DEFAULT_AVATAR || "https://randomuser.me/api/portraits/women/12.jpg",
   customerId,
   myCustomerId,
   id,
@@ -32,7 +32,7 @@ function ReviewCard({
 
   const deleteReview = useCallback(async () => {
     try {
-      await axios.delete(`https://dokany-api-production.up.railway.app/reviews/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API}/reviews/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

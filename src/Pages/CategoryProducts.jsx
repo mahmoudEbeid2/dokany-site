@@ -19,7 +19,7 @@ const CategoryProducts = () => {
   const [loadingMore, setLoadingMore] = useState(false);
 
   const subdomain = window.location.hostname.split(".")[0];
-  const api = "https://dokany-api-production.up.railway.app";
+  const api = import.meta.env.VITE_API;
 
   // Memoized fetch function for better performance
   const fetchCategoryProducts = useCallback(async (pageNum = 1) => {
