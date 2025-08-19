@@ -43,111 +43,120 @@ function ShopPage() {
   }, [getCategories]);
 
   // Memoized fetch products function
-  const getProducts = useCallback(async (pageNum = 1) => {
-    if (pageNum === 1) {
-      setLoading(true);
-    } else {
-      setLoadingMore(true);
-    }
-    
-    try {
-      let url = `${api}/products/seller/subdomain/${subdomain}?page=${pageNum}`;
-      if (selectProducts === "low" || selectProducts === "high") {
-        url += `&sort=${selectProducts}`;
-      } else if (selectProducts === "discount") {
-        url = `${api}/products/seller/subdomain/${subdomain}/discount?page=${pageNum}`;
-      }
-      
-      const response = await axios.get(url);
-      const data = response.data;
-
+  const getProducts = useCallback(
+    async (pageNum = 1) => {
       if (pageNum === 1) {
-        setProducts(data);
-        // Scroll to top when first page loads
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setLoading(true);
       } else {
-        setProducts((prev) => [...prev, ...data]);
+        setLoadingMore(true);
       }
 
-      if (data.length === 0) {
-        setHasMore(false);
+      try {
+        let url = `${api}/products/seller/subdomain/${subdomain}?page=${pageNum}`;
+        if (selectProducts === "low" || selectProducts === "high") {
+          url += `&sort=${selectProducts}`;
+        } else if (selectProducts === "discount") {
+          url = `${api}/products/seller/subdomain/${subdomain}/discount?page=${pageNum}`;
+        }
+
+        const response = await axios.get(url);
+        const data = response.data;
+
+        if (pageNum === 1) {
+          setProducts(data);
+          // Scroll to top when first page loads
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          setProducts((prev) => [...prev, ...data]);
+        }
+
+        if (data.length === 0) {
+          setHasMore(false);
+        }
+      } catch (err) {
+        console.log("Error fetching products:", err);
+      } finally {
+        setLoading(false);
+        setLoadingMore(false);
       }
-    } catch (err) {
-      console.log("Error fetching products:", err);
-    } finally {
-      setLoading(false);
-      setLoadingMore(false);
-    }
-  }, [api, subdomain, selectProducts]);
+    },
+    [api, subdomain, selectProducts]
+  );
 
   // Memoized fetch by category function
-  const fetchByCategory = useCallback(async (pageNum = 1) => {
-    if (!selectCategoryId) return;
-    
-    if (pageNum === 1) {
-      setLoading(true);
-    } else {
-      setLoadingMore(true);
-    }
-    
-    try {
-      const response = await axios.get(
-        `${api}/categories/subdomain/${subdomain}/${selectCategoryId}?page=${pageNum}`
-      );
-      const data = response.data;
+  const fetchByCategory = useCallback(
+    async (pageNum = 1) => {
+      if (!selectCategoryId) return;
 
       if (pageNum === 1) {
-        setProducts(data);
-        // Scroll to top when first page loads
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setLoading(true);
       } else {
-        setProducts((prev) => [...prev, ...data]);
+        setLoadingMore(true);
       }
 
-      if (data.length === 0) {
-        setHasMore(false);
+      try {
+        const response = await axios.get(
+          `${api}/categories/subdomain/${subdomain}/${selectCategoryId}?page=${pageNum}`
+        );
+        const data = response.data;
+
+        if (pageNum === 1) {
+          setProducts(data);
+          // Scroll to top when first page loads
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          setProducts((prev) => [...prev, ...data]);
+        }
+
+        if (data.length === 0) {
+          setHasMore(false);
+        }
+      } catch (err) {
+        console.log("Error fetching products by category:", err);
+      } finally {
+        setLoading(false);
+        setLoadingMore(false);
       }
-    } catch (err) {
-      console.log("Error fetching products by category:", err);
-    } finally {
-      setLoading(false);
-      setLoadingMore(false);
-    }
-  }, [api, subdomain, selectCategoryId]);
+    },
+    [api, subdomain, selectCategoryId]
+  );
 
   // Memoized search function
-  const fetchProductsBySearch = useCallback(async (pageNum = 1) => {
-    if (!search) return;
-    
-    if (pageNum === 1) {
-      setLoading(true);
-    } else {
-      setLoadingMore(true);
-    }
-    
-    try {
-      const response = await axios.get(
-        `${api}/products/search?title=${search}&subdomain=${subdomain}&page=${pageNum}`
-      );
+  const fetchProductsBySearch = useCallback(
+    async (pageNum = 1) => {
+      if (!search) return;
 
       if (pageNum === 1) {
-        setProducts(response.data.enrichedProducts);
-        // Scroll to top when first page loads
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setLoading(true);
       } else {
-        setProducts((prev) => [...prev, ...response.data.enrichedProducts]);
+        setLoadingMore(true);
       }
 
-      if (response.data.enrichedProducts.length === 0) {
-        setHasMore(false);
+      try {
+        const response = await axios.get(
+          `${api}/products/search?title=${search}&subdomain=${subdomain}&page=${pageNum}`
+        );
+
+        if (pageNum === 1) {
+          setProducts(response.data.enrichedProducts);
+          // Scroll to top when first page loads
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          setProducts((prev) => [...prev, ...response.data.enrichedProducts]);
+        }
+
+        if (response.data.enrichedProducts.length === 0) {
+          setHasMore(false);
+        }
+      } catch (err) {
+        console.log("Error searching products:", err);
+      } finally {
+        setLoading(false);
+        setLoadingMore(false);
       }
-    } catch (err) {
-      console.log("Error searching products:", err);
-    } finally {
-      setLoading(false);
-      setLoadingMore(false);
-    }
-  }, [api, subdomain, search]);
+    },
+    [api, subdomain, search]
+  );
 
   // Memoized products to display (initially 10)
   const displayedProducts = useMemo(() => {
@@ -228,7 +237,15 @@ function ShopPage() {
       setPageSearch(nextPage);
       fetchProductsBySearch(nextPage);
     }
-  }, [getBy, pageCategory, pageProduct, pageSearch, fetchByCategory, getProducts, fetchProductsBySearch]);
+  }, [
+    getBy,
+    pageCategory,
+    pageProduct,
+    pageSearch,
+    fetchByCategory,
+    getProducts,
+    fetchProductsBySearch,
+  ]);
 
   return (
     <div className="container py-5">
@@ -243,10 +260,10 @@ function ShopPage() {
       </div>
 
       {/* Filters Section */}
-      <div className="row mb-5">
+      <div className="row mb-5 align-items-center">
         {/* Search */}
-        <div className="col-md-6 col-12 mb-4">
-          <label className="form-label fw-semibold mb-2">Search</label>
+        <div className="col-md-6 col-12 mb-3">
+          <label className="form-label fw-semibold mb-1">Search</label>
           <input
             className="form-control"
             type="search"
@@ -309,8 +326,8 @@ function ShopPage() {
             {/* Load More Button */}
             {hasMore && (
               <div className="text-center mt-5">
-                <button 
-                  onClick={loadMore} 
+                <button
+                  onClick={loadMore}
                   className={sectionStyles.retryBtn}
                   disabled={loadingMore}
                 >
