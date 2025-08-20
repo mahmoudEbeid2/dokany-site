@@ -47,6 +47,7 @@ import { startMeasure, endMeasure } from "./utils/performanceMonitor";
 // Styles
 import "./App.css";
 import { setSellerInfo } from "./features/seller/sellerSlice.js";
+import { use } from "react";
 
 const api = import.meta.env.VITE_API;
 
@@ -54,6 +55,19 @@ function App() {
   const isAuthenticated = localStorage.getItem("token");
   const dispatch = useDispatch();
   const [themeLoaded, setThemeLoaded] = useState(false);
+  const { sellerInfo } = useSelector((state) => state.seller);
+
+  // Change Title Dynamic 
+  useEffect(() => {
+    const subdomainTitle = (sellerInfo?.subdomain && !["localhost", "127", "dokaney"].includes(sellerInfo.subdomain.toLowerCase()))
+      ? sellerInfo.subdomain.charAt(0).toUpperCase() + sellerInfo.subdomain.slice(1) + " Store | "
+      : "";
+
+    const pageTitle = `${subdomainTitle}Dokany Platform`;
+
+    document.title = pageTitle
+  }, [sellerInfo?.subdomain]);
+
 
   // Show loader for fixed duration to ensure it's visible on all themes
   useEffect(() => {
@@ -85,7 +99,7 @@ function App() {
   // Performance monitoring for app initialization
   useEffect(() => {
     startMeasure('app_initialization', 'app');
-    
+
     return () => {
       endMeasure('app_initialization', 'app');
     };
@@ -94,7 +108,7 @@ function App() {
   // Performance monitoring for route changes
   useEffect(() => {
     startMeasure('route_change', 'navigation', { path: location.pathname });
-    
+
     return () => {
       endMeasure('route_change', 'navigation', { path: location.pathname });
     };
@@ -139,8 +153,8 @@ function App() {
       .get(`${api}/api/seller/subdomain/${subdomain}`, {
         headers: isAuthenticated
           ? {
-              Authorization: `Bearer ${isAuthenticated}`,
-            }
+            Authorization: `Bearer ${isAuthenticated}`,
+          }
           : {},
         signal: controller.signal,
       })
@@ -249,16 +263,16 @@ function App() {
       {!isSignPage && !isLandingPage && <NavBar />}
 
       <Routes>
-                 <Route
-           path="/"
-           element={
-             subdomain === "localhost" || subdomain === "127" || subdomain === "dokaney" || subdomain === "www" ? (
-               <LandingPage />
-             ) : (
-               <Home />
-             )
-           }
-         />
+        <Route
+          path="/"
+          element={
+            subdomain === "localhost" || subdomain === "127" || subdomain === "dokaney" || subdomain === "www" ? (
+              <LandingPage />
+            ) : (
+              <Home />
+            )
+          }
+        />
         <Route path="/home" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
