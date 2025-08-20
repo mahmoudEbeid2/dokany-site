@@ -11,7 +11,7 @@
 }
 
 .shop-hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -184,30 +184,30 @@
     padding: 3rem 1rem;
     margin-bottom: 1.5rem;
   }
-  
+
   .shop-hero h1 {
     font-size: 2.5rem;
   }
-  
+
   .shop-hero p {
     font-size: 1.1rem;
   }
-  
+
   .form-control,
   .form-select {
     padding: 0.75rem 1rem;
     font-size: 0.95rem;
   }
-  
+
   .form-label {
     font-size: 0.9rem;
   }
-  
+
   .btn-dark {
     padding: 0.5rem 1.5rem;
     font-size: 0.9rem;
   }
-  
+
   .products-section .col-12,
   .products-section .col-sm-6 {
     padding: 0.25rem;
@@ -218,15 +218,15 @@
   .shop-hero {
     padding: 2rem 1rem;
   }
-  
+
   .shop-hero h1 {
     font-size: 2rem;
   }
-  
+
   .products-section {
     padding: 0 0.75rem;
   }
-  
+
   .products-section .col-12 {
     padding: 0.25rem;
   }
@@ -279,6 +279,7 @@
   box-shadow: none;
 }
 
+
 @media (max-width:480px) {
     .form-control,
   .form-select {
@@ -287,3 +288,4 @@
   }
   
 }
+
