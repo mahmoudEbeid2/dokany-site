@@ -58,7 +58,7 @@ function App() {
 
   // Change Title Dynamic 
   useEffect(() => {
-    const subdomainTitle = (sellerInfo?.subdomain && !["localhost", "127", "dokaney"].includes(sellerInfo.subdomain.toLowerCase()))
+    const subdomainTitle = (sellerInfo?.subdomain && !["localhost", "127","www", "dokaney"].includes(sellerInfo.subdomain.toLowerCase()))
       ? sellerInfo.subdomain.charAt(0).toUpperCase() + sellerInfo.subdomain.slice(1) + " Store | "
       : "";
 
