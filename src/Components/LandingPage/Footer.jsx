@@ -105,7 +105,7 @@ const Footer = () => {
         <div className="footer-bottom">
           <div className="footer-bottom-content">
             <div className="copyright">
-              <p style={{ textAlign: 'center' }}>&copy; 2024 Dokany. All rights reserved.</p>
+              <p style={{ textAlign: 'center' }}>&copy;{` ${new Date().getFullYear()} Dokany. All rights reserved.`}</p>
             </div>
           </div>
         </div>
