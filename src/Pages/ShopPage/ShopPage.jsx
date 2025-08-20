@@ -253,6 +253,7 @@ function ShopPage() {
             placeholder="Search by title..."
             value={search}
             onChange={handleSearch}
+            style={{ margin:"0 !important" }}
           />
         </div>
 
