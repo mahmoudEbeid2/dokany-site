@@ -74,7 +74,7 @@
     flex-direction: column;
     align-items: center;
   }
-  
+
   .totalContainer {
     max-width: 400px;
     position: static;
@@ -82,7 +82,7 @@
     order: 1;
     padding: 1.5rem;
   }
-  
+
   .table {
     max-width: 100%;
   }
@@ -94,7 +94,7 @@
     flex-direction: row;
     align-items: flex-start;
   }
-  
+
   .totalContainer {
     position: sticky;
     top: 2rem;
@@ -107,7 +107,7 @@
   .container {
     padding: 3rem 2rem;
   }
-  
+
   .headline {
     font-size: 3rem;
     margin-bottom: 4rem;
@@ -236,9 +236,6 @@
   color: var(--cart-row-text);
 }
 
-.tableRow:hover {
-  background-color: var(--cart-row-hover);
-}
 
 .tableRow:last-child {
   border-bottom: none;
@@ -297,11 +294,11 @@
   margin-top: 0.5rem;
   border: none;
   outline: none;
-  background-color: transparent;
+  background-color: var(--cart-remove-btn-bg);
   padding: 0.5rem;
-  padding-left: 0;
   border-radius: 8px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -579,18 +576,18 @@
   .container {
     padding: 1rem;
   }
-  
+
   .headline {
     font-size: 2rem;
     margin-bottom: 2rem;
   }
-  
+
   .cartContent {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
   }
-  
+
   .totalContainer {
     width: 100%;
     max-width: 100%;
@@ -601,57 +598,57 @@
     padding: 1.25rem;
     min-height: 200px;
   }
-  
+
   .table {
     max-width: 100%;
     border-radius: 8px;
   }
-  
+
   .tableHead,
   .tableRow {
     grid-template-columns: 2fr 1fr 1fr auto;
     gap: 1rem;
     padding: 1rem;
   }
-  
+
   .tableImage {
     width: 60px;
     height: 60px;
   }
-  
+
   .productTitle {
     font-size: 0.875rem;
   }
-  
+
   .count {
     width: 100px;
     padding: 0.5rem;
   }
-  
+
   .countNumber {
     font-size: 0.875rem;
   }
-  
+
   .quantityBtn {
     width: 35px;
     height: 35px;
     font-size: 1rem;
   }
-  
+
   .subtotal,
   .price {
     font-size: 0.875rem;
   }
-  
+
   .totalTitle {
     font-size: 1.125rem;
   }
-  
+
   .totalPrice {
     font-size: 1.2rem;
     padding: 0.5rem 0;
   }
-  
+
   .cheackOutBtn {
     padding: 0.75rem 1.25rem;
     font-size: 0.8rem;
@@ -664,7 +661,7 @@
     flex-direction: column;
     align-items: center;
   }
-  
+
   .totalContainer {
     max-width: 400px;
     position: static;
@@ -672,7 +669,7 @@
     order: 1;
     padding: 1.5rem;
   }
-  
+
   .table {
     max-width: 100%;
   }
@@ -684,7 +681,7 @@
     flex-direction: row;
     align-items: flex-start;
   }
-  
+
   .totalContainer {
     position: sticky;
     top: 2rem;
@@ -697,11 +694,9 @@
   .container {
     padding: 3rem 2rem;
   }
-  
+
   .headline {
     font-size: 3rem;
     margin-bottom: 4rem;
   }
 }
-
-
