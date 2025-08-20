@@ -47,7 +47,6 @@ import { startMeasure, endMeasure } from "./utils/performanceMonitor";
 // Styles
 import "./App.css";
 import { setSellerInfo } from "./features/seller/sellerSlice.js";
-import { use } from "react";
 
 const api = import.meta.env.VITE_API;
 
