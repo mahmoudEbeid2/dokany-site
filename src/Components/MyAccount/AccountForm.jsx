@@ -12,7 +12,7 @@ const AccountForm = () => {
       }}
     >
       <div className="form-group">
-        <label className="labelMyAcc">User Name *</label>
+        <label className="labelMyAcc">User Name</label>
         <input
           type="text"
           name="user_name"
@@ -23,7 +23,7 @@ const AccountForm = () => {
 
       <div className="form-row">
         <div className="form-group">
-          <label className="labelMyAcc">First Name *</label>
+          <label className="labelMyAcc">First Name</label>
           <input
             type="text"
             name="f_name"
@@ -33,7 +33,7 @@ const AccountForm = () => {
         </div>
 
         <div className="form-group">
-          <label className="labelMyAcc">Last Name *</label>
+          <label className="labelMyAcc">Last Name</label>
           <input
             type="text"
             name="l_name"
@@ -44,7 +44,7 @@ const AccountForm = () => {
       </div>
 
       <div className="form-group">
-        <label className="labelMyAcc">Email *</label>
+        <label className="labelMyAcc">Email</label>
         <input
           type="email"
           name="email"
@@ -54,7 +54,7 @@ const AccountForm = () => {
       </div>
 
       <div className="form-group">
-        <label className="labelMyAcc">Phone *</label>
+        <label className="labelMyAcc">Phone</label>
         <input
           type="text"
           name="phone"
